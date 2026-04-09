@@ -1,6 +1,6 @@
 {
   "name": "create-nextvm",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "Scaffold a new NextVM server project. Run via `pnpm create nextvm@latest <name>` or `npm create nextvm@latest <name>`.",
   "license": "BUSL-1.1",
   "publishConfig": {
@@ -13,9 +13,7 @@
   },
   "homepage": "https://github.com/nextvm-official/nextvm/tree/main/packages/create-nextvm#readme",
   "bugs": "https://github.com/nextvm-official/nextvm/issues",
-  "engines": {
-    "node": ">=22.0.0 <23.0.0"
-  },
+  "engines": { "node": ">=22.0.0 <23.0.0" },
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
