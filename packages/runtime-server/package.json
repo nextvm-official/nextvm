@@ -2,7 +2,7 @@
 	"name": "@nextvm/runtime-server",
 	"version": "0.0.1",
 	"description": "NextVM server runtime — boots the ModuleLoader inside an FXServer resource and bridges FiveM events to lifecycle hooks",
-	"license": "LGPL-3.0",
+	"license": "BUSL-1.1",
 	"publishConfig": {
 		"access": "public"
 	},

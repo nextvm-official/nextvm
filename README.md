@@ -3,7 +3,7 @@
 > A next-generation **TypeScript-first** framework for **FiveM** servers.
 
 [![CI](https://github.com/nextvm-official/nextvm/actions/workflows/ci.yml/badge.svg)](https://github.com/nextvm-official/nextvm/actions/workflows/ci.yml)
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+[![License: BUSL-1.1](https://img.shields.io/badge/License-BUSL--1.1-orange.svg)](./LICENSE)
 [![Node](https://img.shields.io/badge/node-22.x-brightgreen.svg)](https://nodejs.org)
 
 NextVM replaces ESX, QBCore and ox_core with a modern, type-safe, modular
@@ -101,11 +101,35 @@ file public issues.
 
 ## License
 
-NextVM is licensed under the [LGPL-3.0](./LICENSE).
+NextVM is licensed under the [Business Source License 1.1](./LICENSE)
+(BUSL-1.1) — the same license used by HashiCorp, MariaDB, CockroachDB,
+and Sentry.
 
-This means you can use NextVM in commercial servers without making your
-own modules LGPL — only modifications to NextVM itself fall under
-copyleft.
+**What you can do (free, no permission needed):**
+
+- ✅ Run NextVM on your own FiveM server, including commercially
+  (donations, premium ranks, paid cosmetics consistent with the
+  Cfx.re PLA)
+- ✅ Build, distribute, and sell NextVM modules
+- ✅ Fork, modify, contribute back
+- ✅ Install NextVM on a single client's infrastructure as a
+  consultant
+- ✅ Use NextVM in classroom / educational settings
+
+**What requires a commercial license from the maintainers:**
+
+- ❌ Operating a multi-tenant hosting platform where third parties
+  can sign up to deploy NextVM-based servers without managing the
+  underlying infrastructure themselves (e.g. "Managed NextVM
+  Hosting as a Service")
+
+**Time-bombed open source:** every released version of NextVM
+automatically converts to **Apache License 2.0** four years after
+its release. So a version released today becomes fully Apache 2.0
+in 2030 — no questions asked, no maintainer approval needed.
+
+For commercial licensing inquiries see [the security contact](./SECURITY.md)
+or open a GitHub Discussion.
 
 ## Acknowledgments
 

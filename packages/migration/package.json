@@ -2,7 +2,7 @@
 	"name": "@nextvm/migration",
 	"version": "0.0.1",
 	"description": "NextVM migration toolkit — convert ESX/QBCore databases to NextVM schema",
-	"license": "LGPL-3.0",
+	"license": "BUSL-1.1",
 	"publishConfig": {
 		"access": "public"
 	},

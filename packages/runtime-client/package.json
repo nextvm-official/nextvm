@@ -2,7 +2,7 @@
 	"name": "@nextvm/runtime-client",
 	"version": "0.0.1",
 	"description": "NextVM client runtime — boots the ModuleLoader inside an FXServer client resource and bridges FiveM client events to lifecycle hooks",
-	"license": "LGPL-3.0",
+	"license": "BUSL-1.1",
 	"publishConfig": {
 		"access": "public"
 	},

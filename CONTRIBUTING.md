@@ -93,5 +93,7 @@ Use the issue templates under `.github/ISSUE_TEMPLATE/`. Include:
 
 ## License
 
-By contributing you agree that your contribution will be licensed under
-LGPL-3.0, the same license as the rest of the project.
+By contributing you agree that your contribution will be licensed
+under the [Business Source License 1.1](./LICENSE) (BUSL-1.1), the
+same license as the rest of the project. Each released version
+automatically converts to Apache License 2.0 four years after release.

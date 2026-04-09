@@ -2,7 +2,7 @@
 	"name": "@nextvm/compat",
 	"version": "0.0.1",
 	"description": "ESX/QBCore compatibility layer for NextVM — exposes legacy exports backed by NextVM data",
-	"license": "LGPL-3.0",
+	"license": "BUSL-1.1",
 	"publishConfig": {
 		"access": "public"
 	},

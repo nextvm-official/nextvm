@@ -2,7 +2,7 @@
 	"name": "@nextvm/test-utils",
 	"version": "0.0.1",
 	"description": "Testing utilities — mock context, mock player, mock DB for NextVM module tests",
-	"license": "LGPL-3.0",
+	"license": "BUSL-1.1",
 	"publishConfig": {
 		"access": "public"
 	},

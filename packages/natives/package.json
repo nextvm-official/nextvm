@@ -2,7 +2,7 @@
 	"name": "@nextvm/natives",
 	"version": "0.0.1",
 	"description": "Typed FiveM native wrappers — Player, Vehicle, World, Entity, Network, Routing, Voice",
-	"license": "LGPL-3.0",
+	"license": "BUSL-1.1",
 	"publishConfig": {
 		"access": "public"
 	},

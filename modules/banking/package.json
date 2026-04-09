@@ -2,7 +2,7 @@
 	"name": "@nextvm/banking",
 	"version": "0.0.1",
 	"description": "NextVM banking module — accounts, transfers, audit trail (Phase 2)",
-	"license": "LGPL-3.0",
+	"license": "BUSL-1.1",
 	"publishConfig": {
 		"access": "public"
 	},

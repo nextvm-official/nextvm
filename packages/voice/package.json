@@ -2,7 +2,7 @@
 	"name": "@nextvm/voice",
 	"version": "0.0.1",
 	"description": "NextVM voice service — server-authoritative radio channels, proximity, phone calls, mute",
-	"license": "LGPL-3.0",
+	"license": "BUSL-1.1",
 	"publishConfig": {
 		"access": "public"
 	},

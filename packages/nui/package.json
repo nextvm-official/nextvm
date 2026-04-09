@@ -2,7 +2,7 @@
 	"name": "@nextvm/nui",
 	"version": "0.0.1",
 	"description": "NextVM NUI bridge — typed message bus between the FiveM client runtime and a NUI browser frame",
-	"license": "LGPL-3.0",
+	"license": "BUSL-1.1",
 	"publishConfig": {
 		"access": "public"
 	},

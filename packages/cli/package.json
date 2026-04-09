@@ -2,7 +2,7 @@
 	"name": "@nextvm/cli",
 	"version": "0.0.1",
 	"description": "NextVM CLI — create, dev, build, validate, db:*, migrate:from",
-	"license": "LGPL-3.0",
+	"license": "BUSL-1.1",
 	"publishConfig": {
 		"access": "public"
 	},

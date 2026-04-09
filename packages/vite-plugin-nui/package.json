@@ -2,7 +2,7 @@
 	"name": "@nextvm/vite-plugin-nui",
 	"version": "0.0.1",
 	"description": "Vite plugin for building NextVM NUI apps — FiveM-friendly defaults, fxmanifest snippet, HMR-ready dev URL",
-	"license": "LGPL-3.0",
+	"license": "BUSL-1.1",
 	"publishConfig": {
 		"access": "public"
 	},

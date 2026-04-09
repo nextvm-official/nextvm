@@ -2,7 +2,7 @@
 	"name": "@nextvm/tebex",
 	"version": "0.0.1",
 	"description": "NextVM Tebex bridge — typed Tebex API client + webhook verification (PLA-compliant payment integration)",
-	"license": "LGPL-3.0",
+	"license": "BUSL-1.1",
 	"publishConfig": {
 		"access": "public"
 	},
