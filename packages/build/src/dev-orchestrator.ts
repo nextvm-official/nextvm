@@ -7,14 +7,9 @@ import type { LoadedProject, ResolvedModule } from './project-loader'
 
 /**
  * Dev orchestrator.
- *
- * Concept v2.3, Chapter 15.2:
  *   "Dev mode: hot-reload, NUI HMR, file watching"
- *
- * Phase 2 minimum: file watcher that rebuilds the affected module on
  * change. State preservation + NUI HMR + ensure-restart bridge follow
- * once the runtime layer is in place (Phase 4).
- *
+ * once the runtime layer is in place.
  * Each module's `src/` is watched. On change, that single module is
  * rebuilt via the build orchestrator (skipLocales=true for speed) and
  * a `module:rebuilt` callback is fired so the runtime can `ensure`-

@@ -1,10 +1,10 @@
 # State Management
 
-> Concept v2.3, Chapter 11
+> 
 
 NextVM wraps FiveM State Bags with type safety, character scoping,
 reactivity, and Hot-Reload preservation. State is **always
-character-scoped** by [GUARD-011](/reference/guards#guard-011-character-scoped-data).
+character-scoped** by [](/reference/pla).
 
 ## defineState
 
@@ -58,7 +58,7 @@ Subscribers are character-scoped — you only get notified about
 mutations to the specific `charId` you subscribed to. If a subscriber
 throws, the error is logged but other subscribers still run.
 
-## Character scoping (GUARD-011)
+## Character scoping
 
 Every read and write takes a `charId`, **never** a `source`. This is
 because the same player (source) can switch between multiple
@@ -110,7 +110,7 @@ playerState.deserialize(snapshot)
 ```
 
 This is wired automatically by the dev orchestrator when modules opt
-in (Concept Chapter 15.2).
+in.
 
 ## Example: full module integration
 
@@ -150,4 +150,4 @@ export { playerState }
 
 - [`@nextvm/core` state API](/packages/core)
 - [Character System](/concept/character-system)
-- [GUARD-011](/reference/guards#guard-011-character-scoped-data)
+- [](/reference/pla)

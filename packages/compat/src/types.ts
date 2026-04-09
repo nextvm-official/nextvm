@@ -1,7 +1,5 @@
 /**
  * @nextvm/compat shared types.
- *
- * Concept v2.3, Chapter 16.
  */
 
 /** A player-shaped item entry as ESX/QBCore expect it */
@@ -21,10 +19,9 @@ export interface CompatIdentifiers {
 
 /**
  * Source of NextVM data needed by the compat bridges.
- *
  * The setup function takes a DataSource so the bridges remain decoupled
  * from the concrete @nextvm/player and @nextvm/inventory module imports
- * (avoids cross-module imports — GUARD-002 spirit) and stays testable.
+ * and stays testable.
  */
 export interface CompatDataSource {
 	/** Resolve a server source ID to a NextVM character snapshot, or null */
@@ -50,7 +47,6 @@ export interface CompatCharacterSnapshot {
 
 /**
  * Thin wrapper over the FiveM `exports[]` global.
- *
  * The compat package needs to register exports under arbitrary resource
  * names (`es_extended`, `qb-core`). Doing this through an injected
  * adapter keeps the package buildable on Node and unit-testable, while

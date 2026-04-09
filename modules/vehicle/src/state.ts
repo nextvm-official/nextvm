@@ -1,8 +1,7 @@
 import { defineState, z } from '@nextvm/core'
 
 /**
- * Vehicle state — character-scoped (GUARD-011).
- *
+ * Vehicle state — character-scoped.
  * Tracks the list of network IDs of vehicles owned by a character.
  * The actual vehicle entities live in the game world; this is the
  * authoritative ownership ledger.

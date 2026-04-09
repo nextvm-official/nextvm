@@ -1,7 +1,5 @@
 /**
  * Tick System Types.
- *
- * Concept v2.3, Chapter 21.1.
  */
 
 import type { TickPriority } from '../module/types'

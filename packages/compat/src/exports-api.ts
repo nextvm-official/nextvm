@@ -3,7 +3,6 @@ import type { ExportsApi } from './types'
 /**
  * In-memory ExportsApi implementation — used for tests and any context
  * outside the FiveM server runtime.
- *
  * The real FiveM-backed implementation lives in the server bootstrap
  * layer (it calls the global `exports[resource][name] = fn` pattern).
  * Keeping the FiveM-specific implementation out of this package makes

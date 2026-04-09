@@ -2,8 +2,6 @@ import type { ModuleEventBus } from '@nextvm/core'
 
 /**
  * Mock event bus with assertion helpers.
- *
- * Concept v2.3, Chapter 31:
  *   Test-friendly mock that records every emitted event so tests can
  *   assert on what handlers were called and with what payloads.
  */

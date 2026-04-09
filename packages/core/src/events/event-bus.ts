@@ -9,18 +9,11 @@ export type EventErrorReporter = (
 
 /**
  * Typed Event Bus — inter-module communication.
- *
- * Concept v2.3, Chapter 8.4:
  *   "Typed event bus, not direct imports"
  *   ctx.events.emit('banking:transaction', { from, to, amount })
  *   ctx.events.on('banking:transaction', (data) => { ... })
- *
- * Concept v2.3, Chapter 22.2 — Error Boundaries:
  *   Each handler is wrapped in try/catch. When an error reporter is set,
  *   errors are forwarded for tracking and threshold-based degradation.
- *
- * GUARD-002: Modules never import each other directly.
- * GUARD-004: Typed events only. No raw TriggerServerEvent.
  */
 export class EventBus implements ModuleEventBus {
 	private handlers = new Map<string, Set<HandlerEntry>>()
@@ -100,7 +93,7 @@ export class EventBus implements ModuleEventBus {
 
 	/**
 	 * Set the error reporter — called by ModuleLoader to wire up
-	 * error counting and threshold-based degradation (Chapter 22.2).
+	 * error counting and threshold-based degradation.
 	 */
 	setErrorReporter(reporter: EventErrorReporter | null): void {
 		this.errorReporter = reporter

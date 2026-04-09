@@ -1,20 +1,14 @@
 /**
  * @nextvm/compat — ESX/QBCore compatibility layer
- *
- * Concept v2.3, Chapter 16.
- *
  * Lets legacy Lua resources (esx_*, qb-*) run unmodified alongside
  * NextVM modules. The compat layer:
  *   - Registers `exports['es_extended']` with getSharedObject()
  *   - Registers `exports['qb-core']` with GetCoreObject()
  *   - Maps NextVM character + inventory state into the legacy formats
- *
  * Scope (80/20): player data, money, job, inventory. Exotic
  * framework-specific features are out of scope.
- *
  * Usage (in the server bootstrap):
  *   import { setupCompat } from '@nextvm/compat'
- *
  *   setupCompat({
  *     dataSource: buildDataSource(characters, inventoryState),
  *     exportsApi: realFivemExportsApi,

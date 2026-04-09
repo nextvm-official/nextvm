@@ -3,13 +3,9 @@ import type { Migration } from './types'
 
 /**
  * MigrationRunner — Applies and rolls back migrations.
- *
- * Concept v2.3, Chapter 12:
  *   "Migration CLI: nextvm db:generate, nextvm db:migrate,
  *    nextvm db:rollback, nextvm db:seed"
- *
  * Tracks applied migrations in `nextv_migrations` table.
- * GUARD-006 compliant: instance state, no globals.
  */
 export class MigrationRunner {
 	private migrations: Migration[] = []

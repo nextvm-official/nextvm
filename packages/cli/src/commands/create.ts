@@ -6,8 +6,6 @@ import { cliLog } from '../utils/logger'
 
 /**
  * `nextvm create <name>` — Scaffold a new NextVM server project.
- *
- * Concept v2.3, Chapter 17.
  */
 export function registerCreateCommand(program: Command): void {
 	program
@@ -68,7 +66,7 @@ export function registerCreateCommand(program: Command): void {
 
 /**
  * NextVM server configuration.
- * Validated at startup against this schema (Concept v2.3, Chapter 8).
+ * Validated at startup against this schema.
  */
 export default {
 	server: {

@@ -2,8 +2,6 @@ import { z } from 'zod'
 
 /**
  * NextVM project configuration schema.
- *
- * Concept v2.3, Chapter 8 + 15:
  *   Each NextVM project has a `nextvm.config.ts` at the root that
  *   declares server settings, database connection, and the modules to
  *   load. Validated at startup so misconfiguration fails loudly.

@@ -1,9 +1,5 @@
 /**
  * Job registry — definitions of available jobs and their grade ladder.
- *
- * Concept v2.3, Chapter 8 + 18.
- *
- * GUARD-006: instance state, no globals. Modules instantiate the
  * registry inside their server() function and seed it with default jobs.
  */
 

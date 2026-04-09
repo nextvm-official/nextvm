@@ -1,12 +1,8 @@
 /**
  * Client bootstrap for the Full Stack Example.
- *
- * Concept v2.3, Chapter 8.3 + 10.2 + 19.
- *
  * Mirror of server/index.ts on the client side. Boots the client
  * runtime, mounts the typed RPC client proxies, and lets the NUI app
  * find the bus through the global window.
- *
  * The actual NUI React app lives under modules/core/nui/ and ships as
  * a separate Vite build referenced by `ui_page` in fxmanifest.lua.
  */

@@ -2,7 +2,7 @@
 
 NextVM follows a strict five-layer architecture. Each layer may only
 depend on the layer directly below it. Cross-layer-up imports are
-forbidden by [GUARD-008](/reference/guards#guard-008-layer-boundaries).
+forbidden by [](/reference/pla).
 
 ## The five layers
 
@@ -31,21 +31,19 @@ forbidden by [GUARD-008](/reference/guards#guard-008-layer-boundaries).
 ## Why the layers matter
 
 - **Layer 4 modules cannot call FiveM natives directly.** They must go
-  through `@nextvm/natives` (GUARD-001). This means a module can be unit
+  through `@nextvm/natives`. This means a module can be unit
   tested in plain Node.js — the natives are abstracted behind interfaces.
 - **Layer 4 modules cannot import each other directly.** Cross-module
-  communication goes through DI (`ctx.inject`) or events (`ctx.events`)
-  (GUARD-002).
+  communication goes through DI (`ctx.inject`) or events (`ctx.events`).
 - **Money/inventory/permission writes are server-side only.** The
-  server is authoritative; the client never decides what it receives
-  (GUARD-003).
+  server is authoritative; the client never decides what it receives.
 - **The build pipeline enforces all of this.** `nextvm validate` and
   `nextvm build` catch the common violations before they hit production.
 
 ## Core principles
 
 NextVM is built on eight core principles documented in
-[Concept v2.3 Chapter 5.2](https://github.com/nextvm-official/nextvm/tree/main/docs/concept):
+[2](https://github.com/nextvm-official/nextvm/tree/main/docs/concept):
 
 ### 1. Dependency Inversion
 Modules depend on **abstractions**, never on concrete FiveM natives.
@@ -66,7 +64,7 @@ fails loudly. The same schema generates dashboard UI in the SaaS layer.
 
 ### 5. Zero Global State
 All state goes through the framework's state management system.
-Module-level mutable globals are forbidden (GUARD-006). Services hold
+Module-level mutable globals are forbidden. Services hold
 their state on instance fields.
 
 ### 6. Build-Time Safety
@@ -184,4 +182,4 @@ NextVM repository
 
 - [Module Authoring](/guide/module-authoring) — the prescriptive guide
 - [Concept Overview](/concept/) — chapter-by-chapter framework spec
-- [Architecture Guards](/reference/guards) — the 13 hard rules
+

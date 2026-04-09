@@ -2,8 +2,6 @@
  * VoiceAdapter — the narrow surface VoiceService needs from the
  * underlying voice runtime (pma-voice via @nextvm/natives in production,
  * an in-memory mock in tests).
- *
- * Concept v2.3, Chapter 20: "the higher-level voice service stays
  * unaware of pma-voice specifics so it can be unit-tested without
  * the FXServer".
  */

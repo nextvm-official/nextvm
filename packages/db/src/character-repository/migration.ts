@@ -4,8 +4,6 @@ import { charactersTable, usersTable } from './schema'
 
 /**
  * Initial migration for the NextVM character system.
- *
- * Concept v2.3, Chapter 9.3:
  *   Creates nextv_users and nextv_characters tables.
  */
 export const initialCharacterMigration = defineMigration({

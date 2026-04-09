@@ -1,7 +1,7 @@
 import { defineState, z } from '@nextvm/core'
 
 /**
- * Housing state — keyed by charId (GUARD-011).
+ * Housing state — keyed by charId.
  * `ownedPropertyIds` is the authoritative ledger of which properties
  * a character owns. The PropertyRegistry resolves them to definitions.
  */

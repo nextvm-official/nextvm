@@ -1,18 +1,12 @@
 /**
  * @nextvm/tebex — Typed Tebex API bridge for NextVM
- *
- * Concept v2.3, Chapter 4.3.3 + 26.
- *
  * The single PLA-compliant payment integration for NextVM modules.
  * Every module that sells in-game items to players for real money
- * MUST consume this package and ship a MONETIZATION.md (GUARD-013).
- *
+ * MUST consume this package and ship a MONETIZATION.md.
  * Usage:
  *   import { TebexClient, parseVerifiedWebhook } from '@nextvm/tebex'
- *
  *   const tebex = new TebexClient({ secret: process.env.TEBEX_SECRET! })
  *   const pkg = await tebex.getPackage(12345)
- *
  *   // In your webhook handler:
  *   const event = parseVerifiedWebhook(rawBody, headers['x-signature'], secret)
  *   if (event?.type === 'payment.completed') {

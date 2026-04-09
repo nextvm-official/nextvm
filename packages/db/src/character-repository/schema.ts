@@ -3,9 +3,6 @@ import { defineTable } from '../define-table'
 
 /**
  * NextVM core character system tables.
- *
- * Concept v2.3, Chapter 9.3.
- *
  * These tables back the CharacterRepository implementation.
  * Migrations to create them are provided alongside.
  */

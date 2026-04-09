@@ -1,13 +1,10 @@
 /**
- * @nextvm/housing — Phase 2 housing module
- *
- * Concept v2.3, Chapter 7.2 + 8 + 18.
- *
+ * @nextvm/housing
  * Owns property definitions, character ownership, and routing-bucket
  * instancing for apartment interiors. Server-authoritative purchases
- * (GUARD-003), char-id keyed state (GUARD-011), Zod-validated RPC
- * (GUARD-005), i18n strings (GUARD-012). Cross-module access to
- * banking goes through a small adapter interface (GUARD-002).
+ *, char-id keyed state, Zod-validated RPC
+ *, i18n strings. Cross-module access to
+ * banking goes through a small adapter interface.
  */
 
 import { defineExports, defineModule, z } from '@nextvm/core'
@@ -82,7 +79,7 @@ export default defineModule({
 		const service = new HousingService(registry, routing)
 		const router = buildHousingRouter(service)
 
-		// Wire the banking dependency via DI (Concept Chapter 8.2)
+		// Wire the banking dependency via DI
 		try {
 			const banking = ctx.inject<{ removeMoney: BankingAdapter['removeMoney'] }>(
 				'banking',

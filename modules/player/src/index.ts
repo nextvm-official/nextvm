@@ -1,16 +1,7 @@
 /**
  * @nextvm/player — First-party player module
- *
- * Concept v2.3, Chapter 8 + 18.
- *
  * Owns the runtime player state (position, health, armor, isDead) and
  * the player RPC router (getMe, teleport, revive, setHealth).
- *
- * - GUARD-001: no direct native calls (uses @nextvm/natives via state bags)
- * - GUARD-003: all writes server-authoritative
- * - GUARD-005: all RPC inputs Zod-validated
- * - GUARD-011: state keyed by charId, not source
- * - GUARD-012: user-facing strings via i18n
  */
 
 import { defineModule, z } from '@nextvm/core'

@@ -1,6 +1,6 @@
 # Character System
 
-> Concept v2.3, Chapter 9
+> 
 
 NextVM separates the concept of **User** (a real person) from
 **Character** (an in-game identity). A user can own multiple
@@ -56,7 +56,6 @@ creates these tables.
 
 ## Character lifecycle
 
-Concept Chapter 9.2:
 
 1. **Player connects** → User record loaded or created from identifiers
 2. **Player enters routing bucket 0** (or a dedicated character-select
@@ -98,7 +97,7 @@ The repository is a **port** (interface) defined in `@nextvm/core`,
 implemented by `@nextvm/db`. Tests use `InMemoryCharacterRepository`
 from `@nextvm/test-utils` for fast, DB-free runs.
 
-## charId scoping (GUARD-011)
+## charId scoping
 
 Every per-player piece of state in NextVM is keyed by `charId`, never
 by `source`. The reason: a single source (server ID) can switch between
@@ -154,4 +153,4 @@ When a character is selected, the player is moved back to bucket 0
 
 - [`@nextvm/core` CharacterService](/packages/core)
 - [`@nextvm/db` schema](/packages/db)
-- [GUARD-011](/reference/guards#guard-011-character-scoped-data)
+- [](/reference/pla)

@@ -2,11 +2,8 @@ import type { z, ZodTypeAny } from 'zod'
 
 /**
  * RPC Types.
- *
- * Concept v2.3, Chapter 10.
- *
  * Inspired by tRPC: compile-time type-safe remote procedure calls.
- * No string-based TriggerServerEvent (GUARD-004).
+ * No string-based TriggerServerEvent.
  */
 
 /** Request context passed to every procedure handler */

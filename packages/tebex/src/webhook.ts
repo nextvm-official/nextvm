@@ -6,14 +6,9 @@ import {
 
 /**
  * Verify a Tebex webhook signature.
- *
- * Concept v2.3, Chapter 4.3.3 + Chapter 20.1 (Event Protection).
- *
  * Tebex signs every webhook with HMAC-SHA256 over the raw JSON body
  * using the project's webhook secret. We verify with `timingSafeEqual`
  * to avoid timing oracle attacks.
- *
- * GUARD-013: PLA compliance — every monetized module that consumes
  * Tebex webhooks MUST call this before trusting the payload.
  */
 export function verifyTebexWebhook(
@@ -30,7 +25,6 @@ export function verifyTebexWebhook(
 
 /**
  * Verify + parse a Tebex webhook in one shot.
- *
  * Returns the typed payload on success or null on signature mismatch.
  * Throws if the body is valid JSON but does not match the schema —
  * that indicates a Tebex API change and the caller should be loud.

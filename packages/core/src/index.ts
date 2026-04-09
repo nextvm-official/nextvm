@@ -1,10 +1,8 @@
 /**
  * @nextvm/core — NextVM Framework Core (Layer 3)
- *
  * Module system, dependency injection, lifecycle hooks,
  * event bus, structured logging.
- *
- * RPC and state management are Phase 1 additions.
+ * RPC and state management are additions.
  */
 
 // Module system
@@ -31,7 +29,7 @@ export { EventBus } from './events/event-bus'
 // Logger
 export { Logger, createLogger } from './logger/logger'
 
-// RPC System (Concept v2.3, Chapter 10)
+// RPC System
 export {
 	defineRouter,
 	procedure,
@@ -55,31 +53,31 @@ export type {
 	RpcErrorReporter,
 } from './rpc'
 
-// State Management (Concept v2.3, Chapter 11)
+// State Management
 export { defineState, StateStore, StateBagBackend } from './state'
 export type { StateBackend, StateSubscriber, StateData } from './state'
 
-// Permissions (Concept v2.3, Chapter 20.3)
+// Permissions
 export { PermissionsService } from './permissions'
 export type { Permission, Role, PermissionDefinition } from './permissions'
 
-// Error Boundaries (Concept v2.3, Chapter 22.2)
+// Error Boundaries
 export { ErrorBoundary, ErrorCounter } from './errors'
 export type { ErrorOrigin, ModuleErrorRecord, ModuleDegradation } from './errors'
 
-// Tick System (Concept v2.3, Chapter 21.1)
+// Tick System
 export { TickScheduler } from './tick'
 export type { RegisteredTick, TickSchedulerOptions, FrameStats } from './tick'
 
-// Performance Profiler (Concept v2.3, Chapter 21.2)
+// Performance Profiler
 export { Profiler } from './performance'
 export type { PerfStats, SampleKind } from './performance'
 
-// Integrations (Concept v2.3, Chapter 29 — txAdmin, etc.)
+// Integrations
 export { bindTxAdmin } from './integrations'
 export type { TxAdminEventBinder, TxAdminIntegrationDeps } from './integrations'
 
-// Character System (Concept v2.3, Chapter 9)
+// Character System
 export { CharacterService } from './character/character-service'
 export type {
 	User,
@@ -91,5 +89,5 @@ export type {
 export type { CharacterRepository } from './character/character-repository'
 
 // Re-export Zod so modules import { defineModule, z } from '@nextvm/core'
-// Deliberate DX decision (Concept v2.3, Chapter 8.1)
+// Deliberate DX decision
 export { z } from 'zod'

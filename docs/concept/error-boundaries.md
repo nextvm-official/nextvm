@@ -1,6 +1,6 @@
 # Error Boundaries
 
-> Concept v2.3, Chapter 22.2
+> 2
 
 NextVM wraps every module's lifecycle hooks, tick handlers, event
 handlers, and RPC handlers in an error boundary. The goal is hard:
@@ -94,7 +94,7 @@ The `origin` field categorizes where the error came from:
 | `rpc-handler` | An RPC procedure handler |
 | `state-subscriber` | A state store `subscribe()` callback |
 
-The CLI's `nextvm perf` command (Phase 3) groups errors by origin so
+The CLI's `nextvm perf` command groups errors by origin so
 you can see at a glance which subsystem is misbehaving.
 
 ## module:degraded event
@@ -130,7 +130,7 @@ errorBoundary.reEnable('banking')
 ```
 
 A future admin module / web dashboard will surface this as a "restart
-module" button. For Phase 2 it's a programmatic call from the
+module" button. For it's a programmatic call from the
 bootstrap or an exec'd command.
 
 ## Why not catch + retry automatically?
@@ -150,4 +150,4 @@ without taking down the server.
 
 - [Tick System](/concept/tick-system)
 - [`@nextvm/core` errors API](/packages/core)
-- [Concept v2.3 Chapter 22.2](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [2](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)

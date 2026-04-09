@@ -11,17 +11,13 @@ import {
 
 /**
  * RpcRouter — Server-side dispatcher for all registered RPC procedures.
- *
- * Concept v2.3, Chapter 10:
  *   - Receives requests from clients
- *   - Validates input via Zod (GUARD-005)
+ *   - Validates input via Zod
  *   - Runs auth middleware
  *   - Rate-limits per player (Kap. 10.3)
  *   - Injects framework-controlled context (source NOT spoofable)
  *   - Routes to the right procedure handler
  *   - Returns typed result or RpcError
- *
- * GUARD-006 compliant: instance state, no globals.
  */
 /**
  * Optional error reporter — receives module-attributed errors from RPC handlers.
@@ -48,7 +44,7 @@ export class RpcRouter {
 
 	/**
 	 * Set the error reporter — called by the framework to wire RPC errors
-	 * into the module error boundary (Concept Chapter 22.2).
+	 * into the module error boundary.
 	 */
 	setErrorReporter(reporter: RpcErrorReporter | null): void {
 		this.errorReporter = reporter
@@ -83,7 +79,6 @@ export class RpcRouter {
 
 	/**
 	 * Dispatch an incoming RPC call.
-	 *
 	 * Called by the network layer when a client sends an RPC request.
 	 * The framework guarantees that `source` comes from the secure
 	 * server-side player table, NOT from client payload (Kap. 10.3).
@@ -124,7 +119,7 @@ export class RpcRouter {
 			}
 		}
 
-		// 3. Validate input via Zod (GUARD-005)
+		// 3. Validate input via Zod
 		let validatedInput: unknown = undefined
 		if (procedure.inputSchema) {
 			const result = procedure.inputSchema.safeParse(input)
@@ -181,7 +176,7 @@ export class RpcRouter {
 				stack: err instanceof Error ? err.stack : undefined,
 			})
 			// Report to error boundary so module degradation triggers
-			// when RPC handlers throw too often (Concept Chapter 22.2)
+			// when RPC handlers throw too often
 			this.errorReporter?.(namespace, procedureName, err)
 			throw new RpcError(
 				'INTERNAL_ERROR',

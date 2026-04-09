@@ -9,11 +9,7 @@ import {
 
 /**
  * Database — High-level facade over a DatabaseAdapter.
- *
- * Concept v2.3, Chapter 12:
  *   const player = await db.query(players).where({ id: charId }).select(...).first()
- *
- * GUARD-006 compliant: instance state, no globals.
  */
 export class Database {
 	constructor(private readonly adapter: DatabaseAdapter) {}

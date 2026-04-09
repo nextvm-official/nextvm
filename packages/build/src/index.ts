@@ -1,8 +1,5 @@
 /**
  * @nextvm/build — NextVM build orchestrator
- *
- * Concept v2.3, Chapter 15.
- *
  * Provides the project loader + build pipeline + dev mode that the
  * @nextvm/cli wraps as the user-facing `nextvm build` and `nextvm dev`
  * commands. Also reusable from tests, IDE integrations, or CI scripts.

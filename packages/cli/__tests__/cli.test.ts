@@ -6,7 +6,6 @@ import { runCli } from '../src/index'
 
 /**
  * CLI smoke tests.
- *
  * Each test gets a fresh temp directory, chdir's into it, runs `runCli`
  * with a real argv, and asserts on the resulting filesystem state. We
  * mock `process.exit` so the validate/build error paths don't kill the

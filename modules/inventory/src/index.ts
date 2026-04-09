@@ -1,21 +1,10 @@
 /**
  * @nextvm/inventory — First-party inventory module
- *
- * Concept v2.3, Chapter 8 + 18.
- *
  * Slot-based inventory with weight and stacking rules. The item
  * registry is module-scoped and populated at module init time.
- *
- * - GUARD-002: depends on 'player' via DI
- * - GUARD-003: server-authoritative add/use/move/drop
- * - GUARD-005: Zod-validated RPC inputs + state schema
- * - GUARD-006: ItemRegistry is instance state, not global
- * - GUARD-011: state keyed by charId
- * - GUARD-012: i18n strings
- *
  * PLA: This module manages in-game items but does NOT process payments.
  * Modules built on top that sell items to players must integrate via
- * @nextvm/tebex (GUARD-013) and ship a MONETIZATION.md.
+ * @nextvm/tebex and ship a MONETIZATION.md.
  */
 
 import { defineModule, z } from '@nextvm/core'

@@ -4,17 +4,14 @@ import type { StateBackend } from './types'
 
 /**
  * Define a typed state container.
- *
- * Concept v2.3, Chapter 11:
  *   export const playerState = defineState('player', {
  *     job: z.string().default('unemployed'),
  *     cash: z.number().default(0),
  *     bank: z.number().default(500),
  *     isDead: z.boolean().default(false),
  *   })
- *
- * The returned StateStore is character-scoped (GUARD-011) and validated
- * against the Zod schema on every write (GUARD-005).
+ * The returned StateStore is character-scoped and validated
+ * against the Zod schema on every write.
  */
 export function defineState<TShape extends ZodRawShape>(
 	name: string,

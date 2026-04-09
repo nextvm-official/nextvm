@@ -1,6 +1,5 @@
 /**
  * Minimal FXServer globals used by the runtime layer.
- *
  * Kept narrow on purpose: any new global must be reviewed against the
  * concept and the GUARDS before being added here. The wider native
  * surface lives in @nextvm/natives.

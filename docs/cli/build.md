@@ -77,4 +77,4 @@ Drop the entire `modules/<name>/` folder into your FXServer's
 
 - [`@nextvm/build`](/packages/build) package reference
 - [`nextvm dev`](/cli/dev) for the watch loop
-- [Concept Chapter 15.1](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [1](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)

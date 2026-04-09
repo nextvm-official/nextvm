@@ -1,6 +1,6 @@
 # Compatibility Layer
 
-> Concept v2.3, Chapter 16
+> 
 
 `@nextvm/compat` exposes ESX- and QBCore-shaped exports backed by
 NextVM data, so legacy Lua resources can keep working alongside
@@ -93,7 +93,6 @@ character + inventory state and returns a properly-shaped object.
 
 ## Adoption path
 
-Concept Chapter 16.3:
 
 1. **Phase A** — Install NextVM alongside ESX/QBCore. Enable
    `@nextvm/compat`. Existing Lua resources keep working. New
@@ -123,4 +122,4 @@ This can take weeks or months. There's no forced timeline.
 - [`@nextvm/compat` package reference](/packages/compat)
 - [Migration from ESX](/guide/migration-from-esx)
 - [Migration from QBCore](/guide/migration-from-qbcore)
-- [Concept v2.3 Chapter 16](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [com/nextvm-official/nextvm/tree/main/docs/concept)

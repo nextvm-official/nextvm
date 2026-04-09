@@ -1,6 +1,5 @@
 /**
  * Read FiveM player identifiers (license, discord, steam) for a source.
- *
  * Pulled out so tests can stub the global natives in isolation.
  */
 export interface PlayerIdentifiers {

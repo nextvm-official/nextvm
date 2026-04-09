@@ -3,16 +3,13 @@ import { defineConfig } from 'vitepress'
 /**
  * NextVM documentation site configuration.
  *
- * Concept v2.3, Chapter 25 — Documentation generated from TSDoc +
- * Zod introspection + hand-written guides.
- *
- * The sidebar is grouped into seven sections:
+ * The sidebar is grouped into six sections:
  *   - Guide       — onboarding + tutorials
- *   - Concept     — architecture chapters that mirror the v2.3 spec
+ *   - Concept     — architecture topics
  *   - Packages    — per @nextvm/* package reference
  *   - Modules     — per first-party game module reference
  *   - CLI         — per `nextvm <command>` reference
- *   - Reference   — guards, ADRs, PLA, glossary
+ *   - Reference   — PLA, glossary
  */
 export default defineConfig({
 	title: 'NextVM',
@@ -31,7 +28,7 @@ export default defineConfig({
 			{ text: 'Packages', link: '/packages/core' },
 			{ text: 'Modules', link: '/modules/player' },
 			{ text: 'CLI', link: '/cli/create' },
-			{ text: 'Reference', link: '/reference/guards' },
+			{ text: 'Reference', link: '/reference/pla' },
 		],
 
 		sidebar: {
@@ -192,8 +189,6 @@ export default defineConfig({
 				{
 					text: 'Reference',
 					items: [
-						{ text: 'Architecture Guards', link: '/reference/guards' },
-						{ text: 'Architecture Decisions', link: '/reference/decisions' },
 						{ text: 'PLA Compliance', link: '/reference/pla' },
 						{ text: 'Glossary', link: '/reference/glossary' },
 					],

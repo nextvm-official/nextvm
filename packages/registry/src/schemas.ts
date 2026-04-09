@@ -2,16 +2,12 @@ import { z } from 'zod'
 
 /**
  * NextVM Registry schemas.
- *
- * Concept v2.3, Chapter 27:
  *   "npm-like registry for NextVM modules. Developer-to-developer
  *    sales (not player-facing). Revenue share 70/30. Auto-generated
  *    docs from Zod schemas. Security scanning. Version pinning."
- *
  * The registry is a thin layer over standard package metadata + a
  * tarball download URL. Premium modules carry a license-key check
  * that the build pipeline runs at build time, NEVER at runtime
- * (Concept Chapter 26.2).
  */
 
 export const moduleListingSchema = z.object({

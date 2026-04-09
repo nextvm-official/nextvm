@@ -8,8 +8,6 @@ import type { LoadedProject, ResolvedModule } from './project-loader'
 
 /**
  * Build orchestrator.
- *
- * Concept v2.3, Chapter 15.1:
  *   nextvm build
  *     ├── TypeScript → JavaScript (tsup/esbuild)
  *     ├── Bundle per resource (server.js, client.js)
@@ -17,7 +15,6 @@ import type { LoadedProject, ResolvedModule } from './project-loader'
  *     ├── Bundle locale files per module
  *     ├── Validate module deps, configs, locale completeness
  *     └── Output to dist/
- *
  * For each discovered module:
  *   - Resolve server + client entry points
  *   - Run tsup to produce server.js / client.js bundles

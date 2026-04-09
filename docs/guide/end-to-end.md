@@ -191,7 +191,7 @@ nextvm dev
 
 Watches every module's `src/`, rebuilds on change, fires
 `onModuleRebuilt`. Restart the affected resource manually with
-`ensure shop` (the live ensure-restart bridge is on the Phase 4 polish
+`ensure shop` (the live ensure-restart bridge is on the polish
 list).
 
 ## What just happened

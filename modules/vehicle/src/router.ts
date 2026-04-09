@@ -4,11 +4,8 @@ import { vehicleState } from './state'
 
 /**
  * Vehicle RPC router.
- *
- * Concept v2.3, Chapter 10 + 18.
- *
- * Server-authoritative spawn/despawn (GUARD-003).
- * Inputs Zod-validated (GUARD-005).
+ * Server-authoritative spawn/despawn.
+ * Inputs Zod-validated.
  */
 export const vehicleRouter = defineRouter({
 	/** Spawn a vehicle for the calling player */

@@ -36,7 +36,7 @@ modules: ['@nextvm/player', /* ... */]
 | `armor` | number (0–100) | 0 |
 | `isDead` | boolean | false |
 
-All fields are character-scoped (GUARD-011) — keyed by `charId`,
+All fields are character-scoped — keyed by `charId`,
 not `source`.
 
 ## RPC procedures

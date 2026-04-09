@@ -3,13 +3,10 @@ import type { InferRow, Table } from './define-table'
 
 /**
  * Typed query builder.
- *
- * Concept v2.3, Chapter 12:
  *   const player = await db.query(players)
  *     .where({ id: charId })
  *     .select('firstName', 'cash')
  *     .first()
- *
  * Supports SELECT/INSERT/UPDATE/DELETE with type inference from table schemas.
  */
 

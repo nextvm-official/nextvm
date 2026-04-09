@@ -23,25 +23,6 @@ If you're new to NextVM, read in this order:
 9. [Error Boundaries](/concept/error-boundaries) — module degradation
 10. [Compatibility Layer](/concept/compatibility-layer) — ESX/QBCore coexistence
 
-## Concept ↔ Concept v2.3 chapter map
-
-NextVM is implemented from a single specification document with 35
-chapters. This docs section maps each implemented feature back to the
-chapter that defines it:
-
-| Docs page | Concept chapter |
-|---|---|
-| [Module System](/concept/module-system) | Ch. 8 |
-| [Dependency Injection](/concept/dependency-injection) | Ch. 8.2 |
-| [Character System](/concept/character-system) | Ch. 9 |
-| [RPC](/concept/rpc) | Ch. 10 |
-| [State Management](/concept/state-management) | Ch. 11 |
-| [i18n](/concept/i18n) | Ch. 14 |
-| [Compatibility Layer](/concept/compatibility-layer) | Ch. 16 |
-| [Permissions](/concept/permissions) | Ch. 20.3 |
-| [Tick System](/concept/tick-system) | Ch. 21 |
-| [Error Boundaries](/concept/error-boundaries) | Ch. 22.2 |
-
 ## Architecture principles
 
 The whole framework is shaped by eight core principles
@@ -57,4 +38,4 @@ The whole framework is shaped by eight core principles
 8. **PLA-Aware** — Tebex bridge for monetization
 
 Each principle is enforced by one or more
-[Architecture Guards](/reference/guards).
+

@@ -3,9 +3,6 @@ import type { LegacyPlayer, MigrationSource } from '../types'
 
 /**
  * ESX migration source.
- *
- * Concept v2.3, Chapter 16.2 — reads from the standard ESX 1.x schema.
- *
  * ESX schema (Standard 1.x):
  *   users(identifier VARCHAR(60), accounts JSON, group VARCHAR,
  *         inventory JSON, position JSON, firstname, lastname,
@@ -13,8 +10,6 @@ import type { LegacyPlayer, MigrationSource } from '../types'
  *   accounts: { "money": 500, "bank": 1000, "black_money": 0 }
  *   inventory: [{ "name": "...", "label": "...", "count": N, "type": "..." }]
  *   owned_vehicles(owner, plate, vehicle JSON, type, job, stored)
- *
- * GUARD-006: instance state, no globals.
  */
 export class EsxMigrationSource implements MigrationSource {
 	readonly framework = 'esx' as const

@@ -24,7 +24,7 @@ and the tick scheduler.
 
 ## defineExports
 Helper that creates a typed exports interface for a module without the
-`as unknown` cast. See GUARD-013.
+`as unknown` cast. See .
 
 ## defineModule
 The entry point of every NextVM module. Declares name, dependencies,
@@ -43,13 +43,9 @@ handlers and RPCs become no-ops) until manually reset.
 The FiveM resource manifest. Generated automatically by `nextvm build`
 from each module's `package.json`.
 
-## GUARD-NNN
-One of the 13 architecture guards enforced by `nextvm validate`.
-See [Guards reference](/reference/guards).
-
 ## Layer
 NextVM has 5 layers: Runtime → Natives → Core → Modules → Content.
-Each layer may only import from the layer directly below it (GUARD-008).
+Each layer may only import from the layer directly below it.
 
 ## Lifecycle hook
 One of 9 callbacks a module can register: `onModuleInit`, `onModuleReady`,
@@ -62,7 +58,7 @@ topological sort, and drives the lifecycle.
 
 ## Native
 A FiveM client or server API function (e.g. `GetPlayerName`). Wrapped
-by `@nextvm/natives`. Modules may not call natives directly (GUARD-001).
+by `@nextvm/natives`. Modules may not call natives directly.
 
 ## PLA
 [Cfx.re Platform License Agreement](https://forum.cfx.re/t/4571423).

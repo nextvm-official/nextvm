@@ -1,7 +1,5 @@
 /**
  * Column definitions for table schemas.
- *
- * Concept v2.3, Chapter 9.3 + 12:
  *   id: column.int().primaryKey().autoIncrement(),
  *   firstName: column.string(50),
  *   metadata: column.json().default({}),
@@ -83,10 +81,7 @@ export class ColumnBuilder<T = unknown> {
 
 	/**
 	 * Add a foreign key reference.
-	 *
-	 * Concept v2.3, Chapter 9.3 syntax:
 	 *   column.int().references('nextv_users.id')
-	 *
 	 * Also supports the explicit two-argument form for clarity:
 	 *   column.int().references('nextv_users', 'id')
 	 */
@@ -117,7 +112,6 @@ export class ColumnBuilder<T = unknown> {
 
 /**
  * Column constructors — entry points for the fluent API.
- *
  * Usage:
  *   id: column.int().primaryKey().autoIncrement()
  *   name: column.string(50)

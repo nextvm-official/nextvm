@@ -10,18 +10,12 @@ import type {
 
 /**
  * TickScheduler — Managed tick system with priority + budget control.
- *
- * Concept v2.3, Chapter 21.1:
  *   "No raw setTick(). Modules register ticks with priority (HIGH/MEDIUM/LOW)
  *    and min interval. Scheduler distributes CPU per frame, skips LOW ticks
  *    when budget exceeded."
- *
- * Concept v2.3, Chapter 22.2:
  *   Tick handlers are wrapped by an ErrorBoundary so a single bad tick
  *   cannot take down the server. Modules that exceed the error threshold
  *   are skipped automatically until manually re-enabled.
- *
- * GUARD-006 compliant: instance state, no globals.
  */
 export class TickScheduler {
 	private ticks: RegisteredTick[] = []
@@ -52,7 +46,6 @@ export class TickScheduler {
 
 	/**
 	 * Register a tick handler under a module name.
-	 *
 	 * Modules register ticks via `ctx.onTick(handler, opts)`; the
 	 * ModuleLoader forwards each registration here together with
 	 * the owning module name.
@@ -77,14 +70,11 @@ export class TickScheduler {
 
 	/**
 	 * Run one frame of the scheduler.
-	 *
 	 * In the FiveM runtime this is called from a single setTick() loop.
 	 * In tests, callers invoke it directly with a fixed `now` for determinism.
-	 *
 	 * Two time sources are tracked separately:
 	 *   - `now` (logical time): drives the per-tick interval gate
 	 *   - `Date.now()` deltas from wallStart: drive the per-frame CPU budget
-	 *
 	 * This separation lets tests pass a deterministic `now` (e.g. 0, 500,
 	 * 1500) for interval testing while the budget logic still measures
 	 * real CPU time.

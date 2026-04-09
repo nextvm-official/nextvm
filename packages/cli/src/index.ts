@@ -1,7 +1,5 @@
 /**
  * @nextvm/cli — NextVM Command Line Interface
- *
- * Concept v2.3, Chapter 17.
  */
 import { Command } from 'commander'
 import { registerAddCommand } from './commands/add'

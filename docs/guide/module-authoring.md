@@ -50,7 +50,7 @@ on higher ones.
   tested with an in-memory backend (`InMemoryCharacterRepository`-style).
 - **adapters/** declare the small interfaces this module needs from
   *other* modules. The full interface lives there, not in the consumed
-  module — that is the GUARD-002 escape hatch for inter-module deps.
+  module — that is the  escape hatch for inter-module deps.
 
 ---
 
@@ -305,7 +305,7 @@ Every module must have:
 - [ ] `src/index.ts` — defineModule wiring
 - [ ] `src/server/service.ts` (or `src/server/index.ts` if trivial)
 - [ ] `src/server/router.ts` if it exposes RPC
-- [ ] `src/shared/locales/en.ts` (GUARD-012)
+- [ ] `src/shared/locales/en.ts`
 - [ ] At least one of `__tests__/service.test.ts` or `__tests__/router.test.ts`
 - [ ] `package.json` with peerDependencies for every workspace dep
 - [ ] `tsconfig.json` extending `../../tsconfig.base.json`
@@ -324,7 +324,7 @@ Every module must have:
 | `(ctx as unknown as { exports }).exports = ...` | `ctx.setExports(buildExports(service))` |
 | Hardcoded English strings in router responses | Translation keys via `@nextvm/i18n` |
 | `let cache = new Map()` at module top level | Instance state inside the service class |
-| Money / inventory writes inside `client:` | Server-only mutation (GUARD-003) |
+| Money / inventory writes inside `client:` | Server-only mutation |
 | `setTick(() => doStuff())` in client | `ctx.onTick(handler, { interval, priority })` |
 | Direct `SetEntityCoords()` call | `entity.setPosition({ x, y, z })` from `@nextvm/natives` |
 

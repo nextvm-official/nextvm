@@ -2,8 +2,6 @@ import type { BlipConfig, MarkerConfig, Vec3, WeatherType } from './types'
 
 /**
  * World — Static utility class for world manipulation.
- *
- * Concept v2.3, Chapter 7.1:
  *   Wraps: Weather, time, blips, markers, zones
  *   Key abstractions: World.setWeather(), World.createBlip(), World.createZone()
  */

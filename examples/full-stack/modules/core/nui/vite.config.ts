@@ -4,7 +4,6 @@ import { nextvmNui } from '@nextvm/vite-plugin-nui'
 
 /**
  * NUI Vite config for the Full Stack Example.
- *
  * `@nextvm/vite-plugin-nui` forces the FiveM-friendly defaults
  * (base: './', no sourcemap, no inlined assets, no modulePreload
  * polyfill), exposes the `virtual:nextvm-nui` module so React code

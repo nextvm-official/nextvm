@@ -7,10 +7,7 @@ import type {
 
 /**
  * In-memory CharacterRepository for unit tests.
- *
- * Concept v2.3, Chapter 31:
  *   "createMockDb() — in-memory query builder"
- *
  * This implementation backs the CharacterService with plain Maps so
  * tests can exercise the full lifecycle without needing a real database.
  */

@@ -4,7 +4,7 @@ import type { BankingService } from './service'
 /**
  * Build the banking router with the BankingService captured in the
  * closure. The router is a factory because it needs the service
- * instance from the module context (Concept Chapter 10).
+ * instance from the module context.
  */
 export function buildBankingRouter(service: BankingService) {
 	return defineRouter({

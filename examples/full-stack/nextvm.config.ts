@@ -1,7 +1,5 @@
 /**
  * NextVM project config — Full Stack Example.
- *
- * Concept v2.3, Chapter 8. Validated at startup against the
  * `projectConfigSchema` in `@nextvm/build`. The CLI commands
  * (`nextvm build`, `nextvm dev`, `nextvm validate`) load this file
  * via jiti and use it to discover modules + runtime config.

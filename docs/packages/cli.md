@@ -45,7 +45,7 @@ in your scripts:
 
 The stubs (`db:generate`, `db:seed`, `deploy`, `perf`) print clear
 "not yet implemented" messages with the reason — they're either
-deferred to Phase 3 (SaaS hosting) or pending sub-features that
+deferred to (SaaS hosting) or pending sub-features that
 need backend services.
 
 ## Programmatic API

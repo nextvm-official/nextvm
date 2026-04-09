@@ -2,11 +2,8 @@ import type { PlayerSource, VoiceProximity } from './types'
 
 /**
  * Voice — Typed wrapper around pma-voice.
- *
- * Concept v2.3, Chapter 7.3:
  *   Does NOT replace pma-voice — wraps it with a typed API.
- *   Optional package (@nextvm/voice in concept, included in @nextvm/natives for Phase 0).
- *
+ *   Optional package (@nextvm/voice in concept, included in @nextvm/natives for ).
  * Note: pma-voice uses FiveM exports and Player State Bags.
  * These methods call pma-voice exports under the hood.
  */

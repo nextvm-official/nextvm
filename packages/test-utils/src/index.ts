@@ -1,8 +1,5 @@
 /**
  * @nextvm/test-utils — Testing utilities for NextVM modules
- *
- * Concept v2.3, Chapter 31.
- *
  * Provides:
  *   - createMockContext()      — full ModuleContext with harness assertions
  *   - createMockEventBus()     — recording event bus with expectEmitted()

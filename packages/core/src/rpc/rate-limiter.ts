@@ -1,16 +1,11 @@
 /**
  * Per-player per-procedure rate limiter.
- *
- * Concept v2.3, Chapter 10.3:
  *   "Every RPC: rate-limited per player"
- *
  * Uses a token-bucket algorithm:
  *   - Each player+procedure pair has its own bucket
  *   - Bucket refills at a fixed rate
  *   - Each call consumes one token
  *   - Empty bucket → RATE_LIMITED error
- *
- * GUARD-006 compliant: instance state, no globals.
  */
 export class RateLimiter {
 	private buckets = new Map<string, { tokens: number; lastRefill: number }>()

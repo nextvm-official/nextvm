@@ -12,15 +12,9 @@ import {
 
 /**
  * RegistryClient — typed client for the NextVM module registry.
- *
- * Concept v2.3, Chapter 27 (Module Marketplace & Registry).
- *
- * Phase 2 ships the client surface; the registry backend itself
- * lands with the SaaS infrastructure in Phase 3. Until then the
+ * lands with the SaaS infrastructure in . Until then the
  * client can be pointed at any compliant API (community-hosted
  * registries, self-hosted instances, mocks for tests).
- *
- * GUARD-006: instance state, no globals.
  */
 
 export interface RegistryClientOptions {
@@ -79,7 +73,6 @@ export class RegistryClient {
 	/**
 	 * Download the tarball bytes for a module version.
 	 * The caller is responsible for extracting them onto disk.
-	 *
 	 * Verifies the SHA-256 against the manifest to detect tampering.
 	 */
 	async downloadTarball(manifest: ModuleManifest): Promise<Uint8Array> {
@@ -95,9 +88,9 @@ export class RegistryClient {
 			throw new Error(`Tarball download failed: ${res.status}`)
 		}
 		// Note: a real implementation would stream binary directly. For
-		// the Phase 2 client we treat the body as a base64 or raw string;
+		// the client we treat the body as a base64 or raw string;
 		// the build of binary support lands when @nextvm/build wires this
-		// into `nextvm add` (Phase 2 Block K continuation).
+		// into `nextvm add`.
 		const bytes = new TextEncoder().encode(res.body)
 
 		const hash = createHash('sha256').update(bytes).digest('hex')
@@ -111,7 +104,6 @@ export class RegistryClient {
 
 	/**
 	 * Publish a module to the registry.
-	 *
 	 * Requires an auth token. The caller passes the manifest + tarball
 	 * bytes; the client posts them to the registry's /publish endpoint
 	 * and returns the canonical URL of the published version.
@@ -134,7 +126,6 @@ export class RegistryClient {
 
 	/**
 	 * Verify a license key for a premium module at build time.
-	 * Concept Chapter 26.2: build-time gate, NEVER runtime DRM.
 	 */
 	async verifyLicense(moduleName: string, licenseKey: string): Promise<{ valid: boolean }> {
 		const data = await this.requestJson(

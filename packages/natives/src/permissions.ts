@@ -2,13 +2,10 @@ import type { PlayerSource } from './types'
 
 /**
  * Permissions — Low-level wrappers around FiveM ACE/ACL natives.
- *
- * Concept v2.3, Chapter 20.3:
  *   "FiveM has a built-in permission system called ACE (Access Control
  *   Entries) with Principals (identifiers/groups) and hierarchical
  *   inheritance. NextVM's RBAC must not exist parallel to ACE — it must
  *   sit on top of it."
- *
  * This is the LAYER 2 wrapper. The high-level PermissionsService lives
  * in @nextvm/core (Layer 3) and uses these primitives.
  */

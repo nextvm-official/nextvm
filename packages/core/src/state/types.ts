@@ -2,8 +2,6 @@ import type { z, ZodObject, ZodRawShape } from 'zod'
 
 /**
  * State Management Types.
- *
- * Concept v2.3, Chapter 11.
  */
 
 /** A subscription callback for state changes */

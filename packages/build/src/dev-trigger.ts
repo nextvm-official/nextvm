@@ -3,17 +3,12 @@ import { dirname, join } from 'node:path'
 
 /**
  * Writer side of the live ensure-restart bridge.
- *
- * Concept v2.3, Chapter 15.2. Paired with `startDevBridge()` in
  * `@nextvm/runtime-server`. The dev orchestrator calls this after a
  * successful per-module rebuild; the runtime is watching the same path
  * and runs `ExecuteCommand('ensure <module>')` whenever a fresh trigger
  * appears.
- *
  * Output:
- *
  *   .nextvm/dev-trigger.json  →  { module, timestamp }
- *
  * The path is relative to the project root by convention so the dev
  * orchestrator and the runtime resolve to the same file.
  */

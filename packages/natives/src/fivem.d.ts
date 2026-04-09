@@ -1,10 +1,8 @@
 /**
  * FiveM Native Type Declarations
- *
  * These are ambient declarations for FiveM's global native functions.
  * They exist at runtime in the CitizenFX V8/Node.js environment,
  * but TypeScript needs to know about them for type-checking.
- *
  * This file declares the subset of natives used by @nextvm/natives.
  * Full native reference: https://docs.fivem.net/natives/
  */

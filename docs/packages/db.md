@@ -170,6 +170,6 @@ adapter so no real MySQL is required.
 
 ## See also
 
-- [Concept Chapter 12](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [com/nextvm-official/nextvm/tree/main/docs/concept)
 - [Character System](/concept/character-system)
 - [`nextvm db` CLI](/cli/db)

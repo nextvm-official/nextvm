@@ -2,10 +2,7 @@ import type { CompatCharacterSnapshot, CompatDataSource, ExportsApi } from './ty
 
 /**
  * ESX compatibility mapper.
- *
- * Concept v2.3, Chapter 16.1:
  *   exports['es_extended'] = { getSharedObject: () => ({ ... }) }
- *
  * Maps a NextVM character snapshot into the xPlayer format that
  * existing ESX scripts (esx_*) expect. Covers the 80% most-used APIs.
  */
@@ -100,7 +97,6 @@ export function toEsxPlayer(snap: CompatCharacterSnapshot): EsxPlayer {
 
 /**
  * Register the `es_extended` exports.
- *
  * After this runs, any legacy ESX script can call:
  *   local ESX = exports['es_extended']:getSharedObject()
  *   local xPlayer = ESX.GetPlayerFromId(source)

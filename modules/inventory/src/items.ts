@@ -1,11 +1,7 @@
 /**
  * Item registry for the inventory module.
- *
- * Concept v2.3, Chapter 8 + 18: Items are defined declaratively at
  * module init time. Each item has a stable id, a translation key,
  * weight, and stacking rules.
- *
- * GUARD-006 compliant: registry lives on the ItemRegistry instance,
  * not on a global static.
  */
 

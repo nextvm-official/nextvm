@@ -1,17 +1,7 @@
 /**
  * @nextvm/vehicle — First-party vehicle module
- *
- * Concept v2.3, Chapter 8 + 18.
- *
  * Owns vehicle ownership state, spawn/despawn RPCs, and the basic
  * lifecycle around player-owned vehicles.
- *
- * - GUARD-001: spawn via @nextvm/natives NextVMVehicle, no raw natives
- * - GUARD-002: depends on 'player' via DI, no direct import
- * - GUARD-003: server-authoritative
- * - GUARD-005: Zod-validated RPC inputs
- * - GUARD-011: state keyed by charId
- * - GUARD-012: i18n strings
  */
 
 import { defineModule, z } from '@nextvm/core'

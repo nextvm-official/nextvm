@@ -3,7 +3,6 @@ import type { ModuleDefinition } from './types'
 
 /**
  * Define a NextVM module.
- *
  * This is the main entry point for creating modules.
  * The returned definition is used by the framework to
  * register, validate, and initialize the module.

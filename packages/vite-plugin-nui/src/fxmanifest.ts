@@ -1,13 +1,9 @@
 /**
  * Generate the NUI section of an fxmanifest.lua file.
- *
- * Concept v2.3, Chapter 19: a NextVM resource that ships a NUI must
  * declare `ui_page` plus the file list FiveM is allowed to serve. This
  * helper turns the Vite build output into that snippet so the build
  * pipeline can append it to the existing manifest.
- *
  * Output shape (literal example):
- *
  *   -- @nextvm/vite-plugin-nui
  *   ui_page 'nui/index.html'
  *   files {

@@ -55,11 +55,11 @@ Diff-based migration generator. Currently prints:
 
 ```
 ⚠ 'nextvm db:generate' is not yet implemented.
-→ Schema diff requires a per-project module-state walker. Lands later in Phase 2.
+→ Schema diff requires a per-project module-state walker. Lands later in .
 ```
 
 Track progress in
-[Phase 2 Block I+](https://github.com/nextvm-official/nextvm/tree/main/docs).
+[+](https://github.com/nextvm-official/nextvm/tree/main/docs).
 
 ## db seed (stubbed)
 
@@ -94,4 +94,4 @@ password to your repo.
 
 - [`@nextvm/db`](/packages/db) package reference
 - [Character System](/concept/character-system)
-- [Concept Chapter 12](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [com/nextvm-official/nextvm/tree/main/docs/concept)

@@ -4,14 +4,9 @@ import type { StateBackend, StateData, StateSubscriber } from './types'
 
 /**
  * StateStore — A typed, character-scoped state container.
- *
- * Concept v2.3, Chapter 11:
  *   playerState.set(charId, 'cash', 1500)
  *   playerState.increment(charId, 'cash', 500)
  *   playerState.subscribe(charId, 'job', (newJob, oldJob) => { })
- *
- * GUARD-011: All per-player data keyed by charId, not source.
- * GUARD-006: Instance state, no globals.
  */
 export class StateStore<TShape extends ZodRawShape> {
 	/** In-memory cache: charId → field → value */
@@ -30,7 +25,7 @@ export class StateStore<TShape extends ZodRawShape> {
 
 	/**
 	 * Set a field value for a character.
-	 * Validates against the schema (GUARD-005).
+	 * Validates against the schema.
 	 */
 	set<K extends keyof StateData<TShape>>(
 		charId: number,
@@ -171,7 +166,7 @@ export class StateStore<TShape extends ZodRawShape> {
 	}
 
 	/**
-	 * Hot-reload state preservation (Chapter 15.2).
+	 * Hot-reload state preservation.
 	 * Serialize all in-memory state for restoration after resource restart.
 	 */
 	serialize(): Record<number, Record<string, unknown>> {

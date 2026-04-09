@@ -2,14 +2,10 @@ import type { Character, CreateCharacterInput, User } from './types'
 
 /**
  * CharacterRepository — Persistence interface for User/Character data.
- *
- * Concept v2.3, Chapter 9.
- *
  * This is a PORT (interface) — the implementation lives in @nextvm/db
  * (or any other adapter). CharacterService depends on this interface,
  * NOT on @nextvm/db directly. This keeps Layer 3 (core) free of
  * Layer 3 cross-package coupling and allows alternative DB backends.
- *
  * Implementations:
  *   - DbCharacterRepository (uses @nextvm/db) — provided by the framework
  *   - InMemoryCharacterRepository — for tests, lives in @nextvm/test-utils

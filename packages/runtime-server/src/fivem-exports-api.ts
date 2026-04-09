@@ -1,6 +1,5 @@
 /**
  * FiveM-backed ExportsApi.
- *
  * Wraps the global `exports` proxy: each call assigns a function on
  * `exports[resource][name]`. Lives in the runtime layer (not in
  * @nextvm/compat) so the compat package stays buildable on plain Node

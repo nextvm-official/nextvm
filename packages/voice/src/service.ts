@@ -2,8 +2,6 @@ import type { ProximityMode, VoiceAdapter } from './adapter'
 
 /**
  * Definition of a radio channel managed by the voice service.
- *
- * Concept v2.3, Chapter 20:
  *   - Channels are registered server-side (server-authoritative)
  *   - Each channel has an optional ACL — `canJoin(source)` — so a
  *     module can gate access by job/permission/character without the
@@ -25,15 +23,11 @@ export interface PhoneCall {
 
 /**
  * VoiceService — server-authoritative voice management.
- *
  * Wraps a `VoiceAdapter` (real or in-memory) and adds:
  *   - typed radio-channel registry with ACL
  *   - per-character proximity tracking
  *   - phone-call sessions with id correlation
  *   - mute with optional expiry
- *
- * GUARD-003: every state-changing call goes through the server.
- * GUARD-006: instance state, no globals.
  */
 export class VoiceService {
 	private channels = new Map<number, RadioChannelDefinition>()

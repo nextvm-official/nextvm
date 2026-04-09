@@ -115,7 +115,7 @@ The output is a standard `cerulean` manifest:
 fx_version 'cerulean'
 games { 'gta5' }
 author 'NextVM'
-description 'Banking module — Phase 2'
+description 'Banking module
 version '0.1.0'
 
 server_script 'dist/server.js'
@@ -158,5 +158,5 @@ fixtures. Run via `pnpm --filter @nextvm/build test`.
 
 ## See also
 
-- [Concept Chapter 15](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [com/nextvm-official/nextvm/tree/main/docs/concept)
 - [`nextvm build`](/cli/build) and [`nextvm dev`](/cli/dev) commands

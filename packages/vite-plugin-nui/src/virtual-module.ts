@@ -1,13 +1,10 @@
 /**
  * Virtual module `virtual:nextvm-nui`.
- *
  * Resolves at build/dev time to a tiny ES module that exposes the
  * resource name + the NextVM-NUI runtime constants. NUI code can then
  * write:
- *
  *   import { resourceName, NuiBrowser } from 'virtual:nextvm-nui'
  *   const bus = new NuiBrowser({ resourceName })
- *
  * without hardcoding the resource name in 12 places.
  */
 export interface VirtualModuleSource {

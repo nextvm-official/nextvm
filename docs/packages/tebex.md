@@ -4,7 +4,7 @@ The single PLA-compliant payment integration for NextVM. Wraps the
 Tebex Headless API and the Tebex webhook flow with type-safe Zod
 schemas and HMAC-SHA256 signature verification.
 
-[GUARD-013](/reference/guards#guard-013-pla-compliance) requires
+[](/reference/pla) requires
 every monetized module to ship through this package.
 
 ## Install
@@ -119,5 +119,5 @@ shape, and schema mismatches against a mock fetcher.
 ## See also
 
 - [PLA Compliance guide](/guide/pla-compliance)
-- [GUARD-013](/reference/guards#guard-013-pla-compliance)
-- [Concept Chapter 4](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [](/reference/pla)
+- [com/nextvm-official/nextvm/tree/main/docs/concept)

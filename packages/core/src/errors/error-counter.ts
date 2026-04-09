@@ -2,14 +2,10 @@ import type { ModuleDegradation, ModuleErrorRecord } from './types'
 
 /**
  * ErrorCounter — Tracks per-module error counts in a rolling time window.
- *
- * Concept v2.3, Chapter 22.2:
  *   "If errors exceed threshold (default 10/minute):
  *     - Disables the module's tick handlers
  *     - Emits 'module:degraded' event
  *     - Logs a CRITICAL warning"
- *
- * GUARD-006 compliant: instance state, no globals.
  */
 export class ErrorCounter {
 	/** Per-module error history (rolling window) */
@@ -72,7 +68,6 @@ export class ErrorCounter {
 
 	/**
 	 * Manually re-enable a module that was previously degraded.
-	 * Concept v2.3: "Module can be manually re-enabled via admin command"
 	 */
 	reEnable(module: string): void {
 		const status = this.degraded.get(module)

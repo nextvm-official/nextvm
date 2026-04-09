@@ -1,6 +1,5 @@
 /**
  * Minimal HTTP layer for the registry client.
- *
  * Same shape as @nextvm/tebex/http — defining a small Fetcher
  * interface lets tests inject a mock without globally stubbing fetch.
  */

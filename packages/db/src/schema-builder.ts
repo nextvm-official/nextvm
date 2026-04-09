@@ -4,9 +4,7 @@ import type { Table } from './define-table'
 
 /**
  * SchemaBuilder — Generates CREATE TABLE / DROP TABLE SQL from Table definitions.
- *
  * Used by the migration runner to materialize schemas defined via defineTable().
- *
  * Currently emits MySQL-flavoured DDL. PostgreSQL adapter will provide its own.
  */
 export class SchemaBuilder {

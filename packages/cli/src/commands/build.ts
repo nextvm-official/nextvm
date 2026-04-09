@@ -4,9 +4,6 @@ import { cliLog } from '../utils/logger'
 
 /**
  * `nextvm build` — Production build (compile, bundle, manifests).
- *
- * Concept v2.3, Chapter 15.1 + 17.
- *
  * Loads the project at the current working directory, builds every
  * discovered module via @nextvm/build, and prints a structured summary.
  * Exits with code 1 on any build error.

@@ -2,10 +2,7 @@ import type { CompatCharacterSnapshot, CompatDataSource, ExportsApi } from './ty
 
 /**
  * QBCore compatibility mapper.
- *
- * Concept v2.3, Chapter 16.1:
  *   exports['qb-core'] = { GetCoreObject: () => ({ Functions: { GetPlayer } }) }
- *
  * Maps a NextVM character snapshot into the QBCore Player format that
  * existing qb-* scripts expect. Covers the 80% most-used APIs.
  */
@@ -126,7 +123,6 @@ export function toQbPlayer(snap: CompatCharacterSnapshot): QbPlayer {
 
 /**
  * Register the `qb-core` exports.
- *
  * After this runs, any legacy QBCore script can call:
  *   local QBCore = exports['qb-core']:GetCoreObject()
  *   local Player = QBCore.Functions.GetPlayer(source)

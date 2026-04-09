@@ -1,13 +1,9 @@
 /**
  * @example/core — Bootstrap module for the Full Stack Example.
- *
- * Concept v2.3, Chapter 8.
- *
  * This module has no game logic of its own — it exists purely to
  * `bootstrapServer()` on the server side and `bootstrapClient()` on
  * the client side. Every other module is a regular game module that
  * gets registered by name; the runtime takes care of the lifecycle.
- *
  * Treat this file as the single source of truth for "how does NextVM
  * actually start a server resource".
  */

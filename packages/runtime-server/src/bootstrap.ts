@@ -16,9 +16,6 @@ import type { BootstrapOptions, RuntimeHandle } from './types'
 
 /**
  * Bootstrap the NextVM server runtime inside an FXServer resource.
- *
- * Concept v2.3, Chapter 8.3 — orchestrates the lifecycle:
- *
  *   1. ModuleLoader registers every module
  *   2. CharacterService is wired to a repository (DB-backed if a real
  *      one was passed, in-memory otherwise)
@@ -31,7 +28,6 @@ import type { BootstrapOptions, RuntimeHandle } from './types'
  *   6. The managed tick loop is started via setTick
  *   7. Optional: @nextvm/compat is registered with a FiveM-backed
  *      ExportsApi
- *
  * Returns a RuntimeHandle. Production code only ever calls `.stop()`;
  * tests use the rest of the handle to drive the runtime deterministically
  * without spinning up a real FXServer.
@@ -61,14 +57,14 @@ export async function bootstrapServer(opts: BootstrapOptions): Promise<RuntimeHa
 	// onto the runtime's RpcRouter under the module's name. This is the
 	// glue that lets `dispatchRpc('banking', 'transfer', ...)` actually
 	// reach the banking module without modules ever touching the rpc
-	// instance directly. Concept Chapter 10.1.
+	// instance directly. 1.
 	for (const [moduleName, router] of loader.getExposedRouters()) {
 		rpc.register(moduleName, router)
 		log.info('Registered RPC router', { module: moduleName })
 	}
 
 	// 2b. Restore state from a hot-reload snapshot if a fresh one exists
-	// (Concept Chapter 15.2). Runs after initialize() so every state
+	//. Runs after initialize() so every state
 	// store is fully wired before we touch it.
 	const snapshotOpts = opts.stateSnapshot
 	if (snapshotOpts !== false) {
@@ -96,7 +92,7 @@ export async function bootstrapServer(opts: BootstrapOptions): Promise<RuntimeHa
 
 	// 4a. Optional dev bridge — watches `.nextvm/dev-trigger.json` and
 	// runs `ExecuteCommand('ensure <module>')` whenever the build
-	// orchestrator writes a fresh trigger (Concept Chapter 15.2).
+	// orchestrator writes a fresh trigger.
 	if (opts.devBridge) {
 		const devOpts = opts.devBridge === true ? {} : opts.devBridge
 		devBridgeHandle = startDevBridge({

@@ -54,13 +54,13 @@ Every monetized module imports `@nextvm/tebex` to:
 The package never sees real money — Tebex handles the entire
 transaction. NextVM just reacts to the webhook.
 
-### 3. `nextvm validate` enforces GUARD-013
+### 3. `nextvm validate` enforces 
 
 If a module imports `@nextvm/tebex` and **does not** ship a
 `MONETIZATION.md` file, `nextvm validate` fails with a hard error:
 
 ```
-✗ Module 'weapon-shop' imports @nextvm/tebex but lacks MONETIZATION.md (GUARD-013)
+✗ Module 'weapon-shop' imports @nextvm/tebex but lacks MONETIZATION.md
 ```
 
 The check looks for **real import statements**, not stray mentions
@@ -118,20 +118,19 @@ deliver an in-game item. That's the entire compliant pattern.
 
 | Stream | PLA status | NextVM support |
 |---|---|---|
-| Selling premium modules to developers | ✅ Compliant | `@nextvm/registry` (Phase 2) |
-| Managed hosting subscriptions | ✅ Compliant | Phase 3 |
-| SaaS dashboard subscriptions | ✅ Compliant | Phase 3 |
-| In-game item sales via Tebex | ✅ Compliant | `@nextvm/tebex` (Phase 2) |
+| Selling premium modules to developers | ✅ Compliant | `@nextvm/registry` |
+| Managed hosting subscriptions | ✅ Compliant | |
+| SaaS dashboard subscriptions | ✅ Compliant | |
+| In-game item sales via Tebex | ✅ Compliant | `@nextvm/tebex` |
 | In-game currency sales | ❌ Prohibited | NOT supported by design |
 | Loot boxes | ❌ Prohibited | NOT supported |
 | Cash-out mechanics | ❌ Prohibited | NOT supported |
 
 ## Quarterly review
 
-The PLA can change. NextVM tracks reviews in
-[`.ai/PLA_COMPLIANCE.md`](https://github.com/nextvm-official/nextvm/tree/main/docs)
-on a quarterly schedule (Jan / Apr / Jul / Oct). Every monetized
-module's MONETIZATION.md must include the same review cadence.
+The PLA can change. The framework reviews compliance on a quarterly
+schedule (Jan / Apr / Jul / Oct). Every monetized module's
+MONETIZATION.md should include the same review cadence.
 
 If Tebex or Cfx.re publishes new terms, the framework's PLA reference
 gets updated and the breaking change is called out in the release notes.
@@ -140,6 +139,6 @@ gets updated and the breaking change is called out in the release notes.
 
 - [`@nextvm/tebex`](/packages/tebex) — the typed bridge
 - [`@nextvm/registry`](/packages/registry) — developer-to-developer marketplace
-- [GUARD-013](/reference/guards#guard-013-pla-compliance) — the rule itself
+- [](/reference/pla) — the rule itself
 - [Cfx.re Creator PLA Reference](/reference/pla)
-- [Concept v2.3 Chapter 4](https://github.com/nextvm-official/nextvm/tree/main/docs/concept#4-cfxre-creator-pla--monetization-compliance)
+- [com/nextvm-official/nextvm/tree/main/docs/concept#4-cfxre-creator-pla--monetization-compliance)

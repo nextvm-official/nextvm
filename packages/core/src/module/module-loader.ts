@@ -21,15 +21,11 @@ import type {
 
 /**
  * Module Loader — orchestrates module registration, validation, and lifecycle.
- *
- * Concept v2.3, Chapter 8:
  *   - Registers modules via defineModule()
- *   - Resolves dependency order (DI — Chapter 8.2)
- *   - Validates configs with Zod (GUARD-005, GUARD-009)
- *   - Runs lifecycle hooks in order (Chapter 8.3)
+ *   - Resolves dependency order (DI.2)
+ *   - Validates configs with Zod
+ *   - Runs lifecycle hooks in order
  *   - Provides ModuleContext to each module
- *
- * Concept v2.3, Chapter 22.2 — Error Boundaries:
  *   "A crashing module must not take down the server or other modules"
  */
 export class ModuleLoader {
@@ -41,7 +37,7 @@ export class ModuleLoader {
 	private profiler = new Profiler()
 
 	constructor() {
-		// Wire EventBus errors into the error boundary (Chapter 22.2)
+		// Wire EventBus errors into the error boundary
 		this.eventBus.setErrorReporter((module, event, err) => {
 			this.errorBoundary.report(
 				module ?? 'unknown',
@@ -52,11 +48,11 @@ export class ModuleLoader {
 		})
 
 		// Tick handlers also flow through the error boundary so degraded
-		// modules are skipped automatically (Chapter 21.1 + 22.2)
+		// modules are skipped automatically
 		this.tickScheduler.setErrorBoundary(this.errorBoundary)
 
 		// Tick durations are sampled by the profiler so `nextvm perf`
-		// can surface per-module hot spots (Chapter 21.2)
+		// can surface per-module hot spots
 		this.tickScheduler.setProfiler(this.profiler)
 	}
 
@@ -96,7 +92,7 @@ export class ModuleLoader {
 			const definition = this.container.getModule(name)
 			if (!definition) continue
 
-			// Validate config with Zod (GUARD-005, GUARD-009)
+			// Validate config with Zod
 			let resolvedConfig: Record<string, unknown> = {}
 			if (definition.config) {
 				const result = definition.config.safeParse({})
@@ -122,7 +118,7 @@ export class ModuleLoader {
 					await entryFn(ctx)
 					logger.info('Module initialized', { module: name, side })
 				} catch (err) {
-					// Error boundary (Chapter 22.2)
+					// Error boundary
 					logger.error('Module initialization failed', {
 						module: name,
 						error: err instanceof Error ? err.message : String(err),
@@ -171,7 +167,7 @@ export class ModuleLoader {
 		}
 
 		// Per-module event bus wrapper that attributes handlers to this module
-		// for the error boundary (Concept Chapter 22.2)
+		// for the error boundary
 		const moduleEventBus = {
 			emit: (event: string, data?: unknown) => this.eventBus.emit(event, data),
 			on: (event: string, handler: (data: unknown) => void) =>
@@ -226,7 +222,7 @@ export class ModuleLoader {
 			onTick: (handler, opts) => {
 				// Track in lifecycleHandlers for introspection AND register
 				// with the TickScheduler so the managed loop picks it up
-				// (Concept Chapter 21.1).
+				//.
 				ensureHandlerList(this.lifecycleHandlers.onTick).push({
 					handler,
 					opts: opts ?? {},
@@ -265,7 +261,6 @@ export class ModuleLoader {
 
 	/**
 	 * Safely call a handler with error boundary.
-	 * Concept v2.3, Chapter 22.2:
 	 *   "A crashing module must not take down the server or other modules"
 	 *   "If errors exceed threshold (default 10/minute), disable tick handlers
 	 *    and emit module:degraded event."
@@ -291,9 +286,8 @@ export class ModuleLoader {
 	/**
 	 * Walk every registered module's `shared.schemas.state` and collect
 	 * the StateStore instances, keyed by `<moduleName>.<schemaKey>`.
-	 *
 	 * Used by the runtime layer to drive `serialize()` / `deserialize()`
-	 * snapshots across resource restarts (Concept Chapter 15.2).
+	 * snapshots across resource restarts.
 	 */
 	getStateStores(): Map<string, StateStore<Record<string, never>>> {
 		const result = new Map<string, StateStore<Record<string, never>>>()

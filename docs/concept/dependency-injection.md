@@ -1,10 +1,10 @@
 # Dependency Injection
 
-> Concept v2.3, Chapter 8.2
+> 2
 
 NextVM modules **never import each other directly**. Cross-module
 communication goes through the typed DI container or the typed event
-bus. This is enforced by [GUARD-002](/reference/guards#guard-002-no-cross-module-imports).
+bus. This is enforced by [](/reference/pla).
 
 ## Why DI?
 
@@ -29,7 +29,7 @@ shape it needs, not the producer**.
 // modules/jobs/src/adapters/banking-adapter.ts
 //
 // Defining the contract here (instead of importing the producer
-// directly) keeps the dependency loose, satisfies GUARD-002, and
+// directly) keeps the dependency loose, satisfies , and
 // makes the jobs service trivially testable with a stub.
 
 export interface BankingAdapter {

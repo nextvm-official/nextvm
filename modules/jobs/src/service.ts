@@ -4,7 +4,7 @@ import { jobsState } from './state'
 /**
  * Banking adapter — minimal interface this module needs from the banking
  * service. The actual implementation lives in @nextvm/banking; we type
- * only what we use to keep the dependency loose (GUARD-002).
+ * only what we use to keep the dependency loose.
  */
 export interface BankingAdapter {
 	addMoney(
@@ -17,8 +17,7 @@ export interface BankingAdapter {
 
 /**
  * JobsService — sits on top of jobsState and a banking adapter.
- *
- * Server-authoritative writes (GUARD-003) and char-id keyed (GUARD-011).
+ * Server-authoritative writes and char-id keyed.
  */
 export class JobsService {
 	constructor(

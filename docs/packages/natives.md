@@ -1,7 +1,7 @@
 # @nextvm/natives
 
 Layer 2 of the architecture: typed wrappers around FiveM natives.
-Modules are forbidden from calling raw natives (GUARD-001) — they
+Modules are forbidden from calling raw natives — they
 go through these abstractions.
 
 ## Install
@@ -12,7 +12,7 @@ pnpm add @nextvm/natives
 
 ## Domain wrappers
 
-Phase 0/1 ships seven of the twelve domains from Concept Chapter 7.1:
+/1 ships seven of the twelve domains from 1:
 
 | Domain | Class | Wraps |
 |---|---|---|
@@ -29,7 +29,7 @@ Phase 0/1 ships seven of the twelve domains from Concept Chapter 7.1:
 
 | Symbol | Purpose | See |
 |---|---|---|
-| `useNative<T>(name, ...args)` | Direct typed access to any FiveM native (GUARD-010 — call sites need a benchmark comment) | [Tick System](/concept/tick-system) |
+| `useNative<T>(name, ...args)` | Direct typed access to any FiveM native | [Tick System](/concept/tick-system) |
 | `createBatchProcessor(opts)` | Spread heavy entity work across many ticks | [Tick System](/concept/tick-system) |
 
 ## Types
@@ -51,7 +51,6 @@ Phase 0/1 ships seven of the twelve domains from Concept Chapter 7.1:
 
 ## Encapsulation pattern
 
-Concept Chapter 7.4 shows the pattern that every wrapper follows:
 
 ```typescript
 // Raw FiveM:
@@ -65,9 +64,9 @@ The wrappers are thin — they don't add behavior, just types and
 ergonomics. Performance overhead is < 5% vs raw natives (Concept
 benchmark target).
 
-## Deferred to Phase 2+
+## Deferred to +
 
-The remaining five domains from Concept Chapter 7.1 are not yet
+The remaining five domains from 1 are not yet
 shipped:
 
 - UI (NUI bridge)
@@ -84,4 +83,4 @@ These are documented as deferred in
 `packages/natives/__tests__/` covers `RoutingService`,
 `createBatchProcessor`, and `useNative` with stubbed FiveM globals.
 Other domain wrappers are integration-tested via the demo bundle on
-a real FXServer (Phase 4).
+a real FXServer.

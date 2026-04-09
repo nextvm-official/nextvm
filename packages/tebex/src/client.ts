@@ -8,13 +8,8 @@ import {
 
 /**
  * TebexClient — typed wrapper around the Tebex Headless API.
- *
- * Concept v2.3, Chapter 4.3.3:
  *   "@nextvm/tebex provides typed integration with Tebex's server-side
  *    API (package fulfillment, gift cards, transaction verification)"
- *
- * GUARD-006: instance state, no globals.
- * GUARD-013: this is THE bridge modules use to comply with PLA — any
  * module that sells items to players for real money MUST go through here.
  */
 

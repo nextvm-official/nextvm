@@ -4,13 +4,10 @@ import type { MigrationTarget } from '../types'
 
 /**
  * DbMigrationTarget — production target backed by an @nextvm/db Database.
- *
  * Writes into the standard nextv_users + nextv_characters tables.
  * Migrations against this target write real rows into MySQL — make
  * sure the schema migrations have been applied first via
  * `nextvm db:migrate`.
- *
- * GUARD-006: instance state, no globals.
  */
 export class DbMigrationTarget implements MigrationTarget {
 	constructor(private readonly db: Database) {}

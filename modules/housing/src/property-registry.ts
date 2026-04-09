@@ -4,12 +4,8 @@ import type { Vec3 } from '@nextvm/natives'
  * Property registry — declarative description of properties available
  * on the server. Server-authoritative purchase / ownership lives on
  * the HousingService that wraps this registry.
- *
- * Concept v2.3, Chapter 7.2 — apartment interiors are realized via
  * routing buckets. The propertyId is mapped to a routing-instance
  * label so HousingService can spin up an instance on demand.
- *
- * GUARD-006: instance state, no globals.
  */
 
 export type PropertyType = 'apartment' | 'house' | 'business' | 'warehouse'

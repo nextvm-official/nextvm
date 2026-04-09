@@ -1,8 +1,7 @@
 import { defineState, z } from '@nextvm/core'
 
 /**
- * Player state — character-scoped (GUARD-011).
- *
+ * Player state — character-scoped.
  * Stores the runtime state of a player's character: position,
  * health, armor, alive/dead status. Persisted via the StateBagBackend
  * so other modules and clients can read it reactively.

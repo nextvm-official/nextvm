@@ -2,15 +2,10 @@ import type { PerfStats, SampleKind } from './types'
 
 /**
  * Profiler — Captures duration samples per (kind, module, name).
- *
- * Concept v2.3, Chapter 21.2:
  *   "Built-in profiler" — measures tick/rpc/db/event durations and
  *   surfaces aggregated stats (avg/p50/p95/p99/max).
- *
  * Stores a rolling window of the most recent N samples per series so
  * memory stays bounded even on long-running servers.
- *
- * GUARD-006 compliant: instance state, no globals.
  */
 export class Profiler {
 	/** kind:module:name → ring buffer of recent durations in ms */
@@ -23,7 +18,6 @@ export class Profiler {
 
 	/**
 	 * Record a duration sample.
-	 *
 	 * Most callers use one of the typed helpers (`tick()`, `rpc()`, etc.)
 	 * which build the key for them.
 	 */

@@ -1,7 +1,5 @@
 /**
  * Performance / Profiler types.
- *
- * Concept v2.3, Chapter 21.2.
  */
 
 /** Aggregated stats for a single sample series */

@@ -1,11 +1,8 @@
 /**
  * NuiClient — runs inside the FiveM client runtime.
- *
  * Wraps `SendNUIMessage`, `RegisterNUICallback`, and `SetNuiFocus`
  * behind a typed channel-based API. Pairs with `NuiBrowser` from
  * `@nextvm/nui/browser` over the wire protocol in `./protocol`.
- *
- * Concept v2.3, Chapter 19.
  */
 
 import {

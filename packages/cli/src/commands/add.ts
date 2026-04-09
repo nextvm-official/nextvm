@@ -7,13 +7,9 @@ import { cliLog } from '../utils/logger'
 
 /**
  * `nextvm add <module>` — Scaffold a blank or fully-layered module.
- *
- * Concept v2.3, Chapter 17 + 18 + .ai/MODULE_ARCHITECTURE.md
- *
  * --blank → minimal one-file scaffold for prototyping
  * --full  → layered module following MODULE_ARCHITECTURE.md
  *           (recommended for any non-trivial module)
- *
  * Registry installation lands with @nextvm/registry in Block K.
  */
 export function registerAddCommand(program: Command): void {
@@ -38,7 +34,7 @@ export function registerAddCommand(program: Command): void {
 					'Registry install is not yet available — pass --full or --blank to scaffold locally.',
 				)
 				cliLog.step(
-					'Registry support arrives with @nextvm/registry in Phase 2 Block K.',
+					'Registry support arrives with @nextvm/registry in .',
 				)
 				process.exit(2)
 			}
@@ -80,7 +76,7 @@ async function scaffoldFull(name: string, target: string): Promise<void> {
 
 	cliLog.success(`Module '${name}' scaffolded at ${target}`)
 	cliLog.step('Layered structure: src/{server,client,shared,adapters}, __tests__')
-	cliLog.step('Read .ai/MODULE_ARCHITECTURE.md for the conventions')
+	cliLog.step('See https://docs.nextvm.dev for the module authoring guide')
 	cliLog.step(`Next: pnpm install && pnpm --filter @nextvm/${name} test`)
 }
 

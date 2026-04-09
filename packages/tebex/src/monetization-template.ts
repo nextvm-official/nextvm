@@ -1,13 +1,10 @@
 /**
  * MONETIZATION.md template — every module that consumes @nextvm/tebex
  * must ship one of these.
- *
- * Concept v2.3, Chapter 4.4 (PLA compliance documentation):
  *   "Every module that touches player-facing monetization must include
  *    a MONETIZATION.md file explaining how it complies with the PLA.
  *    The CLI's nextvm validate step will check for this file in
  *    relevant modules."
- *
  * Exporting it as a string lets `nextvm add --monetized` write it
  * out next to a fresh module without needing a separate template file.
  */
@@ -48,9 +45,9 @@ Tebex — they cannot be processed by NextVM directly.
 
 ## Quarterly review
 
-Per .ai/PLA_COMPLIANCE.md, this file must be reviewed every quarter
-(Jan / Apr / Jul / Oct) to confirm Tebex API + PLA terms have not
-shifted. Note any changes in this section.
+This file should be reviewed every quarter (Jan / Apr / Jul / Oct)
+to confirm Tebex API + PLA terms have not shifted. Note any changes
+in this section.
 
 Last reviewed: TODO — set when first deployed
 `

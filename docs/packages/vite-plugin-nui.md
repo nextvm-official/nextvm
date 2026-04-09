@@ -136,4 +136,4 @@ expect(writes[0][0]).toBe('fxmanifest.nui.lua')
 
 - [`@nextvm/nui`](/packages/nui) — typed bus the NUI app uses to talk to the client runtime
 - [`@nextvm/runtime-client`](/packages/runtime-client) — the client runtime that hosts NuiClient
-- [Concept Chapter 19.3](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [3](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)

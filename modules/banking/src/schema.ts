@@ -2,8 +2,6 @@ import { column, defineMigration, defineTable, SchemaBuilder } from '@nextvm/db'
 
 /**
  * Banking transactions audit trail.
- *
- * Concept v2.3, Chapter 9.3 conventions: nextv_ prefix for framework
  * tables, but module-owned tables use the `nextv_<module>_` namespace.
  */
 export const transactionsTable = defineTable('nextv_banking_transactions', {
@@ -20,7 +18,6 @@ export type TransactionType = 'cash' | 'bank'
 
 /**
  * Initial migration for the banking module.
- *
  * Modules ship their own migrations and register them with the project's
  * MigrationRunner during bootstrap. The runner is idempotent so running
  * `nextvm db:migrate` after enabling banking is safe.

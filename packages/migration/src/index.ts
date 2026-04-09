@@ -1,16 +1,11 @@
 /**
  * @nextvm/migration — ESX/QBCore database migration toolkit
- *
- * Concept v2.3, Chapter 16.2.
- *
  * Reads existing player data from a legacy framework (ESX or QBCore)
  * and writes it into the NextVM nextv_users + nextv_characters tables.
  * Always non-destructive against the source — the caller is responsible
  * for backups before running.
- *
  * Usage:
  *   import { runMigration, EsxMigrationSource, DbMigrationTarget } from '@nextvm/migration'
- *
  *   const source = new EsxMigrationSource(esxDb)
  *   const target = new DbMigrationTarget(nextvmDb)
  *   const report = await runMigration(source, target, { onProgress })

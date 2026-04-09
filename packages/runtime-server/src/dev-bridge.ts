@@ -3,16 +3,11 @@ import { dirname } from 'node:path'
 
 /**
  * Live ensure-restart bridge for `nextvm dev`.
- *
- * Concept v2.3, Chapter 15.2:
  *   "Dev mode: hot-reload, NUI HMR, file watching … the framework can
  *    `ensure`-restart the affected resource so the new bundle is
  *    picked up without losing player state."
- *
  * Wire protocol — paired with `writeDevTrigger()` in `@nextvm/build`:
- *
  *   .nextvm/dev-trigger.json  →  { module, timestamp }
- *
  * The build orchestrator calls `writeDevTrigger(module)` after a
  * successful per-module rebuild. The runtime watches that file via
  * `fs.watch`; on change it reads the JSON, debounces, and runs
@@ -20,7 +15,6 @@ import { dirname } from 'node:path'
  * preserved automatically by the existing snapshot mechanism: the
  * stop hook fires before the resource shuts down, the bootstrap on
  * the way back up restores from the fresh snapshot.
- *
  * The bridge is opt-in via `bootstrapServer({ devBridge: { ... } })`.
  * IO is fully injected so unit tests can drive it deterministically.
  */

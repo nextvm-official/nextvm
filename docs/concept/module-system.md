@@ -1,6 +1,6 @@
 # Module System
 
-> Concept v2.3, Chapter 8
+> 
 
 A NextVM **module** is the unit of functionality. One module owns one
 domain (banking, jobs, housing, mailbox, ...). Modules never import
@@ -52,7 +52,7 @@ export default defineModule({
 ## Lifecycle hooks
 
 The framework calls into your module at well-defined points. There
-are **9 lifecycle hooks** (Concept Chapter 8.3):
+are **9 lifecycle hooks**:
 
 | Hook | Side | Fires when |
 |---|---|---|
@@ -97,7 +97,7 @@ config: z.object({
 ```
 
 The `.describe()` calls power the SaaS dashboard's auto-generated
-config UI (Concept Chapter 19) and `nextvm docs` output.
+config UI and `nextvm docs` output.
 
 ## Dependencies
 
@@ -117,7 +117,7 @@ server: (ctx) => {
 
 `BankingAdapter` is an interface defined in the **consumer** module
 (`modules/jobs/src/adapters/banking-adapter.ts`), not in the producer.
-This is the GUARD-002 escape hatch — see [Dependency Injection](/concept/dependency-injection).
+This is the  escape hatch — see [Dependency Injection](/concept/dependency-injection).
 
 ## setExports — publishing the public surface
 
@@ -162,7 +162,7 @@ ctx.events.on('banking:transactionCompleted', (data) => {
 })
 ```
 
-This is GUARD-004: typed events only — never `TriggerServerEvent`.
+This is : typed events only — never `TriggerServerEvent`.
 
 ## ctx.log — structured logging
 
@@ -175,7 +175,7 @@ ctx.log.error('Transfer failed', { error, input })
 ```
 
 Output is JSON, parseable by log aggregators, and feeds into the
-SaaS observability pipeline (Concept Chapter 22.4).
+SaaS observability pipeline.
 
 ## See also
 

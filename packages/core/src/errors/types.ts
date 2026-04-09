@@ -1,7 +1,5 @@
 /**
  * Error Boundary Types.
- *
- * Concept v2.3, Chapter 22.2:
  *   "A crashing module must not take down the server or other modules."
  */
 

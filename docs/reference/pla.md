@@ -31,7 +31,7 @@ on the right side of it.
 HMAC-SHA256 verification. It exposes a typed event stream of completed
 purchases — no SQL, no direct DB writes from a webhook.
 
-### GUARD-012 — PLA-compliant payment flow
+###  — PLA-compliant payment flow
 
 `nextvm validate` flags any module that:
 
@@ -62,7 +62,7 @@ tebex.onPurchase(async (purchase) => {
 ### Money grant (NOT allowed)
 
 ```typescript
-// ✗ GUARD-012 violation — pay-to-win
+// ✗  violation — pay-to-win
 tebex.onPurchase(async (purchase) => {
   await db.query('UPDATE characters SET cash = cash + ? WHERE id = ?',
     [10000, purchase.charId]);
@@ -73,4 +73,4 @@ tebex.onPurchase(async (purchase) => {
 
 - [Cfx.re PLA full text](https://forum.cfx.re/t/4571423)
 - [`@nextvm/tebex`](/packages/tebex) package reference
-- [`.ai/PLA_COMPLIANCE.md`](https://github.com/nextvm-official/nextvm/tree/main/docs)
+- [PLA Compliance Guide](/guide/pla-compliance)

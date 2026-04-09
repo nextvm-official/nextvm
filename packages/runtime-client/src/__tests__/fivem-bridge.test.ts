@@ -4,7 +4,6 @@ import { bootstrapClient } from '../bootstrap'
 
 /**
  * Smoke tests for the FiveM client event bridge inside `bootstrapClient`.
- *
  * Mirrors the server-side bridge tests: stub the FiveM client globals,
  * boot the runtime, then fire events and assert the loader saw them.
  */

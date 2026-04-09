@@ -1,20 +1,15 @@
 /**
  * @nextvm/db — NextVM Database Layer
- *
- * Concept v2.3, Chapter 12:
  *   - Custom typed query builder (lighter than ORM)
  *   - MySQL primary, PostgreSQL adapter optional
  *   - Migration CLI integration: db:generate / db:migrate / db:rollback / db:seed
- *
  * Usage:
  *   import { defineTable, column, Database, MySqlAdapter } from '@nextvm/db'
- *
  *   const players = defineTable('nextv_characters', {
  *     id: column.int().primaryKey().autoIncrement(),
  *     firstName: column.string(50),
  *     cash: column.int().default(0),
  *   })
- *
  *   const db = new Database(new MySqlAdapter({ host, user, password, database }))
  *   const player = await db.query(players).where({ id: charId }).first()
  */

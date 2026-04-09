@@ -51,7 +51,7 @@ nextvm docs
 ```markdown
 # @nextvm/banking
 
-NextVM banking module — accounts, transfers, audit trail (Phase 2)
+NextVM banking module — accounts, transfers, audit trail
 
 **Version:** 0.0.1
 
@@ -85,5 +85,5 @@ NextVM banking module — accounts, transfers, audit trail (Phase 2)
 
 ## See also
 
-- [Concept Chapter 25 — Documentation](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [com/nextvm-official/nextvm/tree/main/docs/concept)
 - [Modules section](/modules/player)

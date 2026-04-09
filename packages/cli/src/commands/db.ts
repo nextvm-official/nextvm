@@ -11,9 +11,6 @@ import { notImplemented } from '../utils/not-implemented'
 
 /**
  * `nextvm db:*` — Database commands.
- *
- * Concept v2.3, Chapter 12 + 17.
- *
  * The runtime side (MigrationRunner) is in @nextvm/db. These commands
  * load the project's nextvm.config.ts, instantiate a MySqlAdapter from
  * the configured connection, register the framework migrations
@@ -39,14 +36,14 @@ async function buildRunner() {
 }
 
 export function registerDbCommands(program: Command): void {
-	const db = program.command('db').description('Database utilities (Concept Chapter 12)')
+	const db = program.command('db').description('Database migrations and schema management')
 
 	db.command('generate')
 		.description('Generate a migration from a schema diff')
 		.action(() => {
 			notImplemented(
 				'db:generate',
-				'Schema diff requires a per-project module-state walker. Lands later in Phase 2.',
+				'Schema diff requires a per-project module-state walker. Lands later in .',
 			)
 		})
 

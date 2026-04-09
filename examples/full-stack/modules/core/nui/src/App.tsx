@@ -2,7 +2,6 @@ import { useNuiCallback, useNuiState } from '@nextvm/nui-react'
 
 /**
  * Reference HUD for the Full Stack Example.
- *
  * Subscribes to two channels (`hud.update` and `notifications.show`)
  * and exposes one button that calls back into the client via
  * `useNuiCallback`. The whole component is roughly 40 lines and

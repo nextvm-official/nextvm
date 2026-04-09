@@ -4,14 +4,10 @@ import { cliLog } from '../utils/logger'
 
 /**
  * `nextvm dev` — Dev mode with file watching + incremental rebuilds.
- *
- * Concept v2.3, Chapter 15.2 + 17.
- *
  * Loads the project, kicks off the dev orchestrator (initial full build
  * + per-module file watcher), and stays alive until SIGINT.
- *
  * State preservation across resource restarts and NUI HMR will land
- * with the runtime layer in Phase 4. Phase 2 ships the file-watching
+ * with the runtime layer in . ships the file-watching
  * incremental rebuild loop that's safe to run alongside a manually
  * `ensure`d FXServer.
  */

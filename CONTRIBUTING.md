@@ -36,19 +36,17 @@ You need **Node 22 LTS** (pinned via `.nvmrc`) and **pnpm 9+**.
 
 ## Architecture rules
 
-NextVM enforces 13 architecture guards. They live in
-[`docs/reference/guards.md`](./docs/reference/guards.md). The most
-important ones:
+A few hard rules that keep modules composable and the framework
+honest:
 
-- **GUARD-001** — no direct FiveM native calls in modules
-  (use `@nextvm/natives`)
-- **GUARD-002** — no cross-module imports
-  (use DI via `ctx.inject<T>()`)
-- **GUARD-005** — every RPC input + every config validated with Zod
-- **GUARD-010** — use `charId`, never `source`, for player data
-- **GUARD-012** — PLA-compliant payment flow only
+- **No direct FiveM native calls in modules** — use `@nextvm/natives`
+- **No cross-module imports** — use DI via `ctx.inject<T>()`
+- **Validate every RPC input and every config** with Zod
+- **Use `charId`, never `source`, for player data**
+- **Stick to PLA-compliant monetization** for anything that touches
+  real money — see [`SECURITY.md`](./SECURITY.md) and the docs site
 
-`pnpm validate` runs all 13 as a hard check.
+`pnpm validate` runs the static checks.
 
 ## Commit message format
 

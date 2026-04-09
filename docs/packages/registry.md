@@ -72,7 +72,7 @@ Tarball integrity check failed: expected abc123..., got def456...
 ## Build-time license verification
 
 Premium modules use `verifyLicense` to gate the build, **never**
-runtime DRM (Concept Chapter 26.2). The pattern:
+runtime DRM. The pattern:
 
 ```typescript
 // Inside @nextvm/build:
@@ -85,11 +85,9 @@ if (manifest.premium) {
 Once the build succeeds, the produced bundle has no license check —
 it just runs.
 
-## Phase 2 vs Phase 3
-
-Phase 2 ships the **client**. The actual registry backend (search
+## vs ships the **client**. The actual registry backend (search
 index, tarball CDN, license server) is part of the SaaS platform and
-lands in Phase 3. Until then the client can be pointed at any
+lands in . Until then the client can be pointed at any
 compliant API:
 
 - `--url https://your-self-hosted-instance/`
@@ -104,5 +102,5 @@ publish auth requirement, publish round-trip, and license verify.
 
 ## See also
 
-- [Concept Chapter 27](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [com/nextvm-official/nextvm/tree/main/docs/concept)
 - [`nextvm registry`](/cli/registry) commands

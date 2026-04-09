@@ -77,8 +77,7 @@ The module ships seed items on startup: `water_bottle`, `bread`, `phone`.
 
 This module manages **in-game items only**. It does NOT process
 payments. Modules built on top that sell items to players for real
-money must integrate via `@nextvm/tebex` and ship a `MONETIZATION.md`
-([GUARD-013](/reference/guards#guard-013-pla-compliance)).
+money must integrate via `@nextvm/tebex` and ship a `MONETIZATION.md`).
 
 ## See also
 

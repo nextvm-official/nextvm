@@ -2,20 +2,14 @@ import type { RpcTransport } from '@nextvm/core'
 
 /**
  * Client-side RPC transport.
- *
- * Concept v2.3, Chapter 10.2:
  *   "The framework's network layer sends typed RPC requests to the
  *    server and routes the response back to the original promise."
- *
  * Wire protocol — paired with @nextvm/runtime-server's bridge:
- *
  *   client → server: emitNet('__nextvm:rpc', namespace, procedure, input, requestId)
  *   server → client: emitNet('__nextvm:rpc:response', requestId, errorMessage|null, result|null)
- *
  * Each outgoing call gets a monotonic numeric `requestId`. The transport
  * keeps a `Map<requestId, { resolve, reject }>` and resolves the
  * matching entry when the response event fires. Unknown ids are dropped.
- *
  * The transport is testable in plain Node by passing your own
  * `emit`/`subscribe` functions instead of the FiveM globals — see
  * the constructor signature.

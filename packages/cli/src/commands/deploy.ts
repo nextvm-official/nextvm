@@ -3,10 +3,7 @@ import { notImplemented } from '../utils/not-implemented'
 
 /**
  * `nextvm deploy` — Deploy to managed hosting.
- *
- * Concept v2.3, Chapter 17 + 28.
- *
- * Stubbed: requires the managed hosting service (Phase 3 SaaS).
+ * Stubbed: requires the managed hosting service.
  */
 export function registerDeployCommand(program: Command): void {
 	program
@@ -15,7 +12,7 @@ export function registerDeployCommand(program: Command): void {
 		.action(() => {
 			notImplemented(
 				'deploy',
-				'Managed hosting target lands in Phase 3 (Concept Chapter 28).',
+				'requires the managed hosting service.',
 			)
 		})
 }

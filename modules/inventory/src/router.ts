@@ -9,7 +9,6 @@ interface SlotEntry {
 
 /**
  * Build the inventory router.
- *
  * The router is a factory because it needs the ItemRegistry instance
  * (which lives on the module's server context) to validate item ids.
  */

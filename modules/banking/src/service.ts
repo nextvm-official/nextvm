@@ -3,14 +3,9 @@ import { transactionsTable, type TransactionType } from './schema'
 
 /**
  * Lightweight balance ledger used by the banking module.
- *
- * Phase 2 keeps balances in an in-memory map keyed by charId so the
  * router can be exercised end-to-end without forcing every test to
  * stand up a real database. Production callers wire a Database via
  * setDatabase() and the audit trail flows into nextv_banking_transactions.
- *
- * GUARD-006: instance state, no globals.
- * GUARD-011: keyed by charId.
  */
 export interface BalanceSnapshot {
 	cash: number

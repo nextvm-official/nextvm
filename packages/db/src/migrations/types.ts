@@ -2,8 +2,6 @@ import type { Database } from '../database'
 
 /**
  * Migration definition.
- *
- * Concept v2.3, Chapter 12:
  *   nextvm db:generate / db:migrate / db:rollback / db:seed
  */
 export interface Migration {

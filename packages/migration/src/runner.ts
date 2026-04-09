@@ -9,15 +9,12 @@ import type {
 
 /**
  * Run a full source → target migration.
- *
- * Concept v2.3, Chapter 16.2:
  *   1. Read every legacy player row
  *   2. Map identifiers (license / steam / discord)
  *   3. Convert money fields to NextVM character fields
  *   4. Migrate inventory (JSON conversion)
  *   5. Create NextVM character records
  *   6. Emit a typed report with warnings
- *
  * Always non-destructive against the source — the toolkit only reads.
  * The caller is responsible for backups before running.
  */
@@ -122,7 +119,6 @@ function validatePlayer(player: LegacyPlayer): string[] {
 
 /**
  * Normalize a legacy identifier into a NextVM license string.
- *
  * ESX uses `license:abc...`, QBCore uses raw `abc...` or `license:abc...`.
  * We strip a leading `license:` if present and prefix with `license:`
  * unconditionally so the resulting NextVM user.license is canonical.

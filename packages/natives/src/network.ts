@@ -2,11 +2,8 @@ import type { EntityHandle, PlayerSource } from './types'
 
 /**
  * Network — Typed wrappers for FiveM networking primitives.
- *
- * Concept v2.3, Chapter 7.1:
  *   Wraps: Events, state bags, RPC foundations
  *   Key abstractions: Typed event system, RPC router
- *
  * Note: The full RPC system lives in @nextvm/core (Layer 3).
  * This layer provides the low-level network primitives that core builds upon.
  */
@@ -89,7 +86,7 @@ export class Network {
 
 	/**
 	 * Register a server net event handler.
-	 * Note: Modules should use @nextvm/core's typed event bus (GUARD-004),
+	 * Note: Modules should use @nextvm/core's typed event bus,
 	 * not these low-level primitives directly.
 	 */
 	static onServerEvent(

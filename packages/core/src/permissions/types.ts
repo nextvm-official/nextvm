@@ -1,8 +1,5 @@
 /**
  * Permissions Types.
- *
- * Concept v2.3, Chapter 20.3.
- *
  * NextVM RBAC sits on top of FiveM ACE. All NextVM ACE entries are
  * prefixed with `nextvm.` to avoid collisions with other resources.
  */

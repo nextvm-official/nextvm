@@ -23,8 +23,7 @@ nextvm add <name> --blank
 | `--blank` | Minimal one-file scaffold for prototyping |
 
 If you pass neither flag, the CLI prints a helpful message saying
-the registry install path lands with `@nextvm/registry` in Phase 2
-Block K and asks you to pick `--full` or `--blank`.
+the registry install path lands with `@nextvm/registry` in and asks you to pick `--full` or `--blank`.
 
 ## --full output
 

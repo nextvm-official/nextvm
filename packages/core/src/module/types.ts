@@ -3,7 +3,6 @@ import type { Router } from '../rpc/types'
 
 /**
  * Module definition — the shape passed to defineModule().
- * Concept v2.3, Chapter 8.1.
  */
 export interface ModuleDefinition<TConfig extends ZodRawShape = ZodRawShape> {
 	name: string
@@ -20,18 +19,16 @@ export interface ModuleDefinition<TConfig extends ZodRawShape = ZodRawShape> {
 
 /**
  * Module context — injected into server/client functions.
- * Concept v2.3, Chapter 8.1 + 8.2 + 8.3.
  */
 export interface ModuleContext {
 	/** Module name */
 	readonly name: string
 	/** Resolved and validated config values */
 	readonly config: Record<string, unknown>
-	/** Inject a dependency by module name (DI — Chapter 8.2) */
+	/** Inject a dependency by module name (DI.2) */
 	inject: <T = unknown>(moduleName: string) => T
 	/**
 	 * Publish this module's public service surface.
-	 *
 	 * Other modules call `ctx.inject<T>('this-module')` to receive the
 	 * exact object passed here. Replaces the older `(ctx as unknown)
 	 * .exports` cast pattern with a typed setter.
@@ -40,21 +37,21 @@ export interface ModuleContext {
 	/**
 	 * Publish this module's RPC router so the runtime can register it on
 	 * its own RpcRouter under the module's namespace. The router is dispatched
-	 * for inbound `__nextvm:rpc` events from clients (Concept Chapter 10.1).
+	 * for inbound `__nextvm:rpc` events from clients.
 	 */
 	exposeRouter: (router: Router) => void
-	/** Typed event bus (Chapter 8.4) */
+	/** Typed event bus */
 	events: ModuleEventBus
-	/** Logger scoped to this module (Chapter 22.1) */
+	/** Logger scoped to this module */
 	log: ModuleLogger
-	/** Lifecycle hooks (Chapter 8.3) — all 9 concept hooks */
+	/** Lifecycle hooks — all 9 concept hooks */
 	onModuleInit: (handler: () => void | Promise<void>) => void
 	onModuleReady: (handler: () => void | Promise<void>) => void
 	onModuleStop: (handler: () => void | Promise<void>) => void
 	onPlayerConnecting: (handler: PlayerConnectingHandler) => void
 	onPlayerReady: (handler: PlayerHandler) => void
 	onPlayerDropped: (handler: PlayerDroppedHandler) => void
-	/** Client-side: local player spawned, framework ready (Chapter 8.3) */
+	/** Client-side: local player spawned, framework ready */
 	onMounted: (handler: () => void | Promise<void>) => void
 	onCharacterSwitch: (handler: CharacterSwitchHandler) => void
 	onBucketChange: (handler: BucketChangeHandler) => void
@@ -63,7 +60,6 @@ export interface ModuleContext {
 
 /**
  * Typed event bus — inter-module communication.
- * Concept v2.3, Chapter 8.4: "Typed event bus, not direct imports"
  */
 export interface ModuleEventBus {
 	emit: (event: string, data?: unknown) => void
@@ -73,7 +69,6 @@ export interface ModuleEventBus {
 
 /**
  * Structured logger per module.
- * Concept v2.3, Chapter 22.1: JSON output, per-module context.
  */
 export interface ModuleLogger {
 	debug: (msg: string, data?: Record<string, unknown>) => void
@@ -82,7 +77,7 @@ export interface ModuleLogger {
 	error: (msg: string, data?: Record<string, unknown>) => void
 }
 
-// --- Lifecycle Handler Types (Chapter 8.3) ---
+// --- Lifecycle Handler Types ---
 
 /** Player info passed to lifecycle hooks */
 export interface PlayerInfo {
@@ -125,7 +120,7 @@ export type BucketChangeHandler = (
 
 export type TickHandler = () => void
 
-/** Tick priority for managed tick system (Chapter 21.1) */
+/** Tick priority for managed tick system */
 export type TickPriority = 'HIGH' | 'MEDIUM' | 'LOW'
 
 export interface TickOptions {

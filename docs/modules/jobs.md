@@ -97,7 +97,7 @@ const banking = ctx.inject<BankingAdapter>('banking')
 service.setBanking(banking)
 ```
 
-This is the GUARD-002 escape hatch for cross-module deps —
+This is the  escape hatch for cross-module deps —
 [Dependency Injection concept](/concept/dependency-injection).
 
 ## Salary tick

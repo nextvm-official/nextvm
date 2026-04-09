@@ -3,9 +3,6 @@ import { RuntimeRpcTransport } from './rpc-transport'
 
 /**
  * Bootstrap the NextVM client runtime.
- *
- * Concept v2.3, Chapter 8.3 — client lifecycle is shorter than server:
- *
  *   1. ModuleLoader registers every module
  *   2. RuntimeRpcTransport is created, wired to emitNet/onNet for the
  *      typed RPC client proxy
@@ -13,10 +10,9 @@ import { RuntimeRpcTransport } from './rpc-transport'
  *      onModuleInit + onModuleReady
  *   4. FiveM client events are bridged:
  *        - playerSpawned → onMounted (the "framework is ready, the
- *          local player ped exists" hook from Concept 8.3)
+ *          local player ped exists" hook 
  *        - onClientResourceStop → onModuleStop
  *   5. The managed tick loop is started via setTick
- *
  * Returns a `ClientRuntimeHandle`. Production code calls `.stop()` only;
  * tests use the rest of the surface to drive the runtime deterministically.
  */

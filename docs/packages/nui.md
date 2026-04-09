@@ -126,4 +126,4 @@ client.emit('hud.update', { hp: 80 })
 ## See also
 
 - [`@nextvm/runtime-client`](/packages/runtime-client) — the client runtime that hosts the NuiClient
-- [Concept Chapter 19](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [com/nextvm-official/nextvm/tree/main/docs/concept)

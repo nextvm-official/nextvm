@@ -7,7 +7,6 @@ import { generateFxmanifestSnippet } from './fxmanifest'
 
 /**
  * The shape we accept from `vite` without depending on it at type level.
- *
  * Vite is a peer dep so we keep the surface minimal — anything more
  * specific than this would force consumers to install identical Vite
  * versions everywhere.
@@ -69,17 +68,13 @@ const defaultIo = (): NonNullable<NextvmNuiPluginOptions['io']> => {
 
 /**
  * The NextVM Vite plugin.
- *
  * Use it in your NUI app's `vite.config.ts`:
- *
  *   import { defineConfig } from 'vite'
  *   import react from '@vitejs/plugin-react'
  *   import { nextvmNui } from '@nextvm/vite-plugin-nui'
- *
  *   export default defineConfig({
  *     plugins: [react(), nextvmNui({ resourceName: 'my-server' })],
  *   })
- *
  * The plugin:
  *   1. Forces FiveM-friendly Vite settings (`base: './'`, no source
  *      maps in production, no preload polyfills, no externals)

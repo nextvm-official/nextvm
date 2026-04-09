@@ -1,8 +1,5 @@
 /**
  * @nextvm/vite-plugin-nui — Vite plugin for NextVM NUI apps.
- *
- * Concept v2.3, Chapter 19.3.
- *
  * Forces FiveM-compatible build settings, exposes a virtual module
  * `virtual:nextvm-nui` (resource name + NuiBrowser re-export), prints
  * the dev URL to use as `ui_page` while developing, and writes a

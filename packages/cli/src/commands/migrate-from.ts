@@ -13,13 +13,9 @@ import { cliLog } from '../utils/logger'
 
 /**
  * `nextvm migrate:from <framework>` — Migrate from ESX or QBCore database.
- *
- * Concept v2.3, Chapter 16.2 + 17.
- *
  * Connects to the legacy DB using --host / --user / --password / --db
  * (or env vars), reads every player row, and writes them into the
  * NextVM target DB read from nextvm.config.ts.
- *
  * Always non-destructive against the source. Use --dry-run to inspect
  * the report without writing anything.
  */

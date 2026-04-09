@@ -6,8 +6,6 @@ import { createContext, useContext } from 'react'
  * component tree. Wrap your app in `<NuiProvider bus={bus}>` once at
  * the top, then call `useNuiBus()` from anywhere below to access the
  * same instance.
- *
- * Concept v2.3, Chapter 19. Splitting context from the hooks keeps the
  * provider component (which needs JSX) separate from the hook code so
  * tests can pass `bus` directly without rendering a provider.
  */
@@ -15,7 +13,6 @@ export const NuiContext = createContext<NuiBrowser | null>(null)
 
 /**
  * Read the `NuiBrowser` from the surrounding `<NuiProvider>`.
- *
  * Throws if there is no provider in the tree — that's almost always a
  * setup bug rather than something the caller can recover from, and a
  * loud error is better than a silent `null`.

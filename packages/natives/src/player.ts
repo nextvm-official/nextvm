@@ -3,11 +3,8 @@ import type { EntityHandle, PlayerSource, Vec3, VehicleSeat } from './types'
 
 /**
  * NextVMPlayer — Typed wrapper around FiveM player/ped natives.
- *
- * Concept v2.3, Chapter 7.1:
  *   Wraps: Ped natives, identifiers, health, armor, position
  *   Key abstractions: setPosition(), getHealth(), teleport()
- *
  * Server-side: constructed from player source (server ID).
  * Client-side: constructed from ped handle.
  */

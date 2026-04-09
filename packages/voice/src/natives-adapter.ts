@@ -2,7 +2,6 @@ import type { ProximityMode, VoiceAdapter } from './adapter'
 
 /**
  * Production VoiceAdapter that delegates to @nextvm/natives Voice.
- *
  * Lazy-imported so the package builds and tests cleanly without
  * @nextvm/natives present (it's an optional peer dependency — only the
  * runtime layer pulls it in).

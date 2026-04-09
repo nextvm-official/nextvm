@@ -1,17 +1,12 @@
 /**
- * @nextvm/banking — Phase 2 banking module
- *
- * Concept v2.3, Chapter 8 + 18.
- *
+ * @nextvm/banking
  * Provides cash + bank accounts, transfers between characters, and an
  * audit trail in nextv_banking_transactions. Other modules consume this
- * via DI (`ctx.inject('banking')`) — never via direct import (GUARD-002).
- *
- * Server-authoritative (GUARD-003), Zod-validated RPC inputs (GUARD-005),
- * char-id scoped (GUARD-011), i18n strings (GUARD-012).
- *
+ * via DI (`ctx.inject('banking')`) — never via direct import.
+ * Server-authoritative, Zod-validated RPC inputs,
+ * char-id scoped, i18n strings.
  * PLA: in-game money only. Modules that sell items to players for real
- * currency must integrate via @nextvm/tebex (GUARD-013) and ship their
+ * currency must integrate via @nextvm/tebex and ship their
  * own MONETIZATION.md.
  */
 
@@ -23,7 +18,6 @@ import { BankingService } from './service'
 
 /**
  * The public service surface this module exposes via DI.
- *
  * Other modules (jobs, housing, ...) consume this by calling
  * `ctx.inject<BankingExports>('banking')`.
  */
@@ -84,7 +78,7 @@ export default defineModule({
 		})
 
 		// Publish the public surface so jobs/housing/... can pick it up
-		// via `ctx.inject<BankingExports>('banking')` (Concept Chapter 8.2).
+		// via `ctx.inject<BankingExports>('banking')`.
 		ctx.setExports(buildBankingExports(service))
 		// Hand the router to the runtime so client RPCs land here.
 		ctx.exposeRouter(router)

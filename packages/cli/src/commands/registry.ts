@@ -6,14 +6,9 @@ import { cliLog } from '../utils/logger'
 
 /**
  * `nextvm registry:*` — Module registry commands.
- *
- * Concept v2.3, Chapter 17 + 27.
- *
- * Phase 2 ships the CLI surface backed by @nextvm/registry. The
- * registry backend itself is Phase 3 SaaS — until then these commands
+ * registry backend itself is SaaS — until then these commands
  * still work against any compliant API (community-hosted, self-hosted,
  * or stubbed).
- *
  * Authentication tokens are read from the NEXTVM_REGISTRY_TOKEN env var.
  */
 export function registerRegistryCommands(program: Command): void {
@@ -44,7 +39,7 @@ export function registerRegistryCommands(program: Command): void {
 			} catch (err) {
 				cliLog.error(err instanceof Error ? err.message : String(err))
 				cliLog.step(
-					'Hint: the public NextVM registry lands with the SaaS platform in Phase 3. Until then point --url at a community-hosted instance or run a local mock.',
+					'Hint: the public NextVM registry lands with the SaaS platform in . Until then point --url at a community-hosted instance or run a local mock.',
 				)
 				process.exit(1)
 			}
@@ -80,7 +75,7 @@ export function registerRegistryCommands(program: Command): void {
 				cliLog.header(`Publishing ${pkg.name}@${pkg.version}`)
 				cliLog.warn('Tarball packing is delegated to a future tar utility.')
 				cliLog.step(
-					'Phase 2 publishes manifest metadata only — full tarball upload lands once the registry backend exists.',
+					'publishes manifest metadata only — full tarball upload lands once the registry backend exists.',
 				)
 
 				const client = new RegistryClient({ baseUrl: opts.url, token })

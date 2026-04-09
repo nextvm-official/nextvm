@@ -397,7 +397,7 @@ because we used `nextvm add --full`, every check passes by construction.
 - **`defineLocale`** for type-safe i18n
 - **`createModuleHarness`** for easy router tests
 - **`ctx.setExports` + `defineExports`** to publish a typed service surface
-- **`ctx.charId`** (not `source`) for character-scoped data (GUARD-011)
+- **`ctx.charId`** (not `source`) for character-scoped data
 - **`RpcError`** with typed codes for client-distinguishable errors
 
 ## Next steps

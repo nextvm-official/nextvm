@@ -108,4 +108,4 @@ the resulting state directly.
 ## See also
 
 - [`@nextvm/natives`](/packages/natives) — raw `pma-voice` wrapper
-- [Concept Chapter 20](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [com/nextvm-official/nextvm/tree/main/docs/concept)

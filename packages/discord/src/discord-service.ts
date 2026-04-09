@@ -19,17 +19,11 @@ import type {
 
 /**
  * DiscordService — High-level Discord integration for NextVM.
- *
- * Concept v2.3, Chapter 30.
- *
  * Features:
- *   - Role Sync: Discord roles → NextVM ACE permissions (Chapter 30.2)
+ *   - Role Sync: Discord roles → NextVM ACE permissions
  *   - Auto Log: NextVM event bus → Discord embed messages
  *   - Whitelist: Block connections by required Discord roles
  *   - Status Bot: Periodic player count / uptime message
- *
- * GUARD-006 compliant: instance state, no globals.
- *
  * Usage:
  *   const discord = defineDiscord({ botToken, guildId, channels: { ... } })
  *   await discord.start({ permissions, eventBus })
@@ -97,7 +91,7 @@ export class DiscordService {
 		this.channelCache.clear()
 	}
 
-	// --- Role Sync (Concept Chapter 30.1 + 30.2) ---
+	// --- Role Sync ---
 
 	/** Configure Discord role → NextVM permission mapping */
 	roleSync(map: RoleSyncMap): this {
@@ -123,7 +117,7 @@ export class DiscordService {
 		}
 	}
 
-	// --- Auto Log (Concept Chapter 30.1) ---
+	// --- Auto Log ---
 
 	/** Configure event → channel routing for automatic log forwarding */
 	autoLog(map: AutoLogMap): this {
@@ -162,7 +156,7 @@ export class DiscordService {
 		}
 	}
 
-	// --- Whitelist (Concept Chapter 30.1 + 30.2) ---
+	// --- Whitelist ---
 
 	/** Configure Discord-based whitelist */
 	whitelist(config: WhitelistConfig): this {
@@ -173,7 +167,6 @@ export class DiscordService {
 	/**
 	 * Check if a Discord user is whitelisted.
 	 * Should be called from a module's onPlayerConnecting handler.
-	 *
 	 * @returns null if allowed, deny message if rejected
 	 */
 	async checkWhitelist(discordId: string): Promise<string | null> {
@@ -192,7 +185,7 @@ export class DiscordService {
 		return hasRequired ? null : this.whitelistConfig.denyMessage
 	}
 
-	// --- Staff Chat Bridge (Concept Chapter 30.2) ---
+	// --- Staff Chat Bridge ---
 
 	/**
 	 * Configure the staff chat bridge.
@@ -239,7 +232,7 @@ export class DiscordService {
 		})
 	}
 
-	// --- Status Bot (Concept Chapter 30.2) ---
+	// --- Status Bot ---
 
 	/** Configure the status bot */
 	statusBot(config: StatusBotConfig): this {

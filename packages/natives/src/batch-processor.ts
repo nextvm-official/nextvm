@@ -1,26 +1,17 @@
 /**
  * createBatchProcessor — Spread heavy entity work across multiple ticks.
- *
- * Concept v2.3, Chapter 21.3:
  *   "createBatchProcessor() for spreading entity work across ticks."
- *
  * Pattern: instead of iterating 1000 entities in a single tick (and
- * blowing the per-frame budget — Chapter 21.2), give the processor a
+ * blowing the per-frame budget.2), give the processor a
  * chunk size and a worker. Each call to `tick()` advances the cursor
  * by `chunkSize` items. When the queue is exhausted, `done()` returns
  * true and the caller can refill it.
- *
- * GUARD-006: instance state, no globals.
- * GUARD-010: this is an escape hatch — call sites should explain why
  * a managed tick alone is insufficient.
- *
  * Usage (from a module's onTick):
- *
  *   const batch = createBatchProcessor({
  *     chunkSize: 50,
  *     worker: (entity) => syncEntity(entity),
  *   })
- *
  *   ctx.onTick(async () => {
  *     if (batch.done()) batch.fill(getAllEntities())
  *     await batch.tick()

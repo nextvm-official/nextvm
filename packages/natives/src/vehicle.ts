@@ -3,8 +3,6 @@ import type { EntityHandle, Vec3, VehicleSeat } from './types'
 
 /**
  * NextVMVehicle — Typed wrapper around FiveM vehicle natives.
- *
- * Concept v2.3, Chapter 7.1:
  *   Wraps: Vehicle natives, mods, fuel, damage
  *   Key abstractions: spawn(), setColor(), repair()
  */

@@ -1,9 +1,6 @@
 /**
  * Tiny in-memory i18n stub for tests that don't need the full
  * @nextvm/i18n package wired up.
- *
- * Concept v2.3, Chapter 31 — keeps the test surface decoupled from i18n.
- *
  * Usage:
  *   const i18n = createMockI18n({ en: { 'foo.bar': 'Hello {name}' } })
  *   i18n.t('foo.bar', { name: 'Tom' }) // → 'Hello Tom'

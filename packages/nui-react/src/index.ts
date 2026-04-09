@@ -1,19 +1,13 @@
 /**
  * @nextvm/nui-react — React hooks for the NextVM NUI bridge.
- *
- * Concept v2.3, Chapter 19.
- *
  *   import { NuiBrowser } from '@nextvm/nui/browser'
  *   import { NuiProvider, useNuiState, useNuiCallback } from '@nextvm/nui-react'
- *
  *   const bus = new NuiBrowser({ resourceName: 'my-server' })
- *
  *   function App() {
  *     const hud = useNuiState<HudState>('hud.update', { hp: 100, armor: 0 })
  *     const buy = useNuiCallback('shop.buy')
  *     return <button onClick={() => buy({ itemId: 'water' })}>Buy</button>
  *   }
- *
  *   createRoot(root).render(<NuiProvider bus={bus}><App /></NuiProvider>)
  */
 

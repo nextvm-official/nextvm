@@ -1,6 +1,6 @@
 # Tick System
 
-> Concept v2.3, Chapter 21.1
+> 1
 
 NextVM ships a managed tick scheduler that replaces raw `setTick()`.
 Modules register their tick handlers via `ctx.onTick(handler, opts)`,
@@ -95,7 +95,7 @@ const stats = profiler.getStats('tick', 'banking', 'onTick')
 // → { count, avg, p50, p95, p99, max, min }
 ```
 
-The CLI command `nextvm perf` will surface this in Phase 3.
+The CLI command `nextvm perf` will surface this in .
 
 ## ModuleLoader integration
 
@@ -137,7 +137,7 @@ ctx.onTick(async () => {
 }, { interval: 100, priority: 'LOW' })
 ```
 
-This pattern is the [GUARD-010](/reference/guards#guard-010-escape-hatch-documentation)
+This pattern is the [](/reference/pla)
 escape hatch for spreading entity work safely.
 
 ## See also

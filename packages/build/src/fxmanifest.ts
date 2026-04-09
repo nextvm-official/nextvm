@@ -2,10 +2,7 @@ import type { ResolvedModule } from './project-loader'
 
 /**
  * Generate the fxmanifest.lua content for a built module.
- *
- * Concept v2.3, Chapter 15.1:
  *   "Generate fxmanifest.lua from module definition"
- *
  * The manifest is the bridge between NextVM's TS module system and the
  * FXServer resource loader. We emit the standard `cerulean` manifest
  * with server + client entry points pointing at the tsup output.

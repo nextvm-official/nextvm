@@ -1,8 +1,5 @@
 /**
  * Server bootstrap for the Full Stack Example.
- *
- * Concept v2.3, Chapter 8.3 + 11 + 13 + 16 + 20.
- *
  * Wires every NextVM layer:
  *   - bootstrapServer            → ModuleLoader + lifecycle bridge
  *   - DbCharacterRepository      → real MySQL persistence (with fallback)
@@ -10,7 +7,6 @@
  *   - VoiceService               → server-authoritative radio + calls
  *   - stateSnapshot              → hot-reload state preservation
  *   - devBridge                  → live ensure-restart from `nextvm dev`
- *
  * Reads the runtime config from FiveM convars so the same code runs in
  * dev and prod with no source changes.
  */

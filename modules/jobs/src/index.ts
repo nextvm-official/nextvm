@@ -1,16 +1,12 @@
 /**
- * @nextvm/jobs — Phase 2 jobs module
- *
- * Concept v2.3, Chapter 8 + 18.
- *
+ * @nextvm/jobs
  * Owns the job registry (police, ambulance, mechanic, taxi, ...),
  * tracks each character's current job + grade + on-duty status, and
  * pays salaries to on-duty characters via the banking module.
- *
  * Cross-module access (banking) goes through the BankingAdapter
- * interface (GUARD-002 — no direct import). Server-authoritative
- * writes (GUARD-003), Zod-validated RPC (GUARD-005), char-id scoped
- * (GUARD-011), i18n strings (GUARD-012).
+ * interface. Server-authoritative
+ * writes, Zod-validated RPC, char-id scoped
+ *, i18n strings.
  */
 
 import { defineExports, defineModule, z } from '@nextvm/core'
@@ -95,7 +91,7 @@ export default defineModule({
 		const service = new JobsService(registry)
 		const router = buildJobsRouter(service)
 
-		// Pull the banking adapter via DI (Concept Chapter 8.2). Banking
+		// Pull the banking adapter via DI. Banking
 		// is a declared dependency so its setExports() has already run.
 		try {
 			const banking = ctx.inject<{ addMoney: BankingAdapter['addMoney'] }>('banking')

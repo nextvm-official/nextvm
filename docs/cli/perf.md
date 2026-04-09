@@ -73,4 +73,4 @@ nextvm perf clear
 
 - [Tick System](/concept/tick-system)
 - [Error Boundaries](/concept/error-boundaries)
-- [Concept Chapter 21 — Performance](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [com/nextvm-official/nextvm/tree/main/docs/concept)

@@ -35,13 +35,10 @@ const CONFIG_FILENAMES = ['nextvm.config.ts', 'nextvm.config.js', 'nextvm.config
 
 /**
  * Load a NextVM project.
- *
- * Concept v2.3, Chapter 15.1 — the build pipeline starts here:
  *   1. Find nextvm.config.ts in the given directory (or current cwd)
  *   2. Load it via jiti (no compile step needed for TS)
  *   3. Validate the exported config against ProjectConfig schema
  *   4. Discover modules under modules/* via package.json
- *
  * Throws on missing config, invalid TS, or schema violations.
  */
 export async function loadProject(rootDir: string = process.cwd()): Promise<LoadedProject> {

@@ -2,8 +2,6 @@ import type { ColumnBuilder, ColumnDefinition } from './column'
 
 /**
  * Table schema — a record of column builders.
- *
- * Concept v2.3, Chapter 9.3:
  *   export const users = defineTable('nextv_users', {
  *     id: column.int().primaryKey().autoIncrement(),
  *     license: column.string(50).unique(),
@@ -23,7 +21,6 @@ export interface Table<TSchema extends TableSchema = TableSchema> {
 
 /**
  * Infer the row TypeScript type from a table schema.
- *
  * Each column builder carries a phantom type T that we extract here:
  *   defineTable('users', { id: column.int(), name: column.string() })
  *   → { id: number, name: string }
@@ -34,8 +31,6 @@ export type InferRow<T extends Table> = {
 
 /**
  * Define a typed table.
- *
- * Concept v2.3, Chapter 12.
  */
 export function defineTable<TSchema extends TableSchema>(
 	name: string,

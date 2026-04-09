@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 /**
  * NextVM CLI entry point.
- *
- * Concept v2.3, Chapter 17.
  */
 import { runCli } from './index'
 import { cliLog } from './utils/logger'

@@ -15,11 +15,11 @@ nextvm validate
 |---|---|---|
 | `nextvm.config.ts` exists | error | The CLI needs the project config to do anything |
 | Each module has `src/index.ts` | error | Module is malformed |
-| Each module has `en.ts` locale | warning | GUARD-012 — i18n required |
-| Modules importing `@nextvm/tebex` ship `MONETIZATION.md` | error | GUARD-013 — PLA compliance |
+| Each module has `en.ts` locale | warning |  — i18n required |
+| Modules importing `@nextvm/tebex` ship `MONETIZATION.md` | error |  — PLA compliance |
 | Each module uses the layered `src/server/` structure | warning | MODULE_ARCHITECTURE.md convention |
-| Declared dependencies have a matching `adapters/<dep>-adapter.ts` | warning | GUARD-002 — adapter pattern |
-| RPC mutations have `.input(z.object(...))` | error | GUARD-005 — Zod validation |
+| Declared dependencies have a matching `adapters/<dep>-adapter.ts` | warning |  — adapter pattern |
+| RPC mutations have `.input(z.object(...))` | error |  — Zod validation |
 
 The PLA-compliance check looks for **real import statements**, not
 stray mentions in JSDoc comments — so a module that documents the
@@ -38,8 +38,8 @@ policy without consuming `@nextvm/tebex` does NOT trigger the warning.
 ℹ Validating NextVM project
 ✓ nextvm.config.ts found
 ✓ Found 6 module(s)
-⚠ Module 'banking' is not using the layered structure (src/server/service.ts + router.ts). See .ai/MODULE_ARCHITECTURE.md.
-⚠ Module 'jobs' declares dependency 'banking' but has no adapters/banking-adapter.ts (GUARD-002 / MODULE_ARCHITECTURE §4)
+⚠ Module 'banking' is not using the layered structure (src/server/service.ts + router.ts). See https://docs.nextvm.dev/guide/module-authoring.
+⚠ Module 'jobs' declares dependency 'banking' but has no adapters/banking-adapter.ts
 ✓ Validation passed (2 warnings)
 ```
 
@@ -58,5 +58,5 @@ The non-zero exit on errors makes it fail the build cleanly.
 
 ## See also
 
-- [Architecture Guards](/reference/guards)
+
 - [Module Authoring](/guide/module-authoring)

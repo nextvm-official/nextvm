@@ -10,15 +10,10 @@ interface I18nServiceOptions {
 
 /**
  * I18nService — Translation registry and resolver.
- *
- * Concept v2.3, Chapter 14:
  *   - Modules register their locale bundles
  *   - Server resolves keys to player's locale
- *   - Fallback chain: player locale → server default → en → raw key (Chapter 14.5)
+ *   - Fallback chain: player locale → server default → en → raw key
  *   - Missing translations logged as warnings, not silent
- *
- * GUARD-006 compliant: instance state, no globals.
- * GUARD-012 enforced: this is THE i18n system modules must use.
  */
 export class I18nService {
 	/** Map: locale → (key → template) */
@@ -63,7 +58,7 @@ export class I18nService {
 
 	/**
 	 * Resolve a translation key for a specific player.
-	 * Uses the player's reported locale, with the fallback chain (Chapter 14.5).
+	 * Uses the player's reported locale, with the fallback chain.
 	 */
 	t(source: number, key: string, params?: TranslationParams): string {
 		const playerLocale = this.playerLocales.get(source) ?? this.defaultLocale

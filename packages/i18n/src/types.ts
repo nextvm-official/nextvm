@@ -1,8 +1,5 @@
 /**
  * i18n Types.
- *
- * Concept v2.3, Chapter 14.
- *
  * Locale codes follow ISO 639-1 (e.g., 'en', 'de', 'fr', 'es', 'pt-BR', 'pl', 'ru').
  */
 

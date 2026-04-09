@@ -1,6 +1,6 @@
 # RPC
 
-> Concept v2.3, Chapter 10
+> 
 
 NextVM's RPC system is inspired by tRPC. Compile-time type-safe remote
 procedure calls between client and server, with no string-based
@@ -77,7 +77,6 @@ const balance = await banking.getBalance({ accountId: '123' })
 
 ## Security
 
-Concept Chapter 10.3 mandates several security properties — all
 implemented in `RpcRouter.dispatch()`:
 
 ### 1. Source ID injection
@@ -185,4 +184,4 @@ up an FXServer.
 
 - [`@nextvm/core` package reference](/packages/core)
 - [`createModuleHarness`](/guide/testing#router-tests-with-createmodulharness)
-- [Concept v2.3 Chapter 10](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [com/nextvm-official/nextvm/tree/main/docs/concept)

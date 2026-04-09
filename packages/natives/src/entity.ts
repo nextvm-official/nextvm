@@ -2,11 +2,7 @@ import type { EntityHandle, NetworkId, Vec3 } from './types'
 
 /**
  * NextVMEntity — Base class for all entity wrappers.
- *
  * Wraps generic FiveM entity natives behind a typed API.
- * Concept v2.3, Chapter 7.1 + 7.4.
- *
- * GUARD-001: This IS the abstraction layer. Raw natives are called here
  * so that modules never need to call them directly.
  */
 export class NextVMEntity {
@@ -25,7 +21,6 @@ export class NextVMEntity {
 
 	/**
 	 * Set the entity's position.
-	 * Concept v2.3, Chapter 7.4:
 	 *   Raw: SetEntityCoords(entity, x, y, z, xA, yA, zA, clear)
 	 *   NextVM: entity.setPosition({ x, y, z })
 	 */

@@ -2,11 +2,8 @@ import { z } from 'zod'
 
 /**
  * Tebex API schemas.
- *
- * Concept v2.3, Chapter 4.3.3:
  *   "@nextvm/tebex provides typed integration with Tebex's server-side
  *    API (package fulfillment, gift cards, transaction verification)"
- *
  * These schemas mirror the public Tebex Headless API v2.
  * They are intentionally permissive (passthrough on unknown fields)
  * so the package keeps working when Tebex adds new fields.

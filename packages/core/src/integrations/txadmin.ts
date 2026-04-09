@@ -5,21 +5,16 @@ import type { ModuleLoader } from '../module/module-loader'
 
 /**
  * txAdmin Integration.
- *
- * Concept v2.3, Chapter 29.2:
  *   txAdmin emits events that NextVM must handle:
  *     - txAdmin:events:scheduledRestart  → graceful save of all player data
  *     - txAdmin:events:playerKicked      → remove from state, persist character
  *     - txAdmin:events:playerWarned      → store warning in user record
  *     - txAdmin:events:playerBanned      → sync ban to user table
  *     - txAdmin:events:serverShuttingDown→ emergency save, fire onModuleStop
- *
  * The actual FiveM event registration happens via the framework's
  * network primitives (RegisterNetEvent + AddEventHandler). This file
  * provides the typed handler that wires those low-level events into
  * the NextVM lifecycle.
- *
- * GUARD-006 compliant: instance state, no globals.
  */
 
 export interface TxAdminIntegrationDeps {
@@ -36,11 +31,9 @@ export type TxAdminEventBinder = (
 
 /**
  * Bind txAdmin events to NextVM lifecycle hooks.
- *
  * The `binder` argument is supplied by the framework's network/runtime
  * layer (which calls RegisterNetEvent + AddEventHandler). Tests can
  * pass a stub binder.
- *
  * Usage (bootstrap):
  *   bindTxAdmin(binder, { loader, eventBus, characters })
  */

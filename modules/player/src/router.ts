@@ -3,10 +3,7 @@ import { playerState } from './state'
 
 /**
  * Player RPC router.
- *
- * Concept v2.3, Chapter 10.
- *
- * All write operations are server-authoritative (GUARD-003).
+ * All write operations are server-authoritative.
  * Admin operations are gated by the .auth() middleware (GUARD permissions).
  */
 export const playerRouter = defineRouter({

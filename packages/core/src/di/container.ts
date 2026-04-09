@@ -2,8 +2,6 @@ import type { ModuleDefinition } from '../module/types'
 
 /**
  * Dependency Injection Container.
- *
- * Concept v2.3, Chapter 8.2:
  *   "Modules never import each other directly. ctx.inject() provides typed access.
  *    The DI container resolves at startup, checks circular dependencies,
  *    and throws clear errors for missing modules."

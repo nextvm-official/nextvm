@@ -5,10 +5,9 @@ import { housingState } from './state'
 
 /**
  * HousingService — owns purchase + entry/leave logic.
- *
- * Server-authoritative (GUARD-003). Cross-module access (banking,
+ * Server-authoritative. Cross-module access (banking,
  * routing) goes through small adapter interfaces, not via direct
- * imports of the other modules (GUARD-002).
+ * imports of the other modules.
  */
 export class HousingService {
 	constructor(

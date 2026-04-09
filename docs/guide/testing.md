@@ -8,7 +8,7 @@ spinning up an FXServer.
 ## Three test levels
 
 NextVM follows the testing strategy from
-[Concept v2.3 Chapter 31](https://github.com/nextvm-official/nextvm/tree/main/docs/concept):
+[com/nextvm-official/nextvm/tree/main/docs/concept):
 
 | Level | Tool | Speed | What it covers | Required for |
 |---|---|---|---|---|

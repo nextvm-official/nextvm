@@ -9,17 +9,12 @@ import type {
 
 /**
  * CharacterService — Manages User/Character lifecycle.
- *
- * Concept v2.3, Chapter 9:
  *   - User/Character separation (ADR-004)
  *   - Multi-character support (configurable limit, default 5)
- *   - Character selection via routing buckets (Chapter 9.4)
- *   - All game state attached to Character, not User (GUARD-011)
- *
- * GUARD-006 compliant: State lives in the instance, managed via DI.
- *
+ *   - Character selection via routing buckets
+ *   - All game state attached to Character, not User
  * Note: This service provides the in-memory session management.
- * Actual DB persistence will be added when the DB layer is implemented (Phase 1).
+ * Actual DB persistence will be added when the DB layer is implemented.
  * For now, it defines the contract and manages runtime sessions.
  */
 export class CharacterService {
@@ -191,12 +186,12 @@ export class CharacterService {
 		return this.sessions.get(source)
 	}
 
-	/** Get a player's active character (GUARD-011: use charId from this) */
+	/** Get a player's active character */
 	getCharacter(source: number): Character | null {
 		return this.sessions.get(source)?.character ?? null
 	}
 
-	/** Get the character ID for a source (convenience for GUARD-011) */
+	/** Get the character ID for a source */
 	getCharacterId(source: number): number | null {
 		return this.sessions.get(source)?.character?.id ?? null
 	}

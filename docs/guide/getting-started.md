@@ -22,7 +22,7 @@ NextVM ships as a monorepo of 18 packages, grouped by layer:
 | **Layer 3 — Integrations** | `@nextvm/discord`, `@nextvm/compat`, `@nextvm/tebex`, `@nextvm/registry`, `@nextvm/migration` |
 | **Layer 4 — First-party Modules** | `@nextvm/player`, `@nextvm/vehicle`, `@nextvm/inventory`, `@nextvm/banking`, `@nextvm/jobs`, `@nextvm/housing` |
 
-The layer model is enforced by [Architecture Guards](/reference/guards).
+The layer model is enforced by
 Layer 4 modules cannot call FiveM natives directly — they go through
 `@nextvm/natives`. Layer 3 services cannot import each other across
 modules — they go through DI.

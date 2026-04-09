@@ -2,12 +2,8 @@ import type { Vec3 } from '@nextvm/natives'
 
 /**
  * Character System Types.
- *
- * Concept v2.3, Chapter 9:
  *   User = real person (license/discord/steam)
  *   Character = in-game identity (isolated state per character)
- *
- * GUARD-011: All per-player data keyed by charId, not source.
  */
 
 /** User record — one per real person (Concept 9.1) */

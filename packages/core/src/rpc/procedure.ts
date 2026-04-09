@@ -3,12 +3,9 @@ import type { AuthMiddleware, ProcedureDefinition, RpcContext } from './types'
 
 /**
  * Procedure builder — fluent API to define a single RPC procedure.
- *
- * Concept v2.3, Chapter 10.1:
  *   procedure
  *     .input(z.object({ accountId: z.string() }))
  *     .query(async ({ input, ctx }) => { ... })
- *
  * The builder is a chain that progressively narrows types:
  *   - Start: no input, no auth
  *   - .input(schema): adds input type
@@ -22,7 +19,7 @@ class ProcedureBuilder<TInput extends ZodTypeAny | null = null> {
 		private readonly authMiddleware: AuthMiddleware | null,
 	) {}
 
-	/** Add Zod input validation (GUARD-005) */
+	/** Add Zod input validation */
 	input<TNewInput extends ZodTypeAny>(schema: TNewInput): ProcedureBuilder<TNewInput> {
 		return new ProcedureBuilder<TNewInput>(schema, this.authMiddleware)
 	}
@@ -65,7 +62,6 @@ class ProcedureBuilder<TInput extends ZodTypeAny | null = null> {
 
 /**
  * Entry point for defining a procedure.
- * Concept v2.3, Chapter 10.1:
  *   getBalance: procedure.input(...).query(...)
  */
 export const procedure = new ProcedureBuilder<null>(null, null)

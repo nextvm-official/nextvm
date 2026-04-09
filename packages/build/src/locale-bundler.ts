@@ -4,14 +4,10 @@ import type { ResolvedModule } from './project-loader'
 
 /**
  * Locale bundler.
- *
- * Concept v2.3, Chapter 14 + 15.1:
  *   "Bundle locale files per module"
- *
  * Reads `<module>/src/shared/locales/*.ts` (the source files that
  * use defineLocale()), extracts their default-exported translation maps,
  * and emits them as JSON under `<module>/dist/locales/<lang>.json`.
- *
  * The TS files themselves are too dynamic to parse statically, so we
  * use a regex-based extractor that supports the 95% case (an object
  * literal returned from defineLocale). Modules with computed locales
@@ -84,10 +80,9 @@ export function bundleLocales(module: ResolvedModule): LocaleBundleResult {
 
 /**
  * Extract a flat key→string map from a locale file.
- *
  * Limitation: only handles flat object literals like
  *   export default defineLocale({ 'a': 'b', 'c': 'd' })
- * This covers the official module template (Concept Chapter 14.2).
+ * This covers the official module template.
  */
 function parseLocaleFile(content: string): Record<string, string> {
 	const map: Record<string, string> = {}

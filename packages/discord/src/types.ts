@@ -1,7 +1,5 @@
 /**
  * @nextvm/discord types.
- *
- * Concept v2.3, Chapter 30.
  */
 
 /** Map of channel keys (used by autoLog) to Discord channel names */
@@ -34,7 +32,6 @@ export interface WhitelistConfig {
 
 /**
  * Staff Chat Bridge configuration.
- * Concept v2.3, Chapter 30.2: "In-game admin chat bridged to a Discord
  * channel and vice versa."
  */
 export interface StaffChatBridgeConfig {

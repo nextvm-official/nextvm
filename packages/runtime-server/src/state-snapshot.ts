@@ -4,28 +4,21 @@ import type { ModuleLoader } from '@nextvm/core'
 
 /**
  * State snapshot writer/reader for hot-reload across `ensure` restarts.
- *
- * Concept v2.3, Chapter 15.2:
  *   "Dev mode: hot-reload, NUI HMR, file watching. State preservation
  *    across restarts so iteration doesn't lose player state."
- *
  * Strategy: filesystem snapshot.
- *
  *   - On `runtime.stop()` (driven by `onResourceStop`), the runtime
  *     walks every state store the loader knows about, calls
  *     `serialize()`, and writes one JSON file with a timestamp.
- *
  *   - On `bootstrapServer()`, the runtime checks for that file. If it
  *     exists *and* is younger than `staleAfterMs` (default 60s — long
  *     enough for an `ensure` restart, short enough that we don't
  *     restore stale state on a real cold boot), it deserializes every
  *     matching store and deletes the file.
- *
  * Stores not present in the snapshot are left alone (new modules); keys
  * present in the snapshot but no longer registered are dropped silently
  * (removed modules). The snapshot format is forward/backward compatible
  * by construction.
- *
  * The IO surface is injected so the whole feature is unit-testable in
  * plain Node without touching the real filesystem.
  */
@@ -95,7 +88,6 @@ export function writeStateSnapshot(loader: ModuleLoader, opts: SnapshotOptions =
 /**
  * Restore a previously written snapshot, if one exists and is fresh.
  * Called from `bootstrapServer()` before any FiveM events fire.
- *
  * Returns the number of stores that were restored, or `0` if no fresh
  * snapshot was found.
  */

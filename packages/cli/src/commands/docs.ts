@@ -6,11 +6,7 @@ import { cliLog } from '../utils/logger'
 
 /**
  * `nextvm docs` — Generate Markdown reference docs from each module.
- *
- * Concept v2.3, Chapter 25:
  *   "Documentation generated from TSDoc + Zod introspection + hand-written guides"
- *
- * Phase 2 minimum: walk every discovered module, parse its index.ts +
  * router.ts statically, and emit a Markdown file under
  * `<project>/docs/modules/<name>.md` with:
  *   - Description (from package.json)
@@ -18,7 +14,6 @@ import { cliLog } from '../utils/logger'
  *   - Declared dependencies
  *   - RPC procedures (name + type + input shape)
  *   - Locale key list
- *
  * The output is intentionally hand-readable so the same files can be
  * dropped into a VitePress / Starlight site later.
  */

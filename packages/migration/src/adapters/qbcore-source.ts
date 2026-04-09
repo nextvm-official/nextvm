@@ -3,9 +3,6 @@ import type { LegacyPlayer, MigrationSource } from '../types'
 
 /**
  * QBCore migration source.
- *
- * Concept v2.3, Chapter 16.2 — reads from the standard QBCore schema.
- *
  * QBCore schema:
  *   players(citizenid PRIMARY KEY, license VARCHAR, name VARCHAR,
  *           money JSON, charinfo JSON, job JSON, gang JSON,
@@ -15,8 +12,6 @@ import type { LegacyPlayer, MigrationSource } from '../types'
  *               "gender": 0, "nationality": "..." }
  *   job:      { "name": "...", "label": "...", "grade": { "level": N } }
  *   inventory: [{ "slot": 1, "name": "...", "amount": N, ... }]
- *
- * GUARD-006: instance state, no globals.
  */
 export class QbCoreMigrationSource implements MigrationSource {
 	readonly framework = 'qbcore' as const

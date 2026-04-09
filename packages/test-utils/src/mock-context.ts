@@ -4,10 +4,7 @@ import { createMockLogger, type MockLogger } from './mock-logger'
 
 /**
  * Mock ModuleContext with full assertion support.
- *
- * Concept v2.3, Chapter 31 (Testing Strategy):
  *   createMockContext() — fully wired ModuleContext for unit tests.
- *
  * The returned object is a real ModuleContext PLUS a `harness` field
  * that exposes the recording event bus, the recording logger, and the
  * lifecycle handler buckets so tests can inspect what the module did.

@@ -3,12 +3,8 @@ import type { DatabaseAdapter } from '../adapter'
 
 /**
  * MySQL/MariaDB Adapter — primary adapter for NextVM.
- *
- * Concept v2.3, Chapter 6 + 12:
  *   "DB Primary: MySQL/MariaDB — Community compat (oxmysql)"
- *
  * Uses mysql2/promise with connection pooling.
- * GUARD-006 compliant: pool lives on the instance.
  */
 export class MySqlAdapter implements DatabaseAdapter {
 	readonly vendor = 'mysql'

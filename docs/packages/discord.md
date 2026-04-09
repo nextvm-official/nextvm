@@ -116,5 +116,5 @@ the auto-log subscriptions, and starts the status bot timer.
 
 ## See also
 
-- [Concept Chapter 30](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [com/nextvm-official/nextvm/tree/main/docs/concept)
 - [Permissions](/concept/permissions)

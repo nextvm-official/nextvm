@@ -1,13 +1,10 @@
 /**
  * NuiBrowser — runs inside the NUI browser frame (the React/Vite app).
- *
  * Listens for `window.message` events from the FiveM client and exposes
  * the typed channel API to NUI code. Outbound calls use `fetch` against
  * `https://<resource>/<channel>` — the FiveM RegisterNUICallback handler
  * on the client side wakes up and resolves the fetch with whatever
  * `respond()` was called with.
- *
- * Concept v2.3, Chapter 19.
  */
 
 import {

@@ -1,8 +1,5 @@
 /**
  * @nextvm/discord — Discord integration for NextVM
- *
- * Concept v2.3, Chapter 30.
- *
  * Optional package. Server operators who want custom Discord logic can
  * use discord.js directly. This package provides typed, opinionated
  * helpers for the most common features:
@@ -11,7 +8,6 @@
  *   - Whitelist (block connections without required Discord roles)
  *   - Staff Chat Bridge (in-game ↔ Discord channel)
  *   - Status Bot (periodic player count / uptime)
- *
  * Uses Discord.js v14 internally.
  */
 

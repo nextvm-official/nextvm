@@ -21,7 +21,6 @@ export interface BootstrapOptions {
 	 * Optional `setupCompat()` callback — called once after the loader
 	 * has finished `initialize()`. The runtime passes its FiveM-backed
 	 * ExportsApi and a CompatDataSource bound to the live CharacterService.
-	 *
 	 * Importing `@nextvm/compat` here is opt-in so resources that don't
 	 * need ESX/QBCore exports stay lean.
 	 */
@@ -37,27 +36,23 @@ export interface BootstrapOptions {
 	tickIntervalMs?: number
 
 	/**
-	 * State hot-reload snapshot config (Concept Chapter 15.2).
-	 *
+	 * State hot-reload snapshot config.
 	 *   - On `runtime.stop()` the runtime walks every registered state
 	 *     store and writes one timestamped JSON file with their
 	 *     `serialize()` output.
 	 *   - On the next `bootstrapServer()` call, if that file exists
 	 *     and is younger than `staleAfterMs` (default 60s), the runtime
 	 *     deserializes every matching store and deletes the file.
-	 *
 	 * Set to `false` to disable the feature entirely.
 	 */
 	stateSnapshot?: SnapshotOptions | false
 
 	/**
-	 * Live ensure-restart bridge for `nextvm dev` (Concept Chapter 15.2).
-	 *
+	 * Live ensure-restart bridge for `nextvm dev`.
 	 * When set, the runtime watches `.nextvm/dev-trigger.json` and runs
 	 * `ExecuteCommand('ensure <module>')` whenever the build orchestrator
 	 * writes a new trigger. State is preserved automatically by the
 	 * snapshot mechanism.
-	 *
 	 * Off by default — only enable in dev. `true` uses the defaults,
 	 * an object overrides them.
 	 */

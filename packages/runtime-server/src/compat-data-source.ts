@@ -2,7 +2,6 @@ import type { CharacterService } from '@nextvm/core'
 
 /**
  * Compat data source backed by the live CharacterService.
- *
  * Pulled into a dedicated module so `@nextvm/compat` can stay an
  * optional peer dependency: the type is structural and matches the
  * `CompatDataSource` interface from `@nextvm/compat` without importing

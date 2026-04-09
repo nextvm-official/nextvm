@@ -8,15 +8,10 @@ import type {
 
 /**
  * RoutingService — Managed routing buckets / instancing.
- *
- * Concept v2.3, Chapter 7.2:
  *   Wraps: SetPlayerRoutingBucket, SetEntityRoutingBucket, GetEntityRoutingBucket
  *   Solves: Vehicle sync bugs, no auto entity cleanup, no bucket management
- *
- * GUARD-006 compliant: No static/global mutable state.
  * State lives in the instance, which is created and owned by the DI container.
  * Framework creates one RoutingService per server lifecycle.
- *
  * Key behaviors:
  *   - Before changing bucket: auto exit vehicle (prevents sync bug)
  *   - Migrates owned entities to new bucket
@@ -30,7 +25,6 @@ export class RoutingService {
 
 	/**
 	 * Create a managed instance (auto-assigns a free bucket).
-	 * Concept v2.3 API:
 	 *   const instance = await nextvm.routing.createInstance({ label, players, onEmpty })
 	 */
 	createInstance(config: RoutingInstanceConfig): RoutingInstance {
@@ -58,7 +52,6 @@ export class RoutingService {
 	/**
 	 * Move a player to an instance.
 	 * Handles vehicle exit and entity migration.
-	 * Concept v2.3: "before changing a player's bucket, the framework
 	 * automatically exits them from vehicles"
 	 */
 	movePlayer(source: PlayerSource, instanceId: string): void {
@@ -83,7 +76,6 @@ export class RoutingService {
 
 	/**
 	 * Return a player to the main world (bucket 0).
-	 * Concept v2.3 API: await nextvm.routing.resetPlayer(source)
 	 */
 	resetPlayer(source: PlayerSource): void {
 		this.removePlayerFromCurrentInstance(source)

@@ -5,10 +5,7 @@ import type { CompatDataSource, ExportsApi } from './types'
 
 /**
  * Setup options for the compatibility layer.
- *
- * Concept v2.3, Chapter 16.1:
  *   "Phase A: Install NextVM alongside existing framework. Enable @nextvm/compat."
- *
  * The server bootstrap calls setupCompat() once during startup, after
  * CharacterService and the player/inventory modules are ready.
  */
@@ -21,11 +18,9 @@ export interface SetupCompatOptions {
 
 /**
  * Wire up the @nextvm/compat exports.
- *
  * After this returns, legacy Lua resources can call:
  *   local ESX = exports['es_extended']:getSharedObject()
  *   local QBCore = exports['qb-core']:GetCoreObject()
- *
  * and receive properly-shaped objects backed by NextVM data.
  */
 export function setupCompat(opts: SetupCompatOptions): void {

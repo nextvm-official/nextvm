@@ -5,14 +5,11 @@ import { cliLog } from '../utils/logger'
 
 /**
  * `nextvm validate` — Static checks on the current project.
- *
- * Concept v2.3, Chapter 17 + .ai/MODULE_ARCHITECTURE.md
- *
  * Performs structural + GUARD checks that don't require the build pipeline:
  *   - nextvm.config.ts exists
  *   - Each module has src/index.ts
- *   - Each module has at least an en locale file (GUARD-012)
- *   - Modules importing @nextvm/tebex ship a MONETIZATION.md (GUARD-013)
+ *   - Each module has at least an en locale file
+ *   - Modules importing @nextvm/tebex ship a MONETIZATION.md
  *   - Modules with declared dependencies have a matching adapter file (soft warn)
  *   - Modules expose a separate src/server/ + src/server/router.ts (soft warn)
  *   - Every RPC procedure in router.ts has a Zod .input(...) (hard error)
@@ -78,35 +75,35 @@ function validateModule(mod: string, errors: string[], warnings: string[]): void
 		return
 	}
 
-	// GUARD-012 — i18n required
 	const localesPath = join(modPath, 'src', 'shared', 'locales')
 	if (existsSync(localesPath)) {
 		const enPath = join(localesPath, 'en.ts')
 		if (!existsSync(enPath)) {
-			warnings.push(`Module '${mod}' has no en.ts locale (GUARD-012)`)
+			warnings.push(
+				`Module '${mod}' has a locales/ directory but no en.ts (default locale).`,
+			)
 		}
 	} else {
-		warnings.push(`Module '${mod}' has no locales directory (GUARD-012)`)
+		warnings.push(`Module '${mod}' has no shared/locales directory.`)
 	}
 
-	// GUARD-013 — PLA: real tebex imports require MONETIZATION.md
 	const monetizationPath = join(modPath, 'MONETIZATION.md')
 	const tebexImport =
 		/(?:import\s[^'"]*from\s+|require\s*\(\s*)['"]@nextvm\/tebex['"]/
 	if (tebexImport.test(indexContent) && !existsSync(monetizationPath)) {
 		errors.push(
-			`Module '${mod}' imports @nextvm/tebex but lacks MONETIZATION.md (GUARD-013)`,
+			`Module '${mod}' imports @nextvm/tebex but ships no MONETIZATION.md (PLA compliance).`,
 		)
 	}
 
-	// MODULE_ARCHITECTURE — soft warn if no layered structure
+	// Soft warn if no layered structure
 	const serverDir = join(modPath, 'src', 'server')
 	const hasService = existsSync(join(serverDir, 'service.ts'))
 	const hasRouter = existsSync(join(serverDir, 'router.ts'))
 	const isLayered = hasService && hasRouter
 	if (!isLayered) {
 		warnings.push(
-			`Module '${mod}' is not using the layered structure (src/server/service.ts + router.ts). See .ai/MODULE_ARCHITECTURE.md.`,
+			`Module '${mod}' is not using the layered structure (src/server/service.ts + router.ts). See https://docs.nextvm.dev/guide/module-authoring.`,
 		)
 	}
 
@@ -124,12 +121,11 @@ function validateModule(mod: string, errors: string[], warnings: string[]): void
 		const hasAdapter = candidatePaths.some((p) => existsSync(p))
 		if (!hasAdapter) {
 			warnings.push(
-				`Module '${mod}' declares dependency '${dep}' but has no adapters/${short}-adapter.ts (GUARD-002 / MODULE_ARCHITECTURE §4)`,
+				`Module '${mod}' declares dependency '${dep}' but has no adapter file under src/adapters/.`,
 			)
 		}
 	}
 
-	// GUARD-005 — every procedure must have a Zod .input(...)
 	if (hasRouter) {
 		const routerPath = join(serverDir, 'router.ts')
 		try {
@@ -158,7 +154,6 @@ function extractDeclaredDependencies(content: string): string[] {
  * .query(...) or .mutation(...) should have a .input(z.<...>) earlier
  * in the same chain. Procedures with no input still need to declare so
  * via .input(z.void()) or accept that the audit will warn.
- *
  * This is a regex-level check — it catches the obvious case where the
  * developer forgot .input() entirely. The runtime RpcRouter is the
  * source of truth and rejects bad payloads anyway.
@@ -178,7 +173,7 @@ function validateRouterInputs(content: string): string[] {
 			// always indicate a missing schema.
 			if (match[3] === 'mutation') {
 				issues.push(
-					`procedure '${procName}' is a mutation without .input(z.object(...)) (GUARD-005)`,
+					`procedure '${procName}' is a mutation without .input(z.object(...))`,
 				)
 			}
 		}

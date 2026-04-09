@@ -9,9 +9,6 @@ import { charactersTable, usersTable } from './schema'
 
 /**
  * DbCharacterRepository — DB-backed implementation of CharacterRepository.
- *
- * Concept v2.3, Chapter 9.
- *
  * Implements the port defined in @nextvm/core using the @nextvm/db
  * query builder. This is the dependency-inversion pattern: core defines
  * the contract, db provides the implementation.

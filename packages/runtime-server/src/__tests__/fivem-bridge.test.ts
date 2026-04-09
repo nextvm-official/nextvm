@@ -4,7 +4,6 @@ import { bootstrapServer } from '../bootstrap'
 
 /**
  * Smoke tests for the FXServer event bridge inside `bootstrapServer`.
- *
  * The "happy" tests in bootstrap.test.ts drive the runtime through the
  * exposed `RuntimeHandle` methods. These tests instead stub the FiveM
  * globals (`on`, `onNet`, `emitNet`, `setTick`, `clearTick`,

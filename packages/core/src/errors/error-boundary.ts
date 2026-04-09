@@ -5,11 +5,8 @@ import type { ErrorOrigin } from './types'
 
 /**
  * ErrorBoundary — Wraps handlers in try/catch + error counter integration.
- *
- * Concept v2.3, Chapter 22.2:
  *   "NextVM wraps every module lifecycle hook, tick handler, event handler,
  *   and RPC handler in a try-catch boundary"
- *
  * Workflow:
  *   1. Catch the error
  *   2. Log it with full context (module, handler, stack)

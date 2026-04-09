@@ -4,16 +4,11 @@ import type { Permission, PermissionDefinition, Role } from './types'
 
 /**
  * PermissionsService — High-level RBAC built on top of FiveM ACE.
- *
- * Concept v2.3, Chapter 20.3:
  *   - Wraps ACE: grantRole/revokeRole map to add_principal/remove_principal
  *   - Permission checks delegate to IsPlayerAceAllowed
  *   - All ACE entries prefixed with `nextvm.` to avoid collisions
  *   - Existing server.cfg ACE groups are preserved (no overrides)
  *   - txAdmin, vMenu, etc. can see and manage NextVM permissions natively
- *
- * GUARD-006 compliant: instance state, no globals.
- *
  * Usage:
  *   const perms = new PermissionsService()
  *   perms.definePermission('banking.admin.setBalance')
@@ -40,7 +35,6 @@ export class PermissionsService {
 
 	/**
 	 * Define a permission. Idempotent.
-	 * Concept v2.3:
 	 *   "Module-defined permissions register as ACE entries"
 	 */
 	definePermission(name: Permission, options?: { description?: string; parent?: Permission }): void {
@@ -82,7 +76,6 @@ export class PermissionsService {
 
 	/**
 	 * Grant a role to a player.
-	 * Concept v2.3:
 	 *   nextvm.permissions.grantRole(source, 'admin')
 	 *   → ExecuteCommand('add_principal identifier.license:xxx group.nextv_admin')
 	 */
@@ -131,7 +124,7 @@ export class PermissionsService {
 
 	/**
 	 * Get a player's primary principal (license identifier) for ACE.
-	 * Delegated to the natives layer (GUARD-001).
+	 * Delegated to the natives layer.
 	 */
 	private getPlayerPrincipal(source: number): string | null {
 		return Permissions.getLicensePrincipal(source)

@@ -11,8 +11,6 @@ const LOG_LEVELS: Record<LogLevel, number> = {
 
 /**
  * Structured JSON logger per module.
- *
- * Concept v2.3, Chapter 22.1:
  *   "Per-module logger with automatic context"
  *   Output format: { level, module, msg, data, timestamp, source? }
  *   Log levels configurable per module via config.
@@ -72,7 +70,7 @@ export class Logger implements ModuleLogger {
 		}
 
 		// Structured JSON output — parseable by log aggregators (Loki, Elasticsearch)
-		// and by the SaaS dashboard (Chapter 22.4)
+		// and by the SaaS dashboard
 		const json = JSON.stringify(entry)
 
 		switch (level) {
@@ -90,7 +88,6 @@ export class Logger implements ModuleLogger {
 
 /**
  * Create a logger for a module.
- * Concept v2.3: const log = logger.child({ module: 'banking' })
  */
 export function createLogger(moduleName: string, level?: LogLevel): Logger {
 	return new Logger(moduleName, level)

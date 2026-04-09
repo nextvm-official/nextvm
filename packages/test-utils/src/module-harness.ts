@@ -4,18 +4,15 @@ import { createMockLogger, type MockLogger } from './mock-logger'
 
 /**
  * createModuleHarness — high-level test helper for module routers.
- *
  * Wraps an RpcRouter, an event bus, a logger, and a charId resolver in
  * one object so module router tests are one-liners. Compared to manually
  * instantiating an RpcRouter and calling .register() / .setCharIdResolver()
  * this:
- *
  *   - keeps every test isolated (fresh state per harness)
  *   - exposes recording event bus + logger so tests can assert on side
  *     effects without wiring spies
  *   - supports per-test injection of dependent modules so adapter
  *     contracts can be exercised end-to-end
- *
  * Usage:
  *   const harness = createModuleHarness({
  *     namespace: 'banking',
@@ -74,7 +71,6 @@ export function createModuleHarness<TRouter extends Router>(
 
 /**
  * Convenience: build a harness inline from a router definition.
- *
  * Useful when the test only needs the dispatch helper and doesn't
  * care about exposing the underlying router separately.
  */

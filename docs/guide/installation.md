@@ -83,7 +83,7 @@ the conventions in [Module Authoring](/guide/module-authoring).
 
 For a one-file prototype use `--blank` instead of `--full`.
 
-### C. Install from the registry (Phase 3)
+### C. Install from the registry
 
 ```bash
 nextvm add @nextvm-community/loans     # lands with the registry backend
@@ -178,8 +178,8 @@ This runs static checks on every module:
 
 - ✓ Each module has `src/index.ts`
 - ✓ Each module has `en.ts` locale
-- ✓ Each module's RPC mutations have Zod input schemas (GUARD-005)
-- ✓ Modules importing `@nextvm/tebex` ship a `MONETIZATION.md` (GUARD-013)
+- ✓ Each module's RPC mutations have Zod input schemas
+- ✓ Modules importing `@nextvm/tebex` ship a `MONETIZATION.md`
 - ⚠ Soft-warns when a module isn't using the layered structure
 - ⚠ Soft-warns when declared dependencies have no adapter file
 

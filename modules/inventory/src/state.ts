@@ -10,8 +10,7 @@ const slotSchema = z.object({
 })
 
 /**
- * Inventory state — character-scoped (GUARD-011).
- *
+ * Inventory state — character-scoped.
  * Slots are stored as an array of (slot, item) tuples to keep the
  * shape JSON-serializable for state bag persistence and DB storage.
  */

@@ -2,8 +2,6 @@ import type { ModuleLogger } from '@nextvm/core'
 
 /**
  * Recording logger — captures every log call so tests can assert on them.
- *
- * Concept v2.3, Chapter 31.
  */
 export interface MockLogger extends ModuleLogger {
 	/** All log entries since creation (or last reset()) */

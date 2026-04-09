@@ -1,6 +1,6 @@
 # Permissions (ACE)
 
-> Concept v2.3, Chapter 20.3
+> 3
 
 NextVM's RBAC sits **on top of** FiveM's built-in ACE system, not
 parallel to it. Every NextVM permission is registered as an ACE entry
@@ -104,4 +104,4 @@ build the ACE principal. The natives layer's
 
 - [`@nextvm/core/permissions`](/packages/core)
 - [`@nextvm/discord` role sync](/packages/discord)
-- [Concept v2.3 Chapter 20.3](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [3](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)

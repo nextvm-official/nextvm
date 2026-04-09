@@ -20,9 +20,6 @@ function resolveBus(explicit?: NuiBrowser): NuiBrowser {
 
 /**
  * React hooks for the NextVM NUI bridge.
- *
- * Concept v2.3, Chapter 19.
- *
  * All hooks accept an optional `bus` argument so tests (and apps that
  * intentionally avoid the provider) can pass an instance directly. If
  * omitted, the hook reads the `NuiBrowser` from `<NuiProvider>`.
@@ -30,9 +27,7 @@ function resolveBus(explicit?: NuiBrowser): NuiBrowser {
 
 /**
  * Subscribe to a one-way push from the FiveM client over a NUI channel.
- *
  *   useNuiMessage<HudState>('hud.update', (state) => setHud(state))
- *
  * The handler is wrapped in a stable ref so re-renders don't churn the
  * underlying subscription. The cleanup runs on unmount.
  */
@@ -53,7 +48,6 @@ export function useNuiMessage<T = unknown>(
  * Subscribe to the latest value pushed over a channel and expose it as
  * React state. Equivalent to `useNuiMessage` + `useState` but in one
  * call. The initial value is used until the first message arrives.
- *
  *   const hud = useNuiState<HudState>('hud.update', { hp: 100, armor: 0 })
  */
 export function useNuiState<T>(
@@ -69,10 +63,8 @@ export function useNuiState<T>(
 /**
  * Imperatively call a callback registered on the FiveM client side and
  * await its response.
- *
  *   const buy = useNuiCallback('shop.buy')
  *   await buy({ itemId: 'water' })
- *
  * The returned function is stable across re-renders for the same
  * channel + bus pair.
  */
@@ -91,7 +83,6 @@ export function useNuiCallback<TArgs = unknown, TResult = unknown>(
  * Like `useNuiCallback`, but tracks the in-flight + result + error
  * state in React. Useful for buttons that should disable themselves
  * while a request is pending.
- *
  *   const { call, loading, data, error } = useNuiRequest<Offer[]>('shop.list')
  *   useEffect(() => { call() }, [call])
  */

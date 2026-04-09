@@ -152,4 +152,4 @@ output, and error capture with the offending identifier.
 - [Migration from ESX](/guide/migration-from-esx)
 - [Migration from QBCore](/guide/migration-from-qbcore)
 - [`nextvm migrate:from`](/cli/migrate-from)
-- [Concept Chapter 16.2](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [2](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)

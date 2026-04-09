@@ -6,7 +6,6 @@ import type {
 
 /**
  * InMemoryMigrationSource — testing helper.
- *
  * Pass a static list of legacy players and the source iterates over them.
  * Used by every test in @nextvm/migration so suites stay free of real
  * databases. Production code uses EsxMigrationSource / QbCoreMigrationSource.
@@ -27,7 +26,6 @@ export class InMemoryMigrationSource implements MigrationSource {
 
 /**
  * InMemoryMigrationTarget — testing helper.
- *
  * Records every insertUser + insertCharacter call so tests can assert
  * on the resulting NextVM rows without touching a real database.
  */

@@ -17,7 +17,7 @@ nextvm dev
 4. On change → debounces, rebuilds the affected module with
    `skipLocales: true` for speed
 5. Fires the `onModuleRebuilt` callback so the runtime layer can
-   `ensure`-restart the resource (Phase 4)
+   `ensure`-restart the resource
 
 The session stays alive until you hit Ctrl+C or send SIGTERM.
 
@@ -40,8 +40,8 @@ Press Ctrl+C to stop.
 
 ## What it doesn't do (yet)
 
-- **NUI HMR** lands in Phase 4 with the full runtime layer
-- **State preservation across restarts** lands in Phase 4 — modules
+- **NUI HMR** lands in with the full runtime layer
+- **State preservation across restarts** lands in — modules
   can already opt in via `serialize()` / `deserialize()` on their
   state stores, but the dev orchestrator doesn't automatically
   invoke them yet
@@ -56,4 +56,4 @@ These deferrals are documented in
 
 - [`nextvm build`](/cli/build) — one-shot production build
 - [`@nextvm/build`](/packages/build) package reference
-- [Concept Chapter 15.2](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [2](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)

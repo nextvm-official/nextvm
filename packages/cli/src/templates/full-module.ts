@@ -1,9 +1,8 @@
 /**
  * Full-layered module scaffold templates.
- *
- * Generates the same structure as the @nextvm/banking reference module
- * documented in .ai/MODULE_ARCHITECTURE.md. Files use the supplied
- * module name to keep imports + identifiers consistent.
+ * Generates the same structure as the @nextvm/banking reference module.
+ * Files use the supplied module name to keep imports + identifiers
+ * consistent.
  */
 
 const pascal = (name: string): string =>
@@ -42,12 +41,6 @@ import { ${Pascal}Service } from './server/service'
 
 /**
  * @nextvm/${name} — TODO: describe what this module owns.
- *
- * Architecture: see .ai/MODULE_ARCHITECTURE.md.
- *
- * GUARDs followed: 001, 002 (deps via DI), 003 (server-authoritative),
- * 005 (Zod-validated RPC), 009 (config .describe + .default),
- * 011 (charId scoping), 012 (i18n locales).
  */
 
 /** Public service surface — consumed via inject<${Pascal}Exports>('${name}') */
@@ -111,11 +104,6 @@ export { build${Pascal}Router } from './server/router'
 
 	const serverServiceTs = `/**
  * ${Pascal}Service — domain logic for the ${name} module.
- *
- * GUARD-003: server-authoritative writes only.
- * GUARD-006: instance state, no global mutables.
- * GUARD-011: every per-character map keyed by charId, never source.
- *
  * Tests: __tests__/service.test.ts exercises this directly without an
  * RpcRouter — the service is pure TS so service-level tests are fast
  * and stable.
@@ -142,8 +130,6 @@ import type { ${Pascal}Service } from './service'
 
 /**
  * Build the ${name} RPC router with the service captured in the closure.
- *
- * GUARD-005: every procedure has a Zod input schema.
  * The router is a thin boundary — business logic lives in the service.
  */
 export function build${Pascal}Router(service: ${Pascal}Service) {
@@ -163,7 +149,6 @@ export function build${Pascal}Router(service: ${Pascal}Service) {
 
 	const clientIndexTs = `/**
  * Client-side entry for the ${name} module.
- *
  * Runs in the FiveM V8 client runtime. Use ctx.onMounted() for code
  * that needs the local player to be spawned, ctx.onTick() for managed
  * frame loops, and ctx.events.on() to react to other modules.
@@ -177,8 +162,6 @@ export {}
 
 /**
  * Shared Zod schemas for the ${name} module.
- *
- * Concept v2.3, Chapter 6: schemas are the single source of truth for
  * runtime validation, TypeScript types, dashboard widgets, and i18n key
  * enforcement. Define them here and import from server/router.ts.
  */
@@ -192,7 +175,6 @@ export type ExampleInput = z.infer<typeof exampleInputSchema>
 
 	const sharedConstantsTs = `/**
  * Shared constants for the ${name} module.
- *
  * Event names, ACE permission strings, default values that need to be
  * referenced from both server and client live here. Keeping them as
  * exported constants makes refactoring safe (one rename, all callers
@@ -210,9 +192,7 @@ export const PERMISSIONS = {
 
 	const localeEnTs = `import { defineLocale } from '@nextvm/i18n'
 
-export default defineLocale({
-	'${name}.title': '${name}',
-	// TODO: add user-facing strings (GUARD-012)
+export default defineLocale
 })
 `
 
@@ -230,7 +210,7 @@ Drop typed interfaces here for every module this module **consumes** at
 runtime via \`ctx.inject<T>('other-module')\`.
 
 Defining the contract here (instead of importing the producer module
-directly) is the GUARD-002 escape hatch: the consumer owns the shape it
+directly) is the  escape hatch: the consumer owns the shape it
 needs, the producer does not have to know who calls it, and tests can
 trivially substitute a stub.
 

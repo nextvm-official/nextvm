@@ -32,7 +32,7 @@ The runtime:
    entry runs and `onModuleInit` / `onModuleReady` hooks fire
 4. Bridges FiveM client events:
    - `playerSpawned` → `onMounted` (the "framework is ready, the
-     local player ped exists" hook from Concept 8.3)
+     local player ped exists" hook 
    - `onClientResourceStop` → `onModuleStop`
 5. Starts the managed tick loop via `setTick`
 
@@ -84,4 +84,4 @@ const balance = await banking.getMyBalance()
 
 - [`@nextvm/runtime-server`](/packages/runtime-server) — server side
 - [`@nextvm/core`](/packages/core) — `createClient` typed proxy
-- [Concept Chapter 10.2](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)
+- [2](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)

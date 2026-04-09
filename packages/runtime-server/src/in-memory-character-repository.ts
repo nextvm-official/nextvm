@@ -10,7 +10,6 @@ import type {
  * repository is supplied to `bootstrapServer`. Lets a NextVM resource
  * boot and accept connections without a database — handy for smoke
  * tests, demos, and "first run" experiences.
- *
  * Production deployments should pass a `DbCharacterRepository` from
  * `@nextvm/db` instead.
  */

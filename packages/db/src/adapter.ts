@@ -1,6 +1,5 @@
 /**
  * Database Adapter interface.
- *
  * The query builder is adapter-agnostic. Adapters translate the
  * neutral query representation into vendor-specific SQL.
  */
