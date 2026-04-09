@@ -1,31 +1,42 @@
 {
-  "name": "@nextvm/test-utils",
-  "version": "0.0.1",
-  "description": "Testing utilities — mock context, mock player, mock DB for NextVM module tests",
-  "license": "LGPL-3.0",
-  "publishConfig": { "access": "public" },
-  "engines": { "node": ">=22.0.0 <23.0.0" },
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
-  },
-  "peerDependencies": {
-    "@nextvm/core": "workspace:*"
-  },
-  "devDependencies": {
-    "@nextvm/core": "workspace:*",
-    "tsup": "^8.4.0",
-    "typescript": "^5.7.0"
-  }
+	"name": "@nextvm/test-utils",
+	"version": "0.0.1",
+	"description": "Testing utilities — mock context, mock player, mock DB for NextVM module tests",
+	"license": "LGPL-3.0",
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nextvm-official/nextvm.git",
+		"directory": "packages/test-utils"
+	},
+	"homepage": "https://github.com/nextvm-official/nextvm/tree/main/packages/test-utils#readme",
+	"bugs": "https://github.com/nextvm-official/nextvm/issues",
+	"engines": {
+		"node": ">=22.0.0 <23.0.0"
+	},
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"typecheck": "tsc --noEmit",
+		"clean": "rm -rf dist"
+	},
+	"peerDependencies": {
+		"@nextvm/core": "workspace:*"
+	},
+	"devDependencies": {
+		"@nextvm/core": "workspace:*",
+		"tsup": "^8.4.0",
+		"typescript": "^5.7.0"
+	}
 }

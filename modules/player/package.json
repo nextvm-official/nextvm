@@ -1,38 +1,49 @@
 {
-  "name": "@nextvm/player",
-  "version": "0.0.1",
-  "description": "NextVM first-party player module — health, armor, position, identity",
-  "license": "LGPL-3.0",
-  "publishConfig": { "access": "public" },
-  "engines": { "node": ">=22.0.0 <23.0.0" },
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run --pool=forks --poolOptions.forks.singleFork=true",
-    "clean": "rm -rf dist"
-  },
-  "peerDependencies": {
-    "@nextvm/core": "workspace:*",
-    "@nextvm/natives": "workspace:*",
-    "@nextvm/i18n": "workspace:*"
-  },
-  "devDependencies": {
-    "@nextvm/core": "workspace:*",
-    "@nextvm/natives": "workspace:*",
-    "@nextvm/i18n": "workspace:*",
-    "@nextvm/test-utils": "workspace:*",
-    "tsup": "^8.4.0",
-    "typescript": "^5.7.0",
-    "vitest": "^2.1.0"
-  }
+	"name": "@nextvm/player",
+	"version": "0.0.1",
+	"description": "NextVM first-party player module — health, armor, position, identity",
+	"license": "LGPL-3.0",
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nextvm-official/nextvm.git",
+		"directory": "modules/player"
+	},
+	"homepage": "https://github.com/nextvm-official/nextvm/tree/main/modules/player#readme",
+	"bugs": "https://github.com/nextvm-official/nextvm/issues",
+	"engines": {
+		"node": ">=22.0.0 <23.0.0"
+	},
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run --pool=forks --poolOptions.forks.singleFork=true",
+		"clean": "rm -rf dist"
+	},
+	"peerDependencies": {
+		"@nextvm/core": "workspace:*",
+		"@nextvm/natives": "workspace:*",
+		"@nextvm/i18n": "workspace:*"
+	},
+	"devDependencies": {
+		"@nextvm/core": "workspace:*",
+		"@nextvm/natives": "workspace:*",
+		"@nextvm/i18n": "workspace:*",
+		"@nextvm/test-utils": "workspace:*",
+		"tsup": "^8.4.0",
+		"typescript": "^5.7.0",
+		"vitest": "^2.1.0"
+	}
 }

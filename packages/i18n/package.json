@@ -1,29 +1,40 @@
 {
-  "name": "@nextvm/i18n",
-  "version": "0.0.1",
-  "description": "NextVM i18n — typed translation keys, per-player locale, NUI-aware",
-  "license": "LGPL-3.0",
-  "publishConfig": { "access": "public" },
-  "engines": { "node": ">=22.0.0 <23.0.0" },
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run --pool=forks --poolOptions.forks.singleFork=true",
-    "clean": "rm -rf dist"
-  },
-  "devDependencies": {
-    "tsup": "^8.4.0",
-    "typescript": "^5.7.0",
-    "vitest": "^3.0.0"
-  }
+	"name": "@nextvm/i18n",
+	"version": "0.0.1",
+	"description": "NextVM i18n — typed translation keys, per-player locale, NUI-aware",
+	"license": "LGPL-3.0",
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nextvm-official/nextvm.git",
+		"directory": "packages/i18n"
+	},
+	"homepage": "https://github.com/nextvm-official/nextvm/tree/main/packages/i18n#readme",
+	"bugs": "https://github.com/nextvm-official/nextvm/issues",
+	"engines": {
+		"node": ">=22.0.0 <23.0.0"
+	},
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run --pool=forks --poolOptions.forks.singleFork=true",
+		"clean": "rm -rf dist"
+	},
+	"devDependencies": {
+		"tsup": "^8.4.0",
+		"typescript": "^5.7.0",
+		"vitest": "^3.0.0"
+	}
 }

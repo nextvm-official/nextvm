@@ -1,35 +1,46 @@
 {
-  "name": "@nextvm/db",
-  "version": "0.0.1",
-  "description": "NextVM database layer — typed query builder, migrations, MySQL adapter",
-  "license": "LGPL-3.0",
-  "publishConfig": { "access": "public" },
-  "engines": { "node": ">=22.0.0 <23.0.0" },
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run --pool=forks --poolOptions.forks.singleFork=true",
-    "clean": "rm -rf dist"
-  },
-  "dependencies": {
-    "@nextvm/core": "workspace:*",
-    "mysql2": "^3.11.0"
-  },
-  "devDependencies": {
-    "@nextvm/test-utils": "workspace:*",
-    "@types/node": "^22.0.0",
-    "tsup": "^8.4.0",
-    "typescript": "^5.7.0",
-    "vitest": "^3.0.0"
-  }
+	"name": "@nextvm/db",
+	"version": "0.0.1",
+	"description": "NextVM database layer — typed query builder, migrations, MySQL adapter",
+	"license": "LGPL-3.0",
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nextvm-official/nextvm.git",
+		"directory": "packages/db"
+	},
+	"homepage": "https://github.com/nextvm-official/nextvm/tree/main/packages/db#readme",
+	"bugs": "https://github.com/nextvm-official/nextvm/issues",
+	"engines": {
+		"node": ">=22.0.0 <23.0.0"
+	},
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run --pool=forks --poolOptions.forks.singleFork=true",
+		"clean": "rm -rf dist"
+	},
+	"dependencies": {
+		"@nextvm/core": "workspace:*",
+		"mysql2": "^3.11.0"
+	},
+	"devDependencies": {
+		"@nextvm/test-utils": "workspace:*",
+		"@types/node": "^22.0.0",
+		"tsup": "^8.4.0",
+		"typescript": "^5.7.0",
+		"vitest": "^3.0.0"
+	}
 }

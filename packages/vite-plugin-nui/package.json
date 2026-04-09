@@ -1,36 +1,49 @@
 {
-  "name": "@nextvm/vite-plugin-nui",
-  "version": "0.0.1",
-  "description": "Vite plugin for building NextVM NUI apps — FiveM-friendly defaults, fxmanifest snippet, HMR-ready dev URL",
-  "license": "LGPL-3.0",
-  "publishConfig": { "access": "public" },
-  "engines": { "node": ">=22.0.0 <23.0.0" },
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run --pool=forks --poolOptions.forks.singleFork=true",
-    "clean": "rm -rf dist"
-  },
-  "peerDependencies": {
-    "vite": "^5.0.0 || ^6.0.0"
-  },
-  "peerDependenciesMeta": {
-    "vite": { "optional": true }
-  },
-  "devDependencies": {
-    "@types/node": "^22.0.0",
-    "tsup": "^8.4.0",
-    "typescript": "^5.7.0",
-    "vitest": "^2.1.0"
-  }
+	"name": "@nextvm/vite-plugin-nui",
+	"version": "0.0.1",
+	"description": "Vite plugin for building NextVM NUI apps — FiveM-friendly defaults, fxmanifest snippet, HMR-ready dev URL",
+	"license": "LGPL-3.0",
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nextvm-official/nextvm.git",
+		"directory": "packages/vite-plugin-nui"
+	},
+	"homepage": "https://github.com/nextvm-official/nextvm/tree/main/packages/vite-plugin-nui#readme",
+	"bugs": "https://github.com/nextvm-official/nextvm/issues",
+	"engines": {
+		"node": ">=22.0.0 <23.0.0"
+	},
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run --pool=forks --poolOptions.forks.singleFork=true",
+		"clean": "rm -rf dist"
+	},
+	"peerDependencies": {
+		"vite": "^5.0.0 || ^6.0.0"
+	},
+	"peerDependenciesMeta": {
+		"vite": {
+			"optional": true
+		}
+	},
+	"devDependencies": {
+		"@types/node": "^22.0.0",
+		"tsup": "^8.4.0",
+		"typescript": "^5.7.0",
+		"vitest": "^2.1.0"
+	}
 }
