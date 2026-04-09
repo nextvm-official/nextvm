@@ -7,13 +7,12 @@ import type { LoadedProject, ResolvedModule } from './project-loader'
 
 /**
  * Dev orchestrator.
- *   "Dev mode: hot-reload, NUI HMR, file watching"
- * change. State preservation + NUI HMR + ensure-restart bridge follow
- * once the runtime layer is in place.
- * Each module's `src/` is watched. On change, that single module is
- * rebuilt via the build orchestrator (skipLocales=true for speed) and
- * a `module:rebuilt` callback is fired so the runtime can `ensure`-
- * restart the resource.
+ *
+ * Watches each module's `src/` directory. On change, the affected
+ * module is rebuilt incrementally via the build orchestrator
+ * (skipLocales=true for speed) and a `module:rebuilt` callback is
+ * fired so a co-located runtime-server can `ensure`-restart the
+ * resource.
  */
 
 export interface DevOptions {
@@ -38,6 +37,21 @@ export interface DevSession {
 	getWatchedCount(): number
 }
 
+/** Format a number of milliseconds for human reading. */
+function formatMs(ms: number): string {
+	if (ms < 1000) return `${ms}ms`
+	return `${(ms / 1000).toFixed(2)}s`
+}
+
+/** Format a wallclock timestamp for log lines. */
+function timestamp(): string {
+	const now = new Date()
+	const hh = String(now.getHours()).padStart(2, '0')
+	const mm = String(now.getMinutes()).padStart(2, '0')
+	const ss = String(now.getSeconds()).padStart(2, '0')
+	return `${hh}:${mm}:${ss}`
+}
+
 export async function runDev(
 	project: LoadedProject,
 	options: DevOptions = {},
@@ -45,12 +59,20 @@ export async function runDev(
 	const verbose = options.verbose ?? true
 	const debounceMs = options.debounceMs ?? 200
 
-	if (verbose) {
-		console.log(pc.bold(pc.cyan(`\nNextVM dev — watching ${project.modules.length} module(s)\n`)))
+	// Initial full build so the dev session starts from a known state.
+	// The CLI's `nextvm dev` command prints the banner — we don't want
+	// to duplicate it here, so this build is silent.
+	if (verbose && project.modules.length > 0) {
+		console.log(`  ${pc.dim('›')} Initial build of ${pc.bold(String(project.modules.length))} module(s)…`)
 	}
-
-	// Initial full build so the dev session starts from a known state
-	await runBuild(project, { verbose, skipLocales: false })
+	const buildStart = Date.now()
+	await runBuild(project, { verbose: false, skipLocales: false })
+	if (verbose && project.modules.length > 0) {
+		console.log(
+			`  ${pc.green('✓')} Initial build completed in ${pc.dim(formatMs(Date.now() - buildStart))}`,
+		)
+		console.log()
+	}
 
 	const watchers: FSWatcher[] = []
 	const pendingRebuilds = new Map<string, ReturnType<typeof setTimeout>>()
@@ -69,29 +91,42 @@ export async function runDev(
 				mod.name,
 				setTimeout(async () => {
 					pendingRebuilds.delete(mod.name)
+					const start = Date.now()
 					if (verbose) {
-						console.log(pc.dim(`\n[${new Date().toLocaleTimeString()}] `) + pc.cyan(`rebuilding ${mod.name}...`))
+						console.log(
+							`  ${pc.dim(timestamp())} ${pc.cyan('●')} Rebuilding ${pc.bold(mod.name)}…`,
+						)
 					}
 					try {
 						await runBuild(
 							{ ...project, modules: [mod] },
 							{ verbose: false, skipLocales: true },
 						)
-						if (verbose) console.log(`  ${pc.green('✓')} ${mod.name} rebuilt`)
+						const elapsed = Date.now() - start
+						if (verbose) {
+							console.log(
+								`  ${pc.dim(timestamp())} ${pc.green('✓')} ${pc.bold(mod.name)} rebuilt in ${pc.dim(formatMs(elapsed))}`,
+							)
+						}
 						if (options.writeTriggerFile !== false) {
 							try {
 								writeDevTrigger(mod.name, { rootDir: project.rootDir })
 							} catch (err) {
-								if (verbose)
+								if (verbose) {
 									console.error(
-										`  ${pc.yellow('!')} dev-trigger write failed: ${err instanceof Error ? err.message : String(err)}`,
+										`  ${pc.dim(timestamp())} ${pc.yellow('⚠')} dev-trigger write failed: ${
+											err instanceof Error ? err.message : String(err)
+										}`,
 									)
+								}
 							}
 						}
 						await options.onModuleRebuilt?.(mod)
 					} catch (err) {
 						console.error(
-							`  ${pc.red('✗')} ${mod.name} build failed: ${err instanceof Error ? err.message : String(err)}`,
+							`  ${pc.dim(timestamp())} ${pc.red('✗')} ${pc.bold(mod.name)} build failed: ${
+								err instanceof Error ? err.message : String(err)
+							}`,
 						)
 					}
 				}, debounceMs),
@@ -102,10 +137,6 @@ export async function runDev(
 		watcher.on('change', triggerRebuild)
 		watcher.on('unlink', triggerRebuild)
 		watchers.push(watcher)
-	}
-
-	if (verbose) {
-		console.log(pc.dim('\nPress Ctrl+C to stop.\n'))
 	}
 
 	return {

@@ -1,3 +1,14 @@
+import {
+	cancel,
+	confirm,
+	intro,
+	isCancel,
+	log,
+	note,
+	outro,
+	select,
+	text,
+} from '@clack/prompts'
 import { existsSync } from 'node:fs'
 import { mkdir, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, resolve } from 'node:path'
@@ -9,36 +20,40 @@ import { renderStarterTemplate } from './templates/starter'
 /**
  * create-nextvm — scaffold a new NextVM server project.
  *
- * Invoked via `pnpm create nextvm@latest <name>`,
- * `npm create nextvm@latest <name>`, or `yarn create nextvm <name>`.
+ * Two modes:
  *
- * The package manager auto-strips its own arguments, so we just read
- * the rest of process.argv as the project name + flags.
+ *   1. Non-interactive: pass project name + flags as args
+ *      pnpm create nextvm@latest my-server --template starter
+ *
+ *   2. Interactive wizard: run with no args
+ *      pnpm create nextvm@latest
  */
 
 export type TemplateName = 'blank' | 'starter'
 
 interface ParsedArgs {
 	name: string | null
-	template: TemplateName
+	template: TemplateName | null
 	help: boolean
 	version: boolean
+	yes: boolean
 }
 
 const PKG_VERSION = '0.1.0'
 
 const TEMPLATE_DESCRIPTIONS: Record<TemplateName, string> = {
-	blank: 'Empty NextVM project — no modules, no bootstrap (default)',
+	blank: 'Empty project — add your own modules from scratch',
 	starter:
-		'Working server: bootstrap module + example shop module + all first-party modules wired in',
+		'Working server: bootstrap + example shop module + every first-party module wired in',
 }
 
 function parseArgs(args: string[]): ParsedArgs {
 	const result: ParsedArgs = {
 		name: null,
-		template: 'blank',
+		template: null,
 		help: false,
 		version: false,
+		yes: false,
 	}
 	for (let i = 0; i < args.length; i++) {
 		const arg = args[i]!
@@ -46,9 +61,11 @@ function parseArgs(args: string[]): ParsedArgs {
 			result.help = true
 		} else if (arg === '--version' || arg === '-v') {
 			result.version = true
+		} else if (arg === '--yes' || arg === '-y') {
+			result.yes = true
 		} else if (arg === '--template' || arg === '-t') {
 			const next = args[i + 1]
-			if (next && (next === 'blank' || next === 'starter')) {
+			if (next === 'blank' || next === 'starter') {
 				result.template = next
 				i++
 			}
@@ -66,34 +83,31 @@ function parseArgs(args: string[]): ParsedArgs {
 
 function printHelp(): void {
 	stdout.write(`
-${pc.bold('create-nextvm')} ${pc.dim(`v${PKG_VERSION}`)}
+${pc.bold(pc.cyan('▲ create-nextvm'))} ${pc.dim(`v${PKG_VERSION}`)}
 
-Scaffold a new NextVM server project.
+${pc.dim('Scaffold a new NextVM server project.')}
 
 ${pc.bold('Usage:')}
-  ${pc.cyan('pnpm create nextvm@latest')} ${pc.yellow('<project-name>')} ${pc.dim('[--template <name>]')}
-  ${pc.cyan('npm create nextvm@latest')}  ${pc.yellow('<project-name>')} ${pc.dim('[--template <name>]')}
-  ${pc.cyan('yarn create nextvm')}        ${pc.yellow('<project-name>')} ${pc.dim('[--template <name>]')}
+  ${pc.cyan('pnpm create nextvm@latest')}                          ${pc.dim('# interactive wizard')}
+  ${pc.cyan('pnpm create nextvm@latest')} ${pc.yellow('<project-name>')}           ${pc.dim('# blank template')}
+  ${pc.cyan('pnpm create nextvm@latest')} ${pc.yellow('<project-name>')} ${pc.dim('--template starter')}
 
 ${pc.bold('Templates:')}
   ${pc.green('blank')}    ${TEMPLATE_DESCRIPTIONS.blank}
   ${pc.green('starter')}  ${TEMPLATE_DESCRIPTIONS.starter}
 
 ${pc.bold('Examples:')}
-  ${pc.cyan('pnpm create nextvm@latest my-server')}
-  ${pc.cyan('pnpm create nextvm@latest my-server --template starter')}
-
-${pc.bold('After scaffolding:')}
-  ${pc.dim('cd my-server')}
-  ${pc.dim('pnpm install')}
-  ${pc.dim('pnpm dev')}
+  ${pc.dim('$')} ${pc.cyan('pnpm create nextvm@latest my-server')}
+  ${pc.dim('$')} ${pc.cyan('pnpm create nextvm@latest my-server --template starter')}
+  ${pc.dim('$')} ${pc.cyan('pnpm create nextvm@latest')}             ${pc.dim('# guided setup')}
 
 ${pc.bold('Options:')}
-  ${pc.dim('-t, --template <name>')}  Template to scaffold (default: blank)
+  ${pc.dim('-t, --template <name>')}  Template to scaffold ${pc.dim('(blank | starter)')}
+  ${pc.dim('-y, --yes')}              Skip prompts, accept all defaults
   ${pc.dim('-h, --help')}             Show this help
   ${pc.dim('-v, --version')}          Show version
 
-Documentation: ${pc.underline('https://docs.nextvm.dev')}
+${pc.dim('Documentation:')} ${pc.underline('https://docs.nextvm.dev')}
 `)
 }
 
@@ -115,20 +129,97 @@ async function writeFiles(targetRoot: string, files: FileEntry[]): Promise<void>
 	}
 }
 
-async function scaffold(projectName: string, template: TemplateName): Promise<void> {
-	const target = resolve(process.cwd(), projectName)
+interface ResolvedConfig {
+	name: string
+	template: TemplateName
+}
+
+/**
+ * Resolve project config from args + (optionally) interactive prompts.
+ */
+async function resolveConfig(args: ParsedArgs): Promise<ResolvedConfig> {
+	// Path 1: fully specified, non-interactive
+	if (args.name && args.template) {
+		return { name: args.name, template: args.template }
+	}
+
+	// Path 2: yes-mode (CI / scripted)
+	if (args.yes && args.name) {
+		return { name: args.name, template: args.template ?? 'blank' }
+	}
+
+	// Path 3: backward-compat — name without template defaults to blank
+	if (args.name && !args.template) {
+		return { name: args.name, template: 'blank' }
+	}
+
+	// Path 4: full interactive wizard
+	intro(`${pc.bgCyan(pc.black(' ▲ NextVM '))} ${pc.dim(`v${PKG_VERSION}`)}`)
+
+	const projectName = await text({
+		message: 'Project name',
+		placeholder: 'my-fivem-server',
+		validate: (value) => {
+			if (!value) return 'Project name is required'
+			if (!isValidProjectName(value)) {
+				return 'Use lowercase letters, numbers, hyphens or underscores. Must start with a letter or number.'
+			}
+			if (existsSync(resolve(process.cwd(), value))) {
+				return `Directory "${value}" already exists`
+			}
+			return undefined
+		},
+	})
+
+	if (isCancel(projectName)) {
+		cancel('Cancelled.')
+		exit(0)
+	}
+
+	const template = await select<TemplateName>({
+		message: 'Pick a template',
+		options: [
+			{
+				value: 'starter',
+				label: `${pc.bold('Starter')}${pc.dim('  — recommended')}`,
+				hint: TEMPLATE_DESCRIPTIONS.starter,
+			},
+			{
+				value: 'blank',
+				label: pc.bold('Blank'),
+				hint: TEMPLATE_DESCRIPTIONS.blank,
+			},
+		],
+		initialValue: 'starter',
+	})
+
+	if (isCancel(template)) {
+		cancel('Cancelled.')
+		exit(0)
+	}
+
+	const proceed = await confirm({
+		message: `Create ${pc.cyan(projectName as string)} with template ${pc.green(template as string)}?`,
+		initialValue: true,
+	})
+
+	if (isCancel(proceed) || !proceed) {
+		cancel('Cancelled.')
+		exit(0)
+	}
+
+	return {
+		name: projectName as string,
+		template: template as TemplateName,
+	}
+}
+
+async function scaffold(config: ResolvedConfig): Promise<void> {
+	const target = resolve(process.cwd(), config.name)
 	const displayName = basename(target)
 
-	stdout.write(
-		`\n${pc.bold(pc.cyan('▲ Creating NextVM project'))} ${pc.yellow(displayName)} ` +
-			`${pc.dim(`(template: ${template})`)}\n\n`,
-	)
-
 	if (existsSync(target)) {
-		stdout.write(
-			`${pc.red('✗')} Directory ${pc.yellow(target)} already exists.\n` +
-				`  Pick a different name or remove the existing directory first.\n\n`,
-		)
+		log.error(`Directory ${pc.yellow(target)} already exists.`)
 		exit(1)
 	}
 
@@ -136,43 +227,42 @@ async function scaffold(projectName: string, template: TemplateName): Promise<vo
 	await mkdir(join(target, 'modules'), { recursive: true })
 
 	const files =
-		template === 'starter'
+		config.template === 'starter'
 			? renderStarterTemplate(displayName)
 			: renderBlankTemplate(displayName)
 
 	await writeFiles(target, files)
 
-	const fileCount = files.length
-	stdout.write(
-		`${pc.green('✓')} Created ${pc.yellow(displayName)} ${pc.dim(`(${fileCount} files)`)} at ${pc.dim(target)}\n\n`,
+	log.success(
+		`Created ${pc.bold(pc.cyan(displayName))} ${pc.dim(`(${files.length} files, ${config.template} template)`)}`,
 	)
 
-	if (template === 'starter') {
-		stdout.write(
-			`${pc.bold('What you got:')}\n\n` +
-				`  • ${pc.cyan('modules/core')}    Bootstrap module wiring everything together\n` +
-				`  • ${pc.cyan('modules/shop')}    Example module with router, service, tests\n` +
-				`  • All first-party modules ${pc.dim('(banking, jobs, housing, inventory, player, vehicle)')}\n\n`,
+	if (config.template === 'starter') {
+		note(
+			[
+				`${pc.cyan('modules/core')}     Bootstrap module wiring everything together`,
+				`${pc.cyan('modules/shop')}     Example custom module ${pc.dim('(router + service + tests)')}`,
+				`${pc.dim('+ first-party:')}    banking, jobs, housing, inventory, player, vehicle`,
+			].join('\n'),
+			'What you got',
 		)
 	}
 
-	stdout.write(
-		`${pc.bold('Next steps:')}\n\n` +
-			`  ${pc.dim('cd')} ${pc.cyan(displayName)}\n` +
-			`  ${pc.dim('pnpm install')}\n` +
-			`  ${pc.dim('pnpm dev')}\n\n`,
-	)
+	const cmds = [
+		`${pc.dim('$')} ${pc.cyan('cd')} ${displayName}`,
+		`${pc.dim('$')} ${pc.cyan('pnpm install')}`,
+		`${pc.dim('$')} ${pc.cyan('pnpm dev')}`,
+	].join('\n')
 
-	if (template === 'blank') {
-		stdout.write(
-			`${pc.bold('Add your first module:')}\n\n` +
-				`  ${pc.dim('pnpm add:module')} ${pc.yellow('shop')} ${pc.dim('--full')}\n\n` +
-				`${pc.bold('Or start with the working starter template instead:')}\n\n` +
-				`  ${pc.cyan('pnpm create nextvm@latest')} ${pc.yellow(`${displayName}-starter`)} ${pc.dim('--template starter')}\n\n`,
+	note(cmds, 'Next steps')
+
+	if (config.template === 'blank') {
+		log.message(
+			`${pc.dim('Add your first module:')} ${pc.cyan('pnpm add:module')} ${pc.yellow('shop')} ${pc.dim('--full')}`,
 		)
 	}
 
-	stdout.write(`${pc.bold('Documentation:')} ${pc.underline('https://docs.nextvm.dev')}\n\n`)
+	outro(`${pc.bold('Documentation:')} ${pc.underline('https://docs.nextvm.dev')}`)
 }
 
 async function main(): Promise<void> {
@@ -186,29 +276,12 @@ async function main(): Promise<void> {
 		stdout.write(`create-nextvm v${PKG_VERSION}\n`)
 		return
 	}
-	if (!args.name) {
-		stdout.write(
-			`${pc.red('✗')} Missing project name.\n\n` +
-				`Usage: ${pc.cyan('pnpm create nextvm@latest')} ${pc.yellow('<project-name>')} ${pc.dim('[--template <name>]')}\n\n` +
-				`Run ${pc.cyan('pnpm create nextvm@latest --help')} for more info.\n`,
-		)
-		exit(1)
-	}
-	if (!isValidProjectName(args.name)) {
-		stdout.write(
-			`${pc.red('✗')} Invalid project name: ${pc.yellow(args.name)}\n` +
-				`  Project names must be lowercase letters, numbers, hyphens, or underscores,\n` +
-				`  and start with a letter or number.\n`,
-		)
-		exit(1)
-	}
 
 	try {
-		await scaffold(args.name, args.template)
+		const config = await resolveConfig(args)
+		await scaffold(config)
 	} catch (err) {
-		stdout.write(
-			`\n${pc.red('✗ Scaffold failed:')} ${err instanceof Error ? err.message : String(err)}\n`,
-		)
+		log.error(err instanceof Error ? err.message : String(err))
 		exit(1)
 	}
 }
