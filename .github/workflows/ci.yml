@@ -259,6 +259,8 @@ jobs:
           node-version: '22'
           cache: pnpm
           registry-url: 'https://registry.npmjs.org'
+          scope: '@nextvm'
+          always-auth: true
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -266,38 +268,43 @@ jobs:
       - name: Build all packages
         run: pnpm run build
 
-      # Changesets release flow.
+      # Changesets release flow — npmjs.org publishing.
       #
-      # IMPORTANT: the `publish:` line is intentionally commented out
-      # below until the @nextvm scope is claimed on npmjs.com. Without
-      # the scope, every `npm publish` 404s and the whole job fails.
+      # Two outputs land in the public repo automatically:
       #
-      # The `version:` step alone is enough to manage the release loop:
-      # if there are pending changesets in .changeset/, the action
-      # opens a "Version Packages" PR that bumps versions + updates
-      # CHANGELOG.md. Merging that PR triggers a fresh CI run on main
-      # which (once publish is enabled) actually pushes to npm.
+      #   1. GitHub Releases — one per versioned package, with the
+      #      generated CHANGELOG.md entry as the release body. Visible
+      #      under Releases on the public repo.
       #
-      # To enable publishing for the first time:
-      #   1. Sign in to npmjs.com → claim @nextvm as a user scope
-      #      OR create an npm Organization called `nextvm`.
-      #   2. Generate an Automation token (npmjs.com → Settings → Access
-      #      Tokens → Generate New Token → Automation).
-      #   3. Add NPM_TOKEN as a Secret in nextvm-official/nextvm repo
-      #      Settings → Secrets and variables → Actions.
-      #   4. Uncomment the `publish:` line below.
-      #   5. Push a changeset (`pnpm changeset`) for v0.1.0 and merge
-      #      the resulting Version Packages PR.
-      - name: Create release pull request (publish disabled)
+      #   2. npmjs.org packages — every published package goes to
+      #      https://www.npmjs.com/package/@nextvm/<name>. Consumers
+      #      install with the regular `npm install @nextvm/core`.
+      #
+      # The publish step uses NPM_TOKEN (a npmjs.com Automation token)
+      # which must be configured as a Secret in the public repo:
+      #   Settings → Secrets and variables → Actions → Secrets
+      #   Name:  NPM_TOKEN
+      #   Value: <npm_..._automation_token>
+      #
+      # On every push to main:
+      #   - if .changeset/ contains pending changesets, the action opens
+      #     a "Version Packages" PR that bumps versions + updates
+      #     CHANGELOG.md.
+      #   - if .changeset/ is empty AND there are versioned packages
+      #     not yet on npm, the action publishes them and creates
+      #     matching GitHub Releases.
+      #   - if both are empty, the job is a quiet no-op.
+      - name: Create release pull request or publish
         uses: changesets/action@v1
         with:
           version: pnpm changeset version
-          # publish: pnpm changeset publish
+          publish: pnpm changeset publish
+          createGithubReleases: true
           commit: "chore: release packages"
           title: "chore: release packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   deploy-docs:
     name: Deploy docs to Pages
@@ -336,10 +343,13 @@ jobs:
       - name: Build docs
         run: pnpm run docs:build
 
+      # Pages must be enabled manually once on the public repo:
+      #   Settings → Pages → Source: GitHub Actions → Save
+      # `enablement: true` would do this automatically but requires
+      # `administration: write` on GITHUB_TOKEN, which most org policies
+      # block. Manual one-time enablement is the path of least friction.
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

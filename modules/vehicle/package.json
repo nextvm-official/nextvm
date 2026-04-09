@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "NextVM first-party vehicle module — spawn, repair, lock, owner tracking",
   "license": "LGPL-3.0",
+  "publishConfig": { "access": "public" },
   "engines": { "node": ">=22.0.0 <23.0.0" },
   "type": "module",
   "main": "dist/index.js",
