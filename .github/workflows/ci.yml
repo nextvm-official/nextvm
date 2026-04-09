@@ -1,0 +1,351 @@
+name: CI
+
+# One workflow to rule them all. Each push to main triggers a single
+# workflow run with up to four jobs:
+#
+#   build        — install + build + test (always)
+#   mirror       — sync to public repo  (only on the private repo)
+#   release      — changesets version + npm publish (only on the public repo)
+#   deploy-docs  — vitepress build + GitHub Pages deploy (only on the public repo)
+#
+# Gates use `github.repository == vars.PUBLIC_REPO` to detect which side
+# we're running on, so the same file works for both repos.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      is-public: ${{ steps.gate.outputs.is_public }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect public vs private side
+        id: gate
+        env:
+          PUBLIC_REPO: ${{ vars.PUBLIC_REPO }}
+          CURRENT_REPO: ${{ github.repository }}
+        run: |
+          echo "::group::Gate inputs"
+          echo "github.repository = '$CURRENT_REPO'"
+          echo "vars.PUBLIC_REPO  = '$PUBLIC_REPO'"
+          echo "(empty value means the variable is not set as a Variable in repo Settings → Secrets and variables → Actions → Variables tab)"
+          echo "::endgroup::"
+
+          if [[ -z "$PUBLIC_REPO" ]]; then
+            # PUBLIC_REPO var not set → assume we're on the public side
+            decision="true"
+            reason="vars.PUBLIC_REPO is empty"
+          elif [[ "$CURRENT_REPO" == "$PUBLIC_REPO" ]]; then
+            decision="true"
+            reason="github.repository matches vars.PUBLIC_REPO"
+          else
+            decision="false"
+            reason="github.repository does NOT match vars.PUBLIC_REPO"
+          fi
+
+          echo "::notice title=Gate decision::is_public=$decision ($reason)"
+          echo "is_public=$decision" >> "$GITHUB_OUTPUT"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build all packages
+        run: pnpm run build
+
+      - name: Run all tests
+        run: pnpm test
+
+  mirror:
+    name: Mirror to Public Repo
+    needs: build
+    # Mirror runs only on the PRIVATE repo (where vars.PUBLIC_REPO is set
+    # AND points to a different repo than the one we're running on).
+    # This is the source of truth — the build job's gate output is just
+    # advisory. If you ever set vars.PUBLIC_REPO on the public repo by
+    # mistake, this guard catches it before any checkout happens.
+    if: |
+      github.event_name == 'push'
+      && github.ref == 'refs/heads/main'
+      && vars.PUBLIC_REPO != ''
+      && github.repository != vars.PUBLIC_REPO
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    concurrency:
+      group: mirror-public
+      cancel-in-progress: false
+    steps:
+      - name: Verify required secrets and variables
+        env:
+          PUBLIC_REPO: ${{ vars.PUBLIC_REPO }}
+          PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+          CURRENT_REPO: ${{ github.repository }}
+        run: |
+          echo "::group::Mirror sanity check"
+          echo "github.repository = '$CURRENT_REPO'"
+          echo "vars.PUBLIC_REPO  = '$PUBLIC_REPO'"
+          echo "::endgroup::"
+
+          if [[ -z "$PUBLIC_REPO" ]]; then
+            echo "::error::vars.PUBLIC_REPO is not set in repo settings"
+            exit 1
+          fi
+          if [[ -z "$PUBLIC_REPO_TOKEN" ]]; then
+            echo "::error::secrets.PUBLIC_REPO_TOKEN is not set in repo settings"
+            exit 1
+          fi
+          if [[ "$CURRENT_REPO" == "$PUBLIC_REPO" ]]; then
+            echo "::error::Refusing to mirror: github.repository ($CURRENT_REPO) == vars.PUBLIC_REPO ($PUBLIC_REPO). This job should only run on the private side. Unset vars.PUBLIC_REPO on the public repo, or remove the variable from the org level."
+            exit 1
+          fi
+
+      - name: Checkout private repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          fetch-depth: 1
+
+      - name: Initialize public repo working tree
+        env:
+          PUBLIC_REPO: ${{ vars.PUBLIC_REPO }}
+          PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+        run: |
+          # We can't use actions/checkout for the public repo because it
+          # may be a brand-new empty repo with no main branch yet
+          # (actions/checkout fails with 'couldn't find remote ref').
+          # Instead, init manually and try to fast-forward from origin.
+          # If origin has no history, we'll create main on first push.
+          mkdir -p public
+          cd public
+          git init -q -b main
+          git remote add origin "https://x-access-token:${PUBLIC_REPO_TOKEN}@github.com/${PUBLIC_REPO}.git"
+
+          if git ls-remote --exit-code --heads origin main > /dev/null 2>&1; then
+            echo "Public repo already has main branch — fetching."
+            git fetch --depth=1 origin main
+            git checkout -q main
+            git reset --hard origin/main
+            echo "PUBLIC_HAS_HISTORY=true" >> "$GITHUB_ENV"
+          else
+            echo "Public repo is empty — first mirror push will create main."
+            echo "PUBLIC_HAS_HISTORY=false" >> "$GITHUB_ENV"
+          fi
+
+      - name: Make export script executable
+        run: chmod +x scripts/export-public.sh
+
+      - name: Sync allowlisted paths into public checkout
+        run: ./scripts/export-public.sh public
+
+      - name: Commit and push
+        working-directory: public
+        env:
+          PRIVATE_SHA: ${{ github.sha }}
+        run: |
+          git config user.name 'nextvm-bot'
+          git config user.email 'noreply@github.com'
+
+          git add -A
+
+          # On the very first push there is no parent commit, so the usual
+          # `git diff --cached --quiet` check would always say "nothing
+          # staged" even when files exist. Use diff vs the empty tree on
+          # first push, vs HEAD afterwards.
+          if [[ "$PUBLIC_HAS_HISTORY" == "true" ]]; then
+            if git diff --cached --quiet; then
+              echo "No allowlisted changes to mirror — done."
+              exit 0
+            fi
+          else
+            if [[ -z "$(git diff --cached --name-only)" ]]; then
+              echo "Nothing to mirror on first push — done."
+              exit 0
+            fi
+          fi
+
+          # Pull the original commit subject from the private repo so the
+          # public history shows useful messages. We use %s (subject only,
+          # not %B) so commit body trailers like Co-Authored-By never
+          # leak from the private side. Also strip any tool attribution
+          # patterns belt-and-braces.
+          PRIVATE_MSG=$(git -C .. log -1 --pretty=%s \
+            | sed -E 's/[[:space:]]*\(.*[Cc]laude.*\)//g' \
+            | sed -E 's/[[:space:]]*Co-[Aa]uthored-[Bb]y:.*$//g')
+
+          if echo "$PRIVATE_MSG" | grep -iE 'co-authored-by|claude|anthropic' > /dev/null; then
+            echo "::error::Private commit subject contains forbidden token after cleanup. Refusing to mirror."
+            echo "Subject: $PRIVATE_MSG"
+            exit 1
+          fi
+
+          if [[ "$PUBLIC_HAS_HISTORY" == "true" ]]; then
+            git commit \
+              -m "release: sync from private @ ${PRIVATE_SHA:0:7}" \
+              -m "${PRIVATE_MSG}" \
+              -m "Mirror of nextvm private @ ${PRIVATE_SHA}"
+            git push origin HEAD:main
+          else
+            git commit \
+              -m "release: initial public release" \
+              -m "${PRIVATE_MSG}" \
+              -m "Mirror of nextvm private @ ${PRIVATE_SHA}"
+            git push -u origin main
+          fi
+
+  release:
+    name: Release (changesets)
+    needs: build
+    # Release runs only on the PUBLIC repo. We're on the public side if
+    # vars.PUBLIC_REPO is unset (var only configured on private side)
+    # OR if it's set and matches the current repo.
+    if: |
+      github.event_name == 'push'
+      && github.ref == 'refs/heads/main'
+      && (vars.PUBLIC_REPO == '' || github.repository == vars.PUBLIC_REPO)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build all packages
+        run: pnpm run build
+
+      # Changesets release flow.
+      #
+      # IMPORTANT: the `publish:` line is intentionally commented out
+      # below until the @nextvm scope is claimed on npmjs.com. Without
+      # the scope, every `npm publish` 404s and the whole job fails.
+      #
+      # The `version:` step alone is enough to manage the release loop:
+      # if there are pending changesets in .changeset/, the action
+      # opens a "Version Packages" PR that bumps versions + updates
+      # CHANGELOG.md. Merging that PR triggers a fresh CI run on main
+      # which (once publish is enabled) actually pushes to npm.
+      #
+      # To enable publishing for the first time:
+      #   1. Sign in to npmjs.com → claim @nextvm as a user scope
+      #      OR create an npm Organization called `nextvm`.
+      #   2. Generate an Automation token (npmjs.com → Settings → Access
+      #      Tokens → Generate New Token → Automation).
+      #   3. Add NPM_TOKEN as a Secret in nextvm-official/nextvm repo
+      #      Settings → Secrets and variables → Actions.
+      #   4. Uncomment the `publish:` line below.
+      #   5. Push a changeset (`pnpm changeset`) for v0.1.0 and merge
+      #      the resulting Version Packages PR.
+      - name: Create release pull request (publish disabled)
+        uses: changesets/action@v1
+        with:
+          version: pnpm changeset version
+          # publish: pnpm changeset publish
+          commit: "chore: release packages"
+          title: "chore: release packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  deploy-docs:
+    name: Deploy docs to Pages
+    needs: build
+    # Same gate as release: public side only.
+    if: |
+      github.event_name == 'push'
+      && github.ref == 'refs/heads/main'
+      && (vars.PUBLIC_REPO == '' || github.repository == vars.PUBLIC_REPO)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages (so docs can resolve types)
+        run: pnpm run build
+
+      - name: Build docs
+        run: pnpm run docs:build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

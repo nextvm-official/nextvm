@@ -1,0 +1,25 @@
+name: Documentation issue
+description: Report a problem with the docs
+title: "[docs] "
+labels: ["documentation"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Affected page
+      description: URL or path under docs/
+      placeholder: "/guide/end-to-end"
+    validations:
+      required: true
+
+  - type: textarea
+    id: issue
+    attributes:
+      label: What is wrong or missing?
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested
+    attributes:
+      label: Suggested fix (optional)

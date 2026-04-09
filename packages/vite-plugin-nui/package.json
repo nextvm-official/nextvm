@@ -1,0 +1,35 @@
+{
+  "name": "@nextvm/vite-plugin-nui",
+  "version": "0.0.1",
+  "description": "Vite plugin for building NextVM NUI apps — FiveM-friendly defaults, fxmanifest snippet, HMR-ready dev URL",
+  "license": "LGPL-3.0",
+  "engines": { "node": ">=22.0.0 <23.0.0" },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --pool=forks --poolOptions.forks.singleFork=true",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "vite": "^5.0.0 || ^6.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vite": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsup": "^8.4.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}

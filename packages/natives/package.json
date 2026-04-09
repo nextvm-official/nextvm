@@ -1,0 +1,32 @@
+{
+  "name": "@nextvm/natives",
+  "version": "0.0.1",
+  "description": "Typed FiveM native wrappers — Player, Vehicle, World, Entity, Network, Routing, Voice",
+  "license": "LGPL-3.0",
+  "engines": { "node": ">=22.0.0 <23.0.0" },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --pool=forks --poolOptions.forks.singleFork=true",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@citizenfx/server": "*",
+    "@citizenfx/client": "*"
+  },
+  "devDependencies": {
+    "tsup": "^8.4.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

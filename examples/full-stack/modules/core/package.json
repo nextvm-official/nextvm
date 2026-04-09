@@ -1,0 +1,13 @@
+{
+  "name": "@example/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.0.0 <23.0.0" },
+  "main": "src/index.ts",
+  "peerDependencies": {
+    "@nextvm/core": "workspace:*",
+    "@nextvm/runtime-client": "workspace:*",
+    "@nextvm/runtime-server": "workspace:*"
+  }
+}

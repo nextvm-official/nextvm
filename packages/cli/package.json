@@ -1,0 +1,41 @@
+{
+  "name": "@nextvm/cli",
+  "version": "0.0.1",
+  "description": "NextVM CLI — create, dev, build, validate, db:*, migrate:from",
+  "license": "LGPL-3.0",
+  "engines": { "node": ">=22.0.0 <23.0.0" },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "nextvm": "dist/bin.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --pool=forks --poolOptions.forks.singleFork=true",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@nextvm/build": "workspace:*",
+    "@nextvm/core": "workspace:*",
+    "@nextvm/db": "workspace:*",
+    "@nextvm/migration": "workspace:*",
+    "@nextvm/registry": "workspace:*",
+    "commander": "^12.1.0",
+    "picocolors": "^1.1.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.4.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0",
+    "@types/node": "^22.0.0"
+  }
+}

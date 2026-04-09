@@ -1,0 +1,31 @@
+{
+  "name": "nextvm-example-full-stack",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.0.0 <23.0.0" },
+  "scripts": {
+    "dev": "nextvm dev",
+    "build": "nextvm build",
+    "validate": "nextvm validate"
+  },
+  "dependencies": {
+    "@nextvm/banking": "workspace:*",
+    "@nextvm/core": "workspace:*",
+    "@nextvm/db": "workspace:*",
+    "@nextvm/housing": "workspace:*",
+    "@nextvm/inventory": "workspace:*",
+    "@nextvm/jobs": "workspace:*",
+    "@nextvm/player": "workspace:*",
+    "@nextvm/runtime-client": "workspace:*",
+    "@nextvm/runtime-server": "workspace:*",
+    "@nextvm/vehicle": "workspace:*",
+    "@nextvm/voice": "workspace:*",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@nextvm/cli": "workspace:*",
+    "@nextvm/compat": "workspace:*",
+    "typescript": "^5.7.0"
+  }
+}

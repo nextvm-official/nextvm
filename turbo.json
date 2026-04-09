@@ -1,0 +1,35 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "@nextvm/core#build": {
+      "dependsOn": ["@nextvm/natives#build"],
+      "outputs": ["dist/**"]
+    },
+    "@nextvm/test-utils#build": {
+      "dependsOn": ["@nextvm/core#build"],
+      "outputs": ["dist/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["^build"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": ["src/**", "__tests__/**", "vitest.config.*", "package.json"],
+      "outputs": []
+    },
+    "typecheck": {
+      "dependsOn": ["^build"]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

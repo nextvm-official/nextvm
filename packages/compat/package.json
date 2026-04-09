@@ -1,0 +1,31 @@
+{
+  "name": "@nextvm/compat",
+  "version": "0.0.1",
+  "description": "ESX/QBCore compatibility layer for NextVM — exposes legacy exports backed by NextVM data",
+  "license": "LGPL-3.0",
+  "engines": { "node": ">=22.0.0 <23.0.0" },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --pool=forks --poolOptions.forks.singleFork=true",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@nextvm/core": "workspace:*"
+  },
+  "devDependencies": {
+    "tsup": "^8.4.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}

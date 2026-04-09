@@ -1,0 +1,18 @@
+# NextVM CODEOWNERS
+#
+# Default owner of everything: the maintainer team.
+# Update this file as the project grows and contributors take ownership
+# of specific areas.
+
+* @DrDelegate
+
+# Per-area owners (uncomment + adjust as the team grows)
+# /packages/core/                     @DrDelegate
+# /packages/runtime-server/           @DrDelegate
+# /packages/runtime-client/           @DrDelegate
+# /packages/nui/                      @DrDelegate
+# /packages/nui-react/                @DrDelegate
+# /packages/vite-plugin-nui/          @DrDelegate
+# /modules/                           @DrDelegate
+# /docs/                              @DrDelegate
+# /.github/                           @DrDelegate

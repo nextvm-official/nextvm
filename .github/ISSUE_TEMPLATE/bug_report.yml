@@ -1,0 +1,102 @@
+name: Bug report
+description: Report a defect in NextVM
+title: "[bug] "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report!
+
+        Before you start: please search existing issues to make sure
+        this hasn't been reported already.
+
+  - type: input
+    id: nextvm-version
+    attributes:
+      label: NextVM version
+      description: "Run `pnpm list @nextvm/core` in your project."
+      placeholder: "0.0.1"
+    validations:
+      required: true
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node version
+      description: "Run `node --version`."
+      placeholder: "v22.14.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: package
+    attributes:
+      label: Affected package
+      description: Which @nextvm/* package is affected?
+      options:
+        - "@nextvm/core"
+        - "@nextvm/natives"
+        - "@nextvm/db"
+        - "@nextvm/i18n"
+        - "@nextvm/build"
+        - "@nextvm/cli"
+        - "@nextvm/runtime-server"
+        - "@nextvm/runtime-client"
+        - "@nextvm/nui"
+        - "@nextvm/nui-react"
+        - "@nextvm/voice"
+        - "@nextvm/compat"
+        - "@nextvm/tebex"
+        - "@nextvm/registry"
+        - "@nextvm/migration"
+        - "@nextvm/discord"
+        - "@nextvm/vite-plugin-nui"
+        - "First-party module (banking/jobs/housing/inventory/player/vehicle)"
+        - "Other / Unknown"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug.
+      placeholder: "When I do X, Y happens instead of Z."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: |
+        Paste the smallest code snippet, command, or repo link that reproduces the issue.
+      render: typescript
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      placeholder: "I expected X."
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Paste any relevant log output, stack traces, or error messages.
+      render: shell
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-flight checks
+      options:
+        - label: I have searched existing issues and this is not a duplicate.
+          required: true
+        - label: I am running Node 22 LTS.
+          required: true
+        - label: I have read the relevant docs page.
+          required: true

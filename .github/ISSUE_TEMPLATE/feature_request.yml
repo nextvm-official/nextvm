@@ -1,0 +1,58 @@
+name: Feature request
+description: Suggest a new feature or improvement
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please describe the problem
+        you're trying to solve, not just the solution you have in mind.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: Describe the use case in your own words.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Proposed solution
+      description: How would you like NextVM to support this?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What workarounds have you tried? What else could work?
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Which area does this touch?
+      options:
+        - Core framework
+        - CLI / build pipeline
+        - Runtime layer (server / client)
+        - NUI
+        - Voice
+        - First-party game module
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-flight checks
+      options:
+        - label: I have searched existing issues and discussions for similar requests.
+          required: true
+        - label: This feature is in scope for a NextVM framework (not a downstream project concern).
+          required: true
