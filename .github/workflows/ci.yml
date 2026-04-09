@@ -156,6 +156,14 @@ jobs:
           title: "chore: release packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # setup-node@v4 writes ~/.npmrc with the literal placeholder
+          # ${NODE_AUTH_TOKEN}, which npm expands from the environment
+          # at publish time. If this env var isn't set here the .npmrc
+          # resolves to an empty token, npm publishes anonymously, and
+          # every PUT 404s with "not in this registry". We set both
+          # NODE_AUTH_TOKEN (what npm reads) and NPM_TOKEN (what
+          # changesets/action reads for its own auth helpers).
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   deploy-docs:
