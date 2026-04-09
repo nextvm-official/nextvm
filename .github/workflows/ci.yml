@@ -116,6 +116,36 @@ jobs:
       #     not yet on npm, the action publishes them and creates
       #     matching GitHub Releases.
       #   - if both are empty, the job is a quiet no-op.
+      - name: Verify npm token + scope ownership
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "::group::npm whoami"
+          if ! whoami_out=$(npm whoami 2>&1); then
+            echo "::error::npm whoami failed: $whoami_out"
+            echo "The NPM_TOKEN secret is missing, expired, or not a valid publish token."
+            exit 1
+          fi
+          echo "Authenticated as: $whoami_out"
+          echo "::endgroup::"
+
+          echo "::group::Scope ownership check"
+          # If @nextvm is a user scope, the token owner must be 'nextvm'.
+          # If @nextvm is an org scope, the token owner must be a member of
+          # the nextvm org with publish permission. Either way, we can
+          # sanity-check by listing packages the token can publish to.
+          echo "Packages visible to this token:"
+          npm access list packages 2>&1 | head -50 || true
+          echo "::endgroup::"
+
+          echo "::group::Can we reach the @nextvm scope at all?"
+          # Try to fetch the scope's package listing. If this 404s on a
+          # truly non-existent scope, it means the scope has never been
+          # claimed and our first PUT will 404 too.
+          npm view @nextvm/placeholder 2>&1 | head -10 || true
+          echo "::endgroup::"
+
       - name: Create release pull request or publish
         uses: changesets/action@v1
         with:
