@@ -114,17 +114,34 @@ async function buildModule(
 		warnings.push('no src/index.ts, src/server/index.ts, or src/client/index.ts found')
 	}
 
-	// Force .js extension so the fxmanifest references match what tsup writes.
-	// (Default ESM extension would be .mjs, which FXServer also accepts but
-	// breaks our concept-conformant manifest.)
+	// FXServer's V8 isolate runs scripts as CommonJS — top-level `import`
+	// statements throw "Cannot use import statement outside a module".
+	// We bundle to CJS and inline every @nextvm/* package because there
+	// is no node_modules tree inside a FiveM resource folder. Only
+	// natives (mysql2, etc.) and FXServer-provided globals stay external.
 	const sharedTsupOpts = {
-		format: ['esm' as const],
+		format: ['cjs' as const],
 		clean: false,
 		sourcemap: true,
 		dts: false,
 		silent: true,
 		outExtension: () => ({ js: '.js' }),
+		// tsup auto-marks every entry in package.json `dependencies` as
+		// external. We override that for @nextvm/* so resource bundles
+		// stay self-contained.
+		noExternal: [/^@nextvm\//],
 	}
+
+	// Externals: things FXServer provides at runtime, plus native modules
+	// that can't be bundled. @nextvm/* are intentionally NOT external —
+	// they get inlined into each resource bundle.
+	const SERVER_EXTERNAL = [
+		'@citizenfx/server',
+		'mysql2',
+		'mysql2/promise',
+		'discord.js',
+	]
+	const CLIENT_EXTERNAL = ['@citizenfx/client']
 
 	// Build server bundle
 	let bundledServer = false
@@ -133,17 +150,7 @@ async function buildModule(
 			...sharedTsupOpts,
 			entry: { server: serverEntry },
 			outDir: join(module.path, 'dist'),
-			external: [
-				'@nextvm/core',
-				'@nextvm/natives',
-				'@nextvm/i18n',
-				'@nextvm/db',
-				'mysql2',
-				'mysql2/promise',
-				'discord.js',
-				'@citizenfx/server',
-				'@citizenfx/client',
-			],
+			external: SERVER_EXTERNAL,
 		})
 		bundledServer = true
 	}
@@ -156,12 +163,7 @@ async function buildModule(
 			...sharedTsupOpts,
 			entry: { client: clientEntry },
 			outDir: join(module.path, 'dist'),
-			external: [
-				'@nextvm/core',
-				'@nextvm/natives',
-				'@nextvm/i18n',
-				'@citizenfx/client',
-			],
+			external: CLIENT_EXTERNAL,
 		})
 		bundledClient = true
 	} else if (serverEntry) {
@@ -171,12 +173,7 @@ async function buildModule(
 			...sharedTsupOpts,
 			entry: { client: serverEntry },
 			outDir: join(module.path, 'dist'),
-			external: [
-				'@nextvm/core',
-				'@nextvm/natives',
-				'@nextvm/i18n',
-				'@citizenfx/client',
-			],
+			external: CLIENT_EXTERNAL,
 		})
 		bundledClient = true
 	}

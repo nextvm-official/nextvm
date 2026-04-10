@@ -82,7 +82,22 @@ export function startDevBridge(opts: DevBridgeOptions = {}): DevBridgeHandle {
 		if (typeof exec === 'function') exec(cmd)
 		else opts.log?.('ExecuteCommand global missing — dev bridge inert', { cmd })
 	})
-	const path = opts.path ?? DEFAULT_PATH
+	// Path resolution priority:
+	//   1. explicit opts.path
+	//   2. GetConvar('nextvm_dev_trigger')  ← set by @nextvm/fxserver-runner
+	//   3. relative DEFAULT_PATH (only works when FXServer cwd == projectRoot)
+	let path = opts.path ?? DEFAULT_PATH
+	if (!opts.path) {
+		const g = globalThis as Record<string, unknown>
+		const getConvar = g.GetConvar as
+			| ((name: string, dflt: string) => string)
+			| undefined
+		if (typeof getConvar === 'function') {
+			const fromConvar = getConvar('nextvm_dev_trigger', '')
+			if (fromConvar && fromConvar.length > 0) path = fromConvar
+		}
+	}
+	opts.log?.('Dev bridge watching trigger', { path })
 	const debounceMs = opts.debounceMs ?? 100
 	const freshAfterMs = opts.freshAfterMs ?? 5_000
 

@@ -31,6 +31,33 @@ export const projectConfigSchema = z.object({
 	 * An empty array means "include every module found".
 	 */
 	modules: z.array(z.string()).default([]),
+	/**
+	 * Optional FXServer subprocess configuration. When present, the
+	 * `nextvm serve` and `nextvm dev --serve` commands will spawn a
+	 * local FXServer process pointed at this artifact directory.
+	 */
+	fxserver: z
+		.object({
+			/** Absolute path to a downloaded FXServer artifact directory (containing FXServer.exe / run.sh) */
+			path: z.string().min(1),
+			/**
+			 * Optional path to the data directory containing `resources/`.
+			 * Only set this for split layouts (server/ + server-data/).
+			 * Defaults to `path` for the all-in-one artifact layout.
+			 */
+			dataPath: z.string().optional(),
+			/** Optional Cfx.re license key (overrides $CFX_LICENSE_KEY env var) */
+			licenseKey: z.string().optional(),
+			/** sv_enforceGameBuild (defaults to 3095) */
+			gameBuild: z.number().int().optional(),
+			/** Bind endpoint, defaults to 0.0.0.0:30120 */
+			endpoint: z.string().default('0.0.0.0:30120'),
+			/** Extra resources to ensure after framework modules */
+			additionalResources: z.array(z.string()).default([]),
+			/** Raw `set <k> <v>` convars */
+			convars: z.record(z.union([z.string(), z.number(), z.boolean()])).default({}),
+		})
+		.optional(),
 })
 
 export type ProjectConfig = z.infer<typeof projectConfigSchema>

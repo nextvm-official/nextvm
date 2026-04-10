@@ -12,6 +12,7 @@ import { registerDevCommand } from './commands/dev'
 import { registerMigrateFromCommand } from './commands/migrate-from'
 import { registerPerfCommand } from './commands/perf'
 import { registerRegistryCommands } from './commands/registry'
+import { registerServeCommand } from './commands/serve'
 import { registerValidateCommand } from './commands/validate'
 
 /**
@@ -26,6 +27,7 @@ export function createCli(): Command {
 	registerCreateCommand(program)
 	registerAddCommand(program)
 	registerDevCommand(program)
+	registerServeCommand(program)
 	registerBuildCommand(program)
 	registerValidateCommand(program)
 	registerDbCommands(program)

@@ -10,7 +10,12 @@ and registers it via `ctx.setExports()`.
 ## Bucket
 A FiveM routing bucket — a logical "world" that isolates players from
 each other. NextVM exposes them via `RoutingService` and the
-`onBucketChange` lifecycle hook.
+`onBucketChange` lifecycle hook. Requires [OneSync](#onesync).
+
+## Convar
+A console variable in FXServer (e.g. `sv_hostname`, `onesync`). Set via
+`set <key> <value>` in `server.cfg` or via `fxserver.convars` in
+`nextvm.config.ts`. See [FiveM Basics → Convars](/guide/fivem-basics#convars).
 
 ## Character
 A persistent player identity within a NextVM server. A single FiveM
@@ -60,13 +65,31 @@ topological sort, and drives the lifecycle.
 A FiveM client or server API function (e.g. `GetPlayerName`). Wrapped
 by `@nextvm/natives`. Modules may not call natives directly.
 
+## OneSync
+FXServer's state awareness mode. Makes all entities server-authoritative,
+enables routing buckets, and unlocks Infinity (128+ players). Enable via
+`set onesync on` in `server.cfg` or `convars: { onesync: 'on' }` in
+`nextvm.config.ts`. See [FiveM Basics → OneSync](/guide/fivem-basics#onesync).
+
 ## PLA
 [Cfx.re Platform License Agreement](https://forum.cfx.re/t/4571423).
 The legal terms every FiveM server must follow. See [PLA reference](/reference/pla).
 
+## Resource
+A FXServer plugin — a folder inside `resources/` containing a
+`fxmanifest.lua` and scripts. Managed via `ensure`/`stop`/`start`
+commands. NextVM modules compile to resources. See
+[FiveM Basics → Resources](/guide/fivem-basics#resources).
+
 ## RPC
 Typed remote procedure call. NextVM's tRPC-style router with Zod input
 validation, rate limiting, and middleware. Replaces `TriggerServerEvent`.
+
+## server.cfg
+FXServer's main configuration file. Controls endpoints, convars, ACL
+entries, and which resources to `ensure` on boot. NextVM generates a
+separate `server.cfg.nextvm` and never touches the original. See
+[FiveM Basics → server.cfg](/guide/fivem-basics#server-cfg).
 
 ## TickScheduler
 The managed tick loop with HIGH/MEDIUM/LOW priorities and per-frame

@@ -20,7 +20,8 @@ FiveM resources.
 - 🎭 **Character-scoped state** keyed by `charId`, never `source`
 - 🪝 **Managed tick scheduler** with per-frame budget + priorities
 - 🏗️ **Build pipeline**: tsup + auto-`fxmanifest.lua` + locale bundling
-- 🔥 **Dev mode** with file watching, state hot-reload, ensure-restart bridge
+- 🔥 **Dev mode** spawns a local FXServer subprocess, hot-reloads modules on save, preserves player state across reloads
+- 🔧 **`@nextvm/fxserver-runner`** generates `server.cfg`, links modules into `resources/[nextvm]/`, streams logs, cleans up on Ctrl+C
 - 🎤 **Voice service** on top of `pma-voice` with ACL'd radio channels
 - 🎨 **NUI bridge** with React hooks + Vite plugin (HMR-ready)
 - 🧰 **6 first-party modules**: banking, jobs, housing, inventory, player, vehicle
@@ -30,15 +31,30 @@ FiveM resources.
 ## Quick start
 
 ```bash
-pnpm dlx @nextvm/cli create my-server
+# 1. Scaffold a project (with the starter template)
+pnpm create nextvm@latest my-server --template starter
 cd my-server
 pnpm install
-nextvm add shop --full
-nextvm validate
-nextvm build
+
+# 2. Point it at your local FXServer (one-time setup — bring your own FXServer)
+echo "FXSERVER_PATH=C:/fivem/server" >> .env
+echo "CFX_LICENSE_KEY=cfxk_…"        >> .env
+
+# 3. Run the dev loop — builds modules, spawns FXServer, hot-reloads on save
+pnpm nextvm dev --serve
 ```
 
-For the full walkthrough, see the [End-to-End Quickstart](./docs/guide/end-to-end.md)
+Connect to `localhost:30120` from your FiveM client to verify. Edit any
+file under `modules/<name>/src/` and the runner rebuilds in ~10ms,
+runs `ensure <module>` inside FXServer, and preserves connected player
+state across the reload.
+
+Don't have FXServer installed yet, or prefer to deploy elsewhere? See
+the [Local FXServer guide](./docs/guide/local-fxserver.md) for the
+one-time setup, or skip the `--serve` flag and use the manual
+[build-and-copy flow](./docs/guide/installation.md#_6-alternative-manual-deploy-without-dev-serve).
+
+For the full walkthrough see the [End-to-End Quickstart](./docs/guide/end-to-end.md)
 or the [Full Stack Example](./examples/full-stack).
 
 ## Documentation
@@ -54,9 +70,11 @@ Or browse the rendered version on the [GitHub Pages site](https://nextvm-officia
 
 Reading order if you're new:
 1. [Getting Started](./docs/guide/getting-started.md)
-2. [Architecture Overview](./docs/guide/architecture-overview.md)
-3. [Module Authoring](./docs/guide/module-authoring.md)
-4. [End-to-End Quickstart](./docs/guide/end-to-end.md)
+2. [Installation](./docs/guide/installation.md) — bring-your-own FXServer setup
+3. [Local FXServer](./docs/guide/local-fxserver.md) — `dev --serve` reference
+4. [Architecture Overview](./docs/guide/architecture-overview.md)
+5. [Module Authoring](./docs/guide/module-authoring.md)
+6. [End-to-End Quickstart](./docs/guide/end-to-end.md)
 
 ## Packages
 
@@ -69,6 +87,7 @@ Reading order if you're new:
 | Core | [`@nextvm/test-utils`](./packages/test-utils) | Mock context, harness, in-memory repos |
 | **Tooling** | [`@nextvm/cli`](./packages/cli) | `nextvm` command line |
 | Tooling | [`@nextvm/build`](./packages/build) | Project loader + build orchestrator + dev mode |
+| Tooling | [`@nextvm/fxserver-runner`](./packages/fxserver-runner) | Spawn + manage a local FXServer subprocess for dev |
 | Tooling | [`@nextvm/vite-plugin-nui`](./packages/vite-plugin-nui) | Vite plugin for NUI apps |
 | **Integrations** | [`@nextvm/discord`](./packages/discord) | Discord webhooks + RCON + txAdmin events |
 | Integrations | [`@nextvm/compat`](./packages/compat) | ESX + QBCore exports |

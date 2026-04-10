@@ -1,6 +1,6 @@
 {
 	"name": "@nextvm/runtime-server",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "NextVM server runtime — boots the ModuleLoader inside an FXServer resource and bridges FiveM events to lifecycle hooks",
 	"license": "BUSL-1.1",
 	"publishConfig": {

@@ -46,36 +46,48 @@ Every module under `modules/*` is a workspace package with its own
 `src/`, `__tests__/`, and `package.json`. The framework discovers them
 automatically when you run `nextvm build` or `nextvm dev`.
 
-## The five-second build
+## The 60-second loop
 
 ```bash
-# 1. Create a project
-nextvm create my-server
+# 1. Scaffold a project (with the starter template)
+pnpm create nextvm@latest my-server --template starter
 cd my-server
 pnpm install
 
-# 2. Add a module (layered scaffold)
-nextvm add hello-world --full
+# 2. Point it at your local FXServer
+echo "FXSERVER_PATH=C:/fivem/server" >> .env
+echo "CFX_LICENSE_KEY=cfxk_…"        >> .env
 
-# 3. Build for FXServer
-nextvm build
+# 3. Run the dev loop
+pnpm nextvm dev --serve
 ```
 
-After step 3 you'll have:
+What happens on step 3:
 
-- `modules/hello-world/dist/server.js` — bundled server-side code
-- `modules/hello-world/dist/client.js` — bundled client-side code
-- `modules/hello-world/dist/locales/en.json` — bundled locales
-- `modules/hello-world/fxmanifest.lua` — generated FXServer manifest
+- Every module under `modules/*` gets built to `dist/`
+- The runner links them into `<FXSERVER>/resources/[nextvm]/`
+- A fresh `server.cfg.nextvm` is generated from `nextvm.config.ts`
+- FXServer spawns as a subprocess and streams its logs into your
+  terminal with a cyan `[fx]` prefix
+- File changes trigger a rebuild + `ensure <module>` inside FXServer,
+  preserving connected player state across the reload
+- `Ctrl+C` shuts everything down cleanly
 
-Drop the `modules/hello-world/` folder into your FXServer's `resources/`
-and `ensure hello-world` in `server.cfg`. That's it.
+Connect to `localhost:30120` from your FiveM client to verify.
+
+The full setup walkthrough — including how to install FXServer, where
+to put the license key, and how to handle split `cfx-server-data`
+layouts — lives on the [Local FXServer page](/guide/local-fxserver).
+If you'd rather build modules and deploy them to a remote FXServer
+yourself, drop the `--serve` flag and use `nextvm build` instead;
+[Installation](/guide/installation) covers that flow too.
 
 ## Where to go next
 
 Depending on what you want to do:
 
 - **Set up a real FXServer with NextVM** → [Installation](/guide/installation)
+- **Wire `nextvm dev --serve` against your local FXServer** → [Local FXServer](/guide/local-fxserver)
 - **Build your first module from scratch** → [Your First Module](/guide/your-first-module)
 - **Understand how modules are structured** → [Module Authoring](/guide/module-authoring)
 - **Migrate an existing ESX server** → [Migration from ESX](/guide/migration-from-esx)

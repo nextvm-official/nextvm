@@ -1,10 +1,26 @@
 # @nextvm/cli
 
-## 0.0.2
+## 0.1.0
+
+### Minor Changes
+
+- b129b2f: feat(fxserver): local FXServer subprocess integration
+
+  - New `@nextvm/fxserver-runner` package: spawns and manages a local
+    FXServer process for development. Generates `server.cfg.nextvm`,
+    symlinks (or junctions on Windows) modules into `resources/[nextvm]/`,
+    streams logs, handles graceful shutdown + cleanup.
+  - New `nextvm serve` command: builds modules then boots FXServer
+    against them. Supports `--no-build` to skip the build step.
+  - New `nextvm dev --serve` flag: runs the dev watcher AND a local
+    FXServer side-by-side. Each successful module rebuild triggers
+    `runner.ensure(name)` for live reload inside FXServer.
+  - New `fxserver` block in `nextvm.config.ts` schema (path,
+    licenseKey, gameBuild, endpoint, additionalResources, convars).
 
 ### Patch Changes
 
-- 4214766: Add the `create-nextvm` bootstrap package so users can scaffold a new
+- b6dfd57: Add the `create-nextvm` bootstrap package so users can scaffold a new
   NextVM project with a single command and zero global installs:
 
   ```bash
@@ -24,13 +40,30 @@
   the same project shape (engines pinned to Node 22, scripts include
   `add:module`, runtime packages added to `dependencies`).
 
-- 4214766: Fix `Cannot find module 'typescript'` when installing `@nextvm/cli`
+- b108493: Fix `Cannot find module 'typescript'` when installing `@nextvm/cli`
   via `pnpm dlx` or as a global. `typescript` was only declared in
   `devDependencies` of `@nextvm/build`, but `tsup` (which the build
   orchestrator calls at runtime) requires it via `require('typescript')`
   for DTS generation. Moved `typescript` to `dependencies` so it's
   always installed alongside the build pipeline.
-- 9842a8b: Polish the CLI experience across the board.
+- b41cd0b: fix(fxserver): support split server/server-data layout + Windows tree-kill
+
+  Two issues found during the first end-to-end smoke test against a real
+  FiveM artifact:
+
+  1. **Split layout**: cfx-server-data installations have `FXServer.exe`
+     in `server/` and `resources/` in `server-data/cfx-server-data/`.
+     The runner previously assumed both lived in one folder. Added an
+     optional `fxserver.dataPath` config field; the runner uses it for
+     `resources/`, the generated `server.cfg.nextvm`, and the spawn cwd.
+     Defaults to `path` for the all-in-one artifact layout.
+
+  2. **Windows tree-kill**: FXServer.exe spawns a child server process
+     that doesn't respond to WM_CLOSE. Plain `child.kill()` only
+     terminated the launcher and orphaned the actual server. The default
+     IO now uses `taskkill /T /F` on Windows to walk the process tree.
+
+- ee609c0: Polish the CLI experience across the board.
 
   **`create-nextvm` interactive wizard.** Run `pnpm create nextvm@latest`
   without any arguments and get a guided setup powered by `@clack/prompts`:
@@ -88,6 +121,11 @@
   No breaking changes — all command surfaces and APIs are backward
   compatible.
 
-- Updated dependencies [4214766]
-- Updated dependencies [9842a8b]
-  - @nextvm/build@0.0.2
+- Updated dependencies [b108493]
+- Updated dependencies [66fd23b]
+- Updated dependencies [f43e42c]
+- Updated dependencies [b129b2f]
+- Updated dependencies [b41cd0b]
+- Updated dependencies [ee609c0]
+  - @nextvm/build@0.1.0
+  - @nextvm/fxserver-runner@0.1.0

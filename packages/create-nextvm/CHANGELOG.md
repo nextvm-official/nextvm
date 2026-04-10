@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- 4214766: Add the `create-nextvm` bootstrap package so users can scaffold a new
+- b6dfd57: Add the `create-nextvm` bootstrap package so users can scaffold a new
   NextVM project with a single command and zero global installs:
 
   ```bash
@@ -24,7 +24,7 @@
   the same project shape (engines pinned to Node 22, scripts include
   `add:module`, runtime packages added to `dependencies`).
 
-- 4214766: Add `--template starter` flag to `create-nextvm`. The starter template
+- 40d901a: Add `--template starter` flag to `create-nextvm`. The starter template
   scaffolds a working NextVM server in one command:
 
   ```bash
@@ -53,7 +53,7 @@
   generated client bootstrap so users have something concrete to type
   into their FXServer console after `ensure`-ing the modules.
 
-- 9842a8b: Polish the CLI experience across the board.
+- ee609c0: Polish the CLI experience across the board.
 
   **`create-nextvm` interactive wizard.** Run `pnpm create nextvm@latest`
   without any arguments and get a guided setup powered by `@clack/prompts`:
@@ -110,3 +110,11 @@
 
   No breaking changes — all command surfaces and APIs are backward
   compatible.
+
+- 764db08: feat(starter): scaffold fxserver block + .env.example
+
+  The starter template now includes a conditional `fxserver` block in
+  `nextvm.config.ts` (enabled when `FXSERVER_PATH` is set) and a fresh
+  `.env.example` documenting `FXSERVER_PATH` and `CFX_LICENSE_KEY`.
+  Users can run `nextvm dev --serve` immediately after filling in their
+  local FXServer artifact path.

@@ -45,6 +45,23 @@ dist/
 *.log
 `
 
+export const ENV_EXAMPLE = `# Database
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_USER=root
+MYSQL_PASSWORD=
+MYSQL_DB=nextvm
+
+# FXServer (optional — enables \`nextvm dev --serve\` and \`nextvm serve\`)
+# Absolute path to a downloaded FXServer artifact directory containing
+# FXServer.exe (Windows) or run.sh / FXServer (Linux).
+# Download: https://runtime.fivem.net/artifacts/fivem/
+FXSERVER_PATH=
+
+# Cfx.re license key — get yours at https://keymaster.fivem.net
+CFX_LICENSE_KEY=
+`
+
 /** Stringify a JSON object with two-space indent + trailing newline. */
 export function jsonFile(value: unknown): string {
 	return `${JSON.stringify(value, null, 2)}\n`

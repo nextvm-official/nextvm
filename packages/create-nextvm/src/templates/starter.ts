@@ -1,5 +1,6 @@
 import type { FileEntry } from '../index'
 import {
+	ENV_EXAMPLE,
 	GITIGNORE,
 	jsonFile,
 	NEXTVM_CLI_VERSION,
@@ -84,6 +85,18 @@ export default {
 		'shop',
 		'core',
 	],
+	// Optional: spawn a local FXServer subprocess via \`nextvm dev --serve\`
+	// or \`nextvm serve\`. Set FXSERVER_PATH in .env to enable.
+	fxserver: process.env.FXSERVER_PATH
+		? {
+				path: process.env.FXSERVER_PATH,
+				licenseKey: process.env.CFX_LICENSE_KEY,
+				endpoint: '0.0.0.0:30120',
+				gameBuild: 3095,
+				additionalResources: [],
+				convars: {},
+			}
+		: undefined,
 }
 `
 
@@ -484,6 +497,7 @@ describe('ShopService', () => {
 		{ path: 'tsconfig.json', contents: jsonFile(TSCONFIG) },
 		{ path: 'nextvm.config.ts', contents: nextvmConfig },
 		{ path: '.gitignore', contents: GITIGNORE },
+		{ path: '.env.example', contents: ENV_EXAMPLE },
 		{ path: 'README.md', contents: readme },
 
 		// modules/core

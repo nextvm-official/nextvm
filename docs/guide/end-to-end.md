@@ -186,13 +186,22 @@ the typed result.
 ## 9. Iterate with `dev`
 
 ```bash
-nextvm dev
+nextvm dev --serve
 ```
 
-Watches every module's `src/`, rebuilds on change, fires
-`onModuleRebuilt`. Restart the affected resource manually with
-`ensure shop` (the live ensure-restart bridge is on the polish
-list).
+Spawns a local FXServer subprocess against your built modules,
+streams its logs into your terminal, watches every module's `src/`,
+and runs `ensure <module>` inside FXServer on each successful
+rebuild — connected players keep their state across the reload via
+the snapshot mechanism.
+
+If you'd rather manage FXServer externally (txAdmin, Pterodactyl, a
+remote box), drop the `--serve` flag — `nextvm dev` then runs as a
+pure rebuild watcher and you handle `ensure` yourself.
+
+See the [Local FXServer guide](/guide/local-fxserver) for the full
+setup, including how to wire a `cfx-server-data` install and a
+`fxserver` block in `nextvm.config.ts`.
 
 ## What just happened
 

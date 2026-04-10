@@ -99,9 +99,7 @@ export async function bootstrapServer(opts: BootstrapOptions): Promise<RuntimeHa
 			...devOpts,
 			log: (msg, data) => log.info(msg, data),
 		})
-		log.info('Dev bridge started', {
-			path: devOpts.path ?? '.nextvm/dev-trigger.json',
-		})
+		// The resolved path is logged by startDevBridge itself.
 	}
 	const runtime: RuntimeHandle = {
 		loader,

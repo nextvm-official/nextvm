@@ -1,6 +1,6 @@
 {
 	"name": "@nextvm/cli",
-	"version": "0.0.2",
+	"version": "0.1.0",
 	"description": "NextVM CLI — create, dev, build, validate, db:*, migrate:from",
 	"license": "BUSL-1.1",
 	"publishConfig": {
@@ -39,6 +39,7 @@
 		"@nextvm/build": "workspace:*",
 		"@nextvm/core": "workspace:*",
 		"@nextvm/db": "workspace:*",
+		"@nextvm/fxserver-runner": "workspace:*",
 		"@nextvm/migration": "workspace:*",
 		"@nextvm/registry": "workspace:*",
 		"commander": "^12.1.0",

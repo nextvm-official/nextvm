@@ -41,3 +41,6 @@ coverage/
 *.log
 npm-debug.log*
 pnpm-debug.log*
+
+# Local sandbox for smoke-testing the scaffold + dev pipeline
+sandbox/

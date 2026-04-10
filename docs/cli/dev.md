@@ -1,12 +1,20 @@
 # nextvm dev
 
-Dev mode with file watching and incremental rebuilds.
+Dev mode with file watching, incremental rebuilds, and an optional
+local FXServer subprocess.
 
 ## Synopsis
 
 ```bash
-nextvm dev
+nextvm dev              # rebuild watcher only
+nextvm dev --serve      # rebuild watcher + local FXServer subprocess
 ```
+
+## Flags
+
+| Flag | Description |
+|---|---|
+| `--serve` | Spawn a local FXServer subprocess against your built modules. Requires a `fxserver` block in `nextvm.config.ts`. See [Local FXServer](/guide/local-fxserver). |
 
 ## What it does
 
@@ -16,44 +24,45 @@ nextvm dev
 3. Starts a chokidar watcher on each module's `src/`
 4. On change → debounces, rebuilds the affected module with
    `skipLocales: true` for speed
-5. Fires the `onModuleRebuilt` callback so the runtime layer can
-   `ensure`-restart the resource
+5. Writes `.nextvm/dev-trigger.json` so the runtime-server's dev
+   bridge can `ensure`-restart the resource inside FXServer
+6. **With `--serve`**: also spawns FXServer, links modules into
+   `resources/[nextvm]/`, generates `server.cfg.nextvm`, and streams
+   the FXServer logs into your terminal with a cyan `[fx]` prefix
 
-The session stays alive until you hit Ctrl+C or send SIGTERM.
+The session stays alive until you hit Ctrl+C. Cleanup tears down the
+watcher, the FXServer process tree, and the symlinks.
 
-## Example output
+## Example output (`--serve`)
 
 ```
-NextVM dev — watching 3 module(s)
+▲ NextVM v0.0.x
+dev — watching modules for changes
 
-Building 3 module(s)
-  ✓ @nextvm/banking (61ms)
-  ✓ @nextvm/jobs (12ms)
-  ✓ @nextvm/housing (10ms)
-✓ Built 3 module(s) in 83ms
+  › Initial build of 3 module(s)…
+  ✓ Initial build completed in 64ms
 
-Press Ctrl+C to stop.
+  [runner] Resolved FXServer binary: C:\fivem\server\FXServer.exe
+  [runner] Linked 3 module(s) (symlinks)
+  [runner] Wrote C:\fivem\server-data\server.cfg.nextvm
+  [runner] FXServer started (PID 12345)
+  ✓ FXServer running (PID 12345)
+  ✓ Watching 3 modules for changes
+  Press Ctrl+C to stop.
 
-[10:30:15] rebuilding @nextvm/banking...
-  ✓ @nextvm/banking rebuilt
+  [fx] [   resources] Started resource shop
+  ...
+
+22:42:10 ● Rebuilding shop…
+22:42:10 ✓ shop rebuilt in 9ms
+  [runner] ensure shop (via dev-trigger)
+  [fx] [resources] Stopping resource shop
+  [fx] [resources] Started resource shop
 ```
-
-## What it doesn't do (yet)
-
-- **NUI HMR** lands in with the full runtime layer
-- **State preservation across restarts** lands in — modules
-  can already opt in via `serialize()` / `deserialize()` on their
-  state stores, but the dev orchestrator doesn't automatically
-  invoke them yet
-- **ensure-restart bridge** to a running FXServer — for now, you
-  manually `ensure <name>` after a rebuild, or wire up your own
-  `onModuleRebuilt` callback
-
-These deferrals are documented in
-[`packages/build/src/dev-orchestrator.ts`](https://github.com/nextvm-official/nextvm/blob/main/packages/build/src/dev-orchestrator.ts).
 
 ## See also
 
+- [`nextvm serve`](/cli/serve) — one-shot build + FXServer, no watcher
 - [`nextvm build`](/cli/build) — one-shot production build
+- [Local FXServer](/guide/local-fxserver) — full setup walkthrough
 - [`@nextvm/build`](/packages/build) package reference
-- [2](https://github.com/nextvm-official/nextvm/tree/main/docs/concept)

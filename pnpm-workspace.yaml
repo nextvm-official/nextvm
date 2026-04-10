@@ -1,3 +1,8 @@
 packages:
   - 'packages/*'
   - 'modules/*'
+  # Optional sandbox folder for local end-to-end smoke tests of the
+  # CLI / scaffold / dev pipeline. Each subfolder is treated as its
+  # own pnpm package, so @nextvm/* deps resolve via workspace links
+  # instead of npm. Tracked in .gitignore.
+  - 'sandbox/*'

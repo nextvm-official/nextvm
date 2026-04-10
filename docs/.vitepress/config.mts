@@ -37,6 +37,7 @@ export default defineConfig({
 					text: 'Getting Started',
 					items: [
 						{ text: 'Introduction', link: '/guide/getting-started' },
+						{ text: 'FiveM Server Basics', link: '/guide/fivem-basics' },
 						{ text: 'Installation', link: '/guide/installation' },
 						{ text: 'Your First Module', link: '/guide/your-first-module' },
 					],
@@ -46,6 +47,7 @@ export default defineConfig({
 					items: [
 						{ text: 'Architecture Overview', link: '/guide/architecture-overview' },
 						{ text: 'Module Authoring', link: '/guide/module-authoring' },
+						{ text: 'Local FXServer', link: '/guide/local-fxserver' },
 						{ text: 'Testing', link: '/guide/testing' },
 					],
 				},
@@ -162,6 +164,7 @@ export default defineConfig({
 					items: [
 						{ text: 'build', link: '/cli/build' },
 						{ text: 'dev', link: '/cli/dev' },
+						{ text: 'serve', link: '/cli/serve' },
 					],
 				},
 				{
