@@ -140,7 +140,7 @@ describe('FxserverRunner', () => {
 		await runner.start()
 		expect(io.spawn).toHaveBeenCalledWith(
 			expect.stringContaining('FXServer'),
-			['+exec', join(baseFxserverPath, 'server.cfg.nextvm')],
+			['+exec', 'server.cfg.nextvm'],
 			{ cwd: baseFxserverPath },
 		)
 	})

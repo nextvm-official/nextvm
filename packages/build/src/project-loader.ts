@@ -44,6 +44,29 @@ const CONFIG_FILENAMES = ['nextvm.config.ts', 'nextvm.config.js', 'nextvm.config
 export async function loadProject(rootDir: string = process.cwd()): Promise<LoadedProject> {
 	const root = resolve(rootDir)
 
+	// Load .env file so process.env.* references in nextvm.config.ts
+	// (like CFX_LICENSE_KEY, FXSERVER_PATH) resolve correctly.
+	const envPath = join(root, '.env')
+	if (existsSync(envPath)) {
+		try {
+			// Node 22+ has process.loadEnvFile(), but it throws if
+			// already loaded or on parse errors. Fallback to manual.
+			;(process as { loadEnvFile?: (p: string) => void }).loadEnvFile?.(envPath)
+		} catch {
+			// Manual fallback: parse KEY=VALUE lines
+			const envContent = readFileSync(envPath, 'utf-8')
+			for (const line of envContent.split('\n')) {
+				const trimmed = line.trim()
+				if (!trimmed || trimmed.startsWith('#')) continue
+				const eq = trimmed.indexOf('=')
+				if (eq === -1) continue
+				const key = trimmed.slice(0, eq).trim()
+				const value = trimmed.slice(eq + 1).trim()
+				if (!(key in process.env)) process.env[key] = value
+			}
+		}
+	}
+
 	const configPath = findConfigFile(root)
 	if (!configPath) {
 		throw new Error(

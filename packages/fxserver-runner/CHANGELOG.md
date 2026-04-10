@@ -1,5 +1,22 @@
 # @nextvm/fxserver-runner
 
+## 0.1.2
+
+### Patch Changes
+
+- fix(fxserver-runner,build): config file path + .env loading
+
+  Two bugs found during end-to-end scaffold test:
+
+  1. FXServer couldn't find server.cfg.nextvm because the runner passed
+     the full path to +exec, but FXServer resolves +exec relative to
+     its cwd. Now passes just the filename 'server.cfg.nextvm'.
+
+  2. process.env.CFX_LICENSE_KEY was always empty because nothing loaded
+     the .env file. Added .env auto-loading in loadProject() using
+     Node 22's process.loadEnvFile() with a manual KEY=VALUE parser
+     fallback. Only sets vars that aren't already in the environment.
+
 ## 0.1.1
 
 ### Patch Changes

@@ -126,11 +126,12 @@ export class FxserverRunner {
 			this.log(`Wrote ${this.generatedCfgPath}`)
 
 			// 4. Spawn subprocess — cwd MUST be the data dir so FXServer
-			// resolves `resources/` relatively.
+			// resolves `resources/` relatively. The config file is passed
+			// as just the filename because +exec is relative to cwd.
 			this.process = spawnFxserver({
 				binary,
 				cwd: dataPath,
-				configFile: this.generatedCfgPath,
+				configFile: 'server.cfg.nextvm',
 				io: this.io,
 				onLog: (line) => this.opts.onLog?.(line, 'fxserver'),
 				onExit: (code) => this.handleExit(code),

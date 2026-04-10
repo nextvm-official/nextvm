@@ -1,6 +1,6 @@
 {
   "name": "@nextvm/fxserver-runner",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Spawn and manage a local FXServer process for NextVM dev workflows. Generates server.cfg, links built modules into resources/, streams logs, handles cleanup.",
   "license": "BUSL-1.1",
   "publishConfig": {
