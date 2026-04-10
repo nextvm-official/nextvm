@@ -1,5 +1,12 @@
 # @nextvm/cli
 
+## 0.1.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @nextvm/fxserver-runner@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes

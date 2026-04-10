@@ -8,6 +8,7 @@ import {
 	symlinkSync,
 	writeFileSync,
 } from 'node:fs'
+import { resolve } from 'node:path'
 import { platform as nodePlatform } from 'node:process'
 import type { RunnerIo, SpawnedProcess } from './types'
 
@@ -35,8 +36,10 @@ export const defaultIo: RunnerIo = {
 		}
 	},
 	spawn: (command, args, opts): SpawnedProcess => {
-		const child = spawn(command, [...args], {
-			cwd: opts.cwd,
+		// resolve() normalizes relative paths (.fxserver/artifacts/FXServer.exe)
+		// to absolute — child_process.spawn can't find binaries via relative paths.
+		const child = spawn(resolve(command), [...args], {
+			cwd: resolve(opts.cwd),
 			stdio: ['pipe', 'pipe', 'pipe'],
 		})
 		return {

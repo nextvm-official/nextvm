@@ -1,5 +1,17 @@
 # @nextvm/fxserver-runner
 
+## 0.1.1
+
+### Patch Changes
+
+- fix(fxserver-runner): resolve relative paths before spawn
+
+  child_process.spawn can't find binaries via relative paths like
+  `.fxserver/artifacts/FXServer.exe`. The default IO layer now calls
+  `path.resolve()` on the binary path and cwd before spawning.
+  The fix lives in default-io.ts (real IO only) so mock-based tests
+  continue to work with their synthetic paths.
+
 ## 0.1.0
 
 ### Minor Changes
