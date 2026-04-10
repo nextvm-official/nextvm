@@ -114,23 +114,24 @@ async function buildModule(
 		warnings.push('no src/index.ts, src/server/index.ts, or src/client/index.ts found')
 	}
 
-	// FXServer's V8 isolate runs scripts as CommonJS — top-level `import`
-	// statements throw "Cannot use import statement outside a module".
-	// We bundle to CJS and inline every @nextvm/* package because there
-	// is no node_modules tree inside a FiveM resource folder. Only
-	// natives (mysql2, etc.) and FXServer-provided globals stay external.
-	const sharedTsupOpts = {
-		format: ['cjs' as const],
+	// FXServer runs two different JS environments:
+	//   - Server: Node-like V8 isolate with CommonJS (module, require, exports)
+	//   - Client: bare V8 isolate with NO module system (no module, no require)
+	//
+	// Server bundles use CJS. Client bundles use IIFE (wraps everything
+	// in a self-executing function so no `module` global is needed).
+	// Both inline every @nextvm/* package because there is no
+	// node_modules tree inside a FiveM resource folder.
+	const baseOpts = {
 		clean: false,
 		sourcemap: true,
 		dts: false,
 		silent: true,
 		outExtension: () => ({ js: '.js' }),
-		// tsup auto-marks every entry in package.json `dependencies` as
-		// external. We override that for @nextvm/* so resource bundles
-		// stay self-contained.
 		noExternal: [/^@nextvm\//],
 	}
+	const serverTsupOpts = { ...baseOpts, format: ['cjs' as const] }
+	const clientTsupOpts = { ...baseOpts, format: ['iife' as const] }
 
 	// Externals: things FXServer provides at runtime, plus native modules
 	// that can't be bundled. @nextvm/* are intentionally NOT external —
@@ -143,11 +144,11 @@ async function buildModule(
 	]
 	const CLIENT_EXTERNAL = ['@citizenfx/client']
 
-	// Build server bundle
+	// Build server bundle (CJS — Node-like environment)
 	let bundledServer = false
 	if (serverEntry) {
 		await tsupBuild({
-			...sharedTsupOpts,
+			...serverTsupOpts,
 			entry: { server: serverEntry },
 			outDir: join(module.path, 'dist'),
 			external: SERVER_EXTERNAL,
@@ -155,12 +156,11 @@ async function buildModule(
 		bundledServer = true
 	}
 
-	// Build client bundle (only if there's a dedicated client entry — single
-	// src/index.ts already covers both surfaces in a shared bundle)
+	// Build client bundle (IIFE — bare V8, no module system)
 	let bundledClient = false
 	if (clientEntry && clientEntry !== serverEntry) {
 		await tsupBuild({
-			...sharedTsupOpts,
+			...clientTsupOpts,
 			entry: { client: clientEntry },
 			outDir: join(module.path, 'dist'),
 			external: CLIENT_EXTERNAL,
@@ -170,7 +170,7 @@ async function buildModule(
 		// Single-bundle mode: build a second pass with the same entry but
 		// renamed as 'client' so fxmanifest can reference dist/client.js.
 		await tsupBuild({
-			...sharedTsupOpts,
+			...clientTsupOpts,
 			entry: { client: serverEntry },
 			outDir: join(module.path, 'dist'),
 			external: CLIENT_EXTERNAL,

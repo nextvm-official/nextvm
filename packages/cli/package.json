@@ -1,6 +1,6 @@
 {
 	"name": "@nextvm/cli",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"description": "NextVM CLI — create, dev, build, validate, db:*, migrate:from",
 	"license": "BUSL-1.1",
 	"publishConfig": {

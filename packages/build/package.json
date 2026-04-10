@@ -1,6 +1,6 @@
 {
 	"name": "@nextvm/build",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "NextVM build orchestrator — project loader, tsup pipeline, fxmanifest generation, dev mode",
 	"license": "BUSL-1.1",
 	"publishConfig": {

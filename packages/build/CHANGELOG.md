@@ -1,5 +1,20 @@
 # @nextvm/build
 
+## 0.1.2
+
+### Patch Changes
+
+- fix(build): client bundles use IIFE format (not CJS)
+
+  FiveM's client-side V8 isolate has no CommonJS module system — there
+  is no `module`, `exports`, or `require` global. The build orchestrator
+  was using CJS for both server and client, causing
+  `ReferenceError: module is not defined` on every client script load.
+
+  Server bundles stay CJS (FXServer's server-side has Node-like CJS).
+  Client bundles now use IIFE (self-executing function wrapper that
+  doesn't need any module system globals).
+
 ## 0.1.1
 
 ### Patch Changes
