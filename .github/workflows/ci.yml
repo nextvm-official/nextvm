@@ -216,18 +216,3 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-  # ── Trigger NextVM-Web docs sync ──────────────────────────────
-  # After docs are deployed to Pages, notify the NextVM-Web repo to
-  # pull the updated markdown and convert it to MDX for docs.nextvm.dev.
-  sync-web-docs:
-    name: Trigger NextVM-Web docs sync
-    needs: deploy-docs
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - name: Dispatch to NextVM-Web
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.WEB_REPO_DISPATCH_TOKEN }}
-          repository: DrDelegate/NextVM-Web
-          event-type: docs-update
