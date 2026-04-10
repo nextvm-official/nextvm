@@ -1,5 +1,15 @@
 # create-nextvm
 
+## 0.1.2
+
+### Patch Changes
+
+- fix(create-nextvm): reference @nextvm/cli@^0.1.0 (has --serve flag)
+
+  The template used ^0.0.1 for the CLI which resolved to the old 0.0.1
+  release that doesn't have `nextvm dev --serve`. Bumped to ^0.1.0 so
+  scaffolded projects get the FXServer integration out of the box.
+
 ## 0.1.1
 
 ### Patch Changes

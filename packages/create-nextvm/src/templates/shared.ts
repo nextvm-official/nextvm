@@ -3,7 +3,7 @@
  */
 
 export const NEXTVM_VERSION = '^0.0.1'
-export const NEXTVM_CLI_VERSION = '^0.0.1'
+export const NEXTVM_CLI_VERSION = '^0.1.0'
 export const TYPESCRIPT_VERSION = '^5.7.0'
 export const ZOD_VERSION = '^3.24.0'
 export const VITEST_VERSION = '^2.1.0'
