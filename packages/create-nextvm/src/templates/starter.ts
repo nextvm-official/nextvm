@@ -291,7 +291,7 @@ export {}
 `
 
 	const corePkg = {
-		name: '@example/core',
+		name: 'core',
 		version: '0.1.0',
 		private: true,
 		type: 'module',
@@ -499,7 +499,7 @@ describe('ShopService', () => {
 `
 
 	const shopPkg = {
-		name: '@example/shop',
+		name: 'shop',
 		version: '0.1.0',
 		private: true,
 		type: 'module',

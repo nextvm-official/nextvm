@@ -1,6 +1,6 @@
 {
   "name": "create-nextvm",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Scaffold a new NextVM server project. Run via `pnpm create nextvm@latest <name>` or `npm create nextvm@latest <name>`.",
   "license": "BUSL-1.1",
   "publishConfig": {

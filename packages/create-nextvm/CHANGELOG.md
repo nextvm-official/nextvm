@@ -1,5 +1,16 @@
 # create-nextvm
 
+## 0.1.4
+
+### Patch Changes
+
+- fix(create-nextvm): module package names `core`/`shop` not `@example/*`
+
+  The starter template generated package.json files with
+  `"name": "@example/core"` and `"name": "@example/shop"`. The project
+  loader uses this name for the ensure lines in server.cfg.nextvm, so
+  FXServer looked for `@example/core` instead of `core` in resources/.
+
 ## 0.1.3
 
 ### Patch Changes
