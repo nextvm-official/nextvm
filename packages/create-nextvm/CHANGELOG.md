@@ -1,5 +1,16 @@
 # create-nextvm
 
+## 0.1.3
+
+### Patch Changes
+
+- fix(create-nextvm): wrap top-level await in async IIFE for CJS compat
+
+  The starter template's core server/client modules used top-level
+  `await bootstrapServer(...)` which fails with CJS output format
+  (esbuild: "Top-level await is currently not supported with the cjs
+  output format"). Wrapped in `void (async () => { ... })()`.
+
 ## 0.1.2
 
 ### Patch Changes

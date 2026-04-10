@@ -227,11 +227,13 @@ import shop from '../../shop/src'
  * Without it, the runtime falls back to an in-memory repository — fine
  * for development and quick smoke tests.
  */
-await bootstrapServer({
-	modules: [banking, jobs, housing, inventory, player, vehicle, shop, core],
-	stateSnapshot: {},
-	devBridge: process.env.NEXTVM_DEV === '1',
-})
+void (async () => {
+	await bootstrapServer({
+		modules: [banking, jobs, housing, inventory, player, vehicle, shop, core],
+		stateSnapshot: {},
+		devBridge: process.env.NEXTVM_DEV === '1',
+	})
+})()
 
 export {}
 `
@@ -253,6 +255,7 @@ import type { buildShopRouter } from '../../shop/src/server/router'
  * step: it builds typed RPC client proxies and exposes them on a
  * window global so other client scripts can call \`window.nextvm.rpc.shop.listOffers()\`.
  */
+void (async () => {
 const runtime = await bootstrapClient({
 	modules: [banking, jobs, housing, inventory, player, vehicle, shop, core],
 })
@@ -276,6 +279,7 @@ RegisterCommand(
 	},
 	false,
 )
+})()
 
 declare function RegisterCommand(
 	name: string,
