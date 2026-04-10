@@ -28,19 +28,26 @@ my-fivem-server/
 │   ├── FXServer.exe             (Windows)
 │   └── run.sh                   (Linux)
 │
-├── server-data/                 ← Data directory (your stuff)
-│   ├── server.cfg               ← Main config file
+├── server-data/                 ← Data directory (git clone of cfx-server-data)
+│   ├── server.cfg               ← Main config (you create this for production)
 │   ├── resources/               ← All your scripts/modules
 │   │   ├── [gamemodes]/
 │   │   ├── [managers]/
-│   │   ├── [nextvm]/            ← NextVM's managed folder
+│   │   ├── [nextvm]/            ← NextVM's managed folder (auto-created)
 │   │   │   ├── shop/
 │   │   │   └── banking/
 │   │   └── pma-voice/
-│   └── cache/                   ← FXServer's internal cache
+│   └── cache/                   ← FXServer's internal cache (auto-created)
 │
 └── txData/                      ← txAdmin data (optional)
 ```
+
+::: info cfx-server-data doesn't include a server.cfg
+The [cfx-server-data](https://github.com/citizenfx/cfx-server-data)
+repo only ships `resources/` and a README. For development with NextVM,
+that's fine — `nextvm dev --serve` generates its own `server.cfg.nextvm`
+automatically. For production, you'll write your own `server.cfg`.
+:::
 
 ::: tip Split vs all-in-one layouts
 Some setups put the binary and data in the same folder. Others

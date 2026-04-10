@@ -90,6 +90,7 @@ export default {
 	fxserver: process.env.FXSERVER_PATH
 		? {
 				path: process.env.FXSERVER_PATH,
+				dataPath: process.env.FXSERVER_DATA_PATH || undefined,
 				licenseKey: process.env.CFX_LICENSE_KEY,
 				endpoint: '0.0.0.0:30120',
 				gameBuild: 3095,

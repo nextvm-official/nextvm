@@ -58,6 +58,11 @@ MYSQL_DB=nextvm
 # Download: https://runtime.fivem.net/artifacts/fivem/
 FXSERVER_PATH=
 
+# Absolute path to the data directory containing resources/.
+# This is the cfx-server-data clone. Leave empty if your binary and
+# resources live in the same folder (all-in-one layout).
+FXSERVER_DATA_PATH=
+
 # Cfx.re license key — get yours at https://keymaster.fivem.net
 CFX_LICENSE_KEY=
 `
