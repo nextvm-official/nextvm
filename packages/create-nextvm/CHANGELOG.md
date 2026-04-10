@@ -1,5 +1,20 @@
 # create-nextvm
 
+## 0.1.1
+
+### Patch Changes
+
+- fix(create-nextvm): template versions match published npm packages
+
+  The starter template referenced `@nextvm/*@^0.0.2` but most packages
+  (core, natives, db, i18n, etc.) are still at `0.0.1` on npm, causing
+  `pnpm install` to fail with ERR_PNPM_NO_MATCHING_VERSION. Reverted
+  template version constants to `^0.0.1` which matches all published
+  packages.
+
+  Also includes the auto-bootstrap FXServer feature from the previous
+  commit that wasn't in the 0.1.0 npm release.
+
 ## 0.1.0
 
 ### Minor Changes
