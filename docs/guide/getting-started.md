@@ -46,41 +46,31 @@ Every module under `modules/*` is a workspace package with its own
 `src/`, `__tests__/`, and `package.json`. The framework discovers them
 automatically when you run `nextvm build` or `nextvm dev`.
 
-## The 60-second loop
+## Three commands to a running server
 
 ```bash
-# 1. Scaffold a project (with the starter template)
 pnpm create nextvm@latest my-server --template starter
-cd my-server
-pnpm install
-
-# 2. Point it at your local FXServer
-echo "FXSERVER_PATH=C:/fivem/server" >> .env
-echo "CFX_LICENSE_KEY=cfxk_…"        >> .env
-
-# 3. Run the dev loop
+cd my-server && pnpm install
 pnpm nextvm dev --serve
 ```
 
-What happens on step 3:
+The scaffold downloads FXServer automatically. No manual setup needed
+— just Node.js and pnpm. Connect with FiveM on `localhost:30120`.
 
+What happens behind the scenes:
+
+- FXServer binary + cfx-server-data are downloaded into `.fxserver/`
 - Every module under `modules/*` gets built to `dist/`
-- The runner links them into `<FXSERVER>/resources/[nextvm]/`
+- The runner links them into `resources/[nextvm]/`
 - A fresh `server.cfg.nextvm` is generated from `nextvm.config.ts`
-- FXServer spawns as a subprocess and streams its logs into your
-  terminal with a cyan `[fx]` prefix
-- File changes trigger a rebuild + `ensure <module>` inside FXServer,
-  preserving connected player state across the reload
+- FXServer spawns as a subprocess and streams logs into your terminal
+- File changes trigger a rebuild + `ensure <module>` inside FXServer
 - `Ctrl+C` shuts everything down cleanly
 
-Connect to `localhost:30120` from your FiveM client to verify.
-
-The full setup walkthrough — including how to install FXServer, where
-to put the license key, and how to handle split `cfx-server-data`
-layouts — lives on the [Local FXServer page](/guide/local-fxserver).
-If you'd rather build modules and deploy them to a remote FXServer
-yourself, drop the `--serve` flag and use `nextvm build` instead;
-[Installation](/guide/installation) covers that flow too.
+The full setup walkthrough is on the
+[Installation page](/guide/installation). For FiveM concepts
+(resources, convars, ACL, OneSync) see
+[FiveM Server Basics](/guide/fivem-basics).
 
 ## Where to go next
 

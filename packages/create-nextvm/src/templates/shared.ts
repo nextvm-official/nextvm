@@ -40,6 +40,7 @@ dist/
 .next/
 .turbo/
 .nextvm/
+.fxserver/
 .env
 .env.local
 *.log

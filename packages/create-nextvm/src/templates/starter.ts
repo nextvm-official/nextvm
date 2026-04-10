@@ -87,17 +87,29 @@ export default {
 	],
 	// Optional: spawn a local FXServer subprocess via \`nextvm dev --serve\`
 	// or \`nextvm serve\`. Set FXSERVER_PATH in .env to enable.
-	fxserver: process.env.FXSERVER_PATH
-		? {
-				path: process.env.FXSERVER_PATH,
-				dataPath: process.env.FXSERVER_DATA_PATH || undefined,
-				licenseKey: process.env.CFX_LICENSE_KEY,
-				endpoint: '0.0.0.0:30120',
-				gameBuild: 3095,
-				additionalResources: [],
-				convars: {},
-			}
-		: undefined,
+	// FXServer integration — auto-configured by \`create-nextvm\`.
+	// If .fxserver/ exists (auto-downloaded), uses relative paths.
+	// If FXSERVER_PATH is set (existing install), uses absolute paths.
+	// If neither, the fxserver block is undefined and dev --serve is disabled.
+	fxserver: (() => {
+		const path = process.env.FXSERVER_PATH || '.fxserver/artifacts'
+		const dataPath = process.env.FXSERVER_DATA_PATH || '.fxserver/data'
+		// Only activate if the auto-downloaded .fxserver/ exists or
+		// FXSERVER_PATH is explicitly set.
+		try { require('node:fs').accessSync(path); } catch { if (!process.env.FXSERVER_PATH) return undefined; }
+		return {
+			path,
+			dataPath: dataPath !== path ? dataPath : undefined,
+			licenseKey: process.env.CFX_LICENSE_KEY,
+			endpoint: '0.0.0.0:30120',
+			gameBuild: 3095,
+			additionalResources: [],
+			convars: {
+				sv_projectName: ${JSON.stringify(name)},
+				onesync: 'on',
+			},
+		}
+	})(),
 }
 `
 

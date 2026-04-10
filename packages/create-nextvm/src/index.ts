@@ -7,12 +7,19 @@ import {
 	note,
 	outro,
 	select,
+	spinner,
 	text,
 } from '@clack/prompts'
+import {
+	cloneServerData,
+	downloadFxserver,
+	resolveRecommendedBuild,
+	writeStoredBuild,
+} from '@nextvm/fxserver-runner'
 import { existsSync } from 'node:fs'
 import { mkdir, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, resolve } from 'node:path'
-import { argv, exit, stdout } from 'node:process'
+import { argv, exit, platform, stdout } from 'node:process'
 import pc from 'picocolors'
 import { renderBlankTemplate } from './templates/blank'
 import { renderStarterTemplate } from './templates/starter'
@@ -37,6 +44,9 @@ interface ParsedArgs {
 	help: boolean
 	version: boolean
 	yes: boolean
+	noFxserver: boolean
+	fxserverPath: string | null
+	fxserverData: string | null
 }
 
 const PKG_VERSION = '0.1.0'
@@ -54,6 +64,9 @@ function parseArgs(args: string[]): ParsedArgs {
 		help: false,
 		version: false,
 		yes: false,
+		noFxserver: false,
+		fxserverPath: null,
+		fxserverData: null,
 	}
 	for (let i = 0; i < args.length; i++) {
 		const arg = args[i]!
@@ -63,6 +76,12 @@ function parseArgs(args: string[]): ParsedArgs {
 			result.version = true
 		} else if (arg === '--yes' || arg === '-y') {
 			result.yes = true
+		} else if (arg === '--no-fxserver') {
+			result.noFxserver = true
+		} else if (arg === '--fxserver-path') {
+			result.fxserverPath = args[++i] ?? null
+		} else if (arg === '--fxserver-data') {
+			result.fxserverData = args[++i] ?? null
 		} else if (arg === '--template' || arg === '-t') {
 			const next = args[i + 1]
 			if (next === 'blank' || next === 'starter') {
@@ -214,7 +233,7 @@ async function resolveConfig(args: ParsedArgs): Promise<ResolvedConfig> {
 	}
 }
 
-async function scaffold(config: ResolvedConfig): Promise<void> {
+async function scaffold(config: ResolvedConfig, args: ParsedArgs): Promise<void> {
 	const target = resolve(process.cwd(), config.name)
 	const displayName = basename(target)
 
@@ -237,21 +256,124 @@ async function scaffold(config: ResolvedConfig): Promise<void> {
 		`Created ${pc.bold(pc.cyan(displayName))} ${pc.dim(`(${files.length} files, ${config.template} template)`)}`,
 	)
 
+	// ── FXServer auto-bootstrap ──────────────────────────────
+	const useExisting = args.fxserverPath !== null
+	const skipFxserver = args.noFxserver
+
+	if (!skipFxserver && config.template === 'starter') {
+		if (useExisting) {
+			// User has an existing FXServer install — point at it
+			const envLines = [
+				`FXSERVER_PATH=${args.fxserverPath}`,
+				args.fxserverData ? `FXSERVER_DATA_PATH=${args.fxserverData}` : '',
+				'CFX_LICENSE_KEY=',
+			]
+				.filter(Boolean)
+				.join('\n')
+			await writeFile(join(target, '.env'), `${envLines}\n`)
+			log.success('Linked to existing FXServer installation')
+		} else {
+			// Auto-download FXServer + cfx-server-data
+			const fxDir = join(target, '.fxserver')
+			const artifactsDir = join(fxDir, 'artifacts')
+			const dataDir = join(fxDir, 'data')
+
+			const s = spinner()
+
+			try {
+				s.start('Resolving latest recommended FXServer build…')
+				const build = await resolveRecommendedBuild(
+					platform as 'win32' | 'linux',
+				)
+				s.stop(`Found FXServer build ${pc.cyan(build.build)}`)
+
+				s.start(
+					`Downloading FXServer (build ${build.build})… this may take a minute`,
+				)
+				await downloadFxserver(build.url, artifactsDir)
+				writeStoredBuild(fxDir, build.build)
+				s.stop('FXServer downloaded + extracted')
+
+				s.start('Downloading cfx-server-data baseline…')
+				await cloneServerData(dataDir)
+				s.stop('cfx-server-data ready')
+			} catch (err) {
+				s.stop(
+					pc.yellow(
+						`FXServer download failed: ${err instanceof Error ? err.message : String(err)}`,
+					),
+				)
+				log.warn(
+					'You can download FXServer manually later, or re-run with --fxserver-path.',
+				)
+			}
+
+			// Write .env with just the license key (paths are relative in config)
+			await writeFile(
+				join(target, '.env'),
+				'# Cfx.re license key — get yours at https://keymaster.fivem.net\n# Without a key the server runs in offline mode (LAN only).\nCFX_LICENSE_KEY=\n',
+			)
+		}
+
+		// License key prompt (interactive only)
+		if (!args.yes) {
+			const licenseKey = await text({
+				message: 'Cfx.re License Key',
+				placeholder: 'cfxk_… (press Enter to skip for offline mode)',
+				defaultValue: '',
+				validate: (value) => {
+					if (value && !value.startsWith('cfxk_')) {
+						return 'License keys start with cfxk_'
+					}
+					return undefined
+				},
+			})
+
+			if (!isCancel(licenseKey) && licenseKey) {
+				// Append to .env
+				const envPath = join(target, '.env')
+				const existing = existsSync(envPath)
+					? (await import('node:fs')).readFileSync(envPath, 'utf-8')
+					: ''
+				const updated = existing.replace(
+					'CFX_LICENSE_KEY=',
+					`CFX_LICENSE_KEY=${licenseKey}`,
+				)
+				await writeFile(envPath, updated)
+				log.success('License key saved to .env')
+			} else {
+				log.info(
+					`${pc.dim('No key — server will run in offline mode.')} Get one at ${pc.underline('https://keymaster.fivem.net')}`,
+				)
+			}
+		}
+	}
+
+	// ── Summary ──────────────────────────────────────────────
 	if (config.template === 'starter') {
 		note(
 			[
 				`${pc.cyan('modules/core')}     Bootstrap module wiring everything together`,
 				`${pc.cyan('modules/shop')}     Example custom module ${pc.dim('(router + service + tests)')}`,
+				useExisting || skipFxserver
+					? ''
+					: `${pc.cyan('.fxserver/')}       FXServer binary + cfx-server-data ${pc.dim('(gitignored)')}`,
 				`${pc.dim('+ first-party:')}    banking, jobs, housing, inventory, player, vehicle`,
-			].join('\n'),
+			]
+				.filter(Boolean)
+				.join('\n'),
 			'What you got',
 		)
 	}
 
+	const devCmd = config.template === 'starter' && !skipFxserver
+		? 'pnpm nextvm dev --serve'
+		: 'pnpm dev'
+
 	const cmds = [
 		`${pc.dim('$')} ${pc.cyan('cd')} ${displayName}`,
 		`${pc.dim('$')} ${pc.cyan('pnpm install')}`,
-		`${pc.dim('$')} ${pc.cyan('pnpm dev')}`,
+		`${pc.dim('$')} ${pc.cyan(devCmd)}`,
 	].join('\n')
 
 	note(cmds, 'Next steps')
@@ -279,7 +401,7 @@ async function main(): Promise<void> {
 
 	try {
 		const config = await resolveConfig(args)
-		await scaffold(config)
+		await scaffold(config, args)
 	} catch (err) {
 		log.error(err instanceof Error ? err.message : String(err))
 		exit(1)

@@ -31,28 +31,16 @@ FiveM resources.
 ## Quick start
 
 ```bash
-# 1. Scaffold a project (with the starter template)
 pnpm create nextvm@latest my-server --template starter
 cd my-server
 pnpm install
-
-# 2. Point it at your local FXServer (one-time setup — bring your own FXServer)
-echo "FXSERVER_PATH=C:/fivem/server" >> .env
-echo "CFX_LICENSE_KEY=cfxk_…"        >> .env
-
-# 3. Run the dev loop — builds modules, spawns FXServer, hot-reloads on save
 pnpm nextvm dev --serve
 ```
 
-Connect to `localhost:30120` from your FiveM client to verify. Edit any
-file under `modules/<name>/src/` and the runner rebuilds in ~10ms,
-runs `ensure <module>` inside FXServer, and preserves connected player
-state across the reload.
-
-Don't have FXServer installed yet, or prefer to deploy elsewhere? See
-the [Local FXServer guide](./docs/guide/local-fxserver.md) for the
-one-time setup, or skip the `--serve` flag and use the manual
-[build-and-copy flow](./docs/guide/installation.md#_6-alternative-manual-deploy-without-dev-serve).
+The scaffold downloads FXServer automatically — no manual setup needed.
+Connect to `localhost:30120` from your FiveM client. Edit any file under
+`modules/<name>/src/` and the runner rebuilds in ~30ms, hot-reloads the
+module inside FXServer, and preserves connected player state.
 
 For the full walkthrough see the [End-to-End Quickstart](./docs/guide/end-to-end.md)
 or the [Full Stack Example](./examples/full-stack).

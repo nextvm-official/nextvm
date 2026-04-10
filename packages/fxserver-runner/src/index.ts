@@ -37,6 +37,14 @@ export { generateServerCfg } from './server-cfg'
 export { linkModules } from './linker'
 export { resolveFxserverBinary, spawnFxserver } from './subprocess'
 export { defaultIo } from './default-io'
+export {
+	resolveRecommendedBuild,
+	downloadFxserver,
+	cloneServerData,
+	readStoredBuild,
+	writeStoredBuild,
+} from './download'
+export type { ResolvedBuild } from './download'
 export type {
 	RunnerIo,
 	RunnerModule,
